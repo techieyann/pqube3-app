@@ -1,16 +1,27 @@
 Freq = new Meteor.Collection('freq');
 
 if (Meteor.isClient) {
+  Meteor.startup(function () {
+		$('#freq-display').sevenSeg({
+			digits: 6,
+			colorOff: "#003200", 
+      colorOn: "Lime",
+			slant: 10
+		});
+  });
+
 	Meteor.subscribe('freq');
   // counter starts at 0
   Session.setDefault('counter', 0);
+
+	
 
   Template.hello.helpers({
 		frequency: function () {
 			var data = Freq.findOne();
 			if (data) {
-				var freq = Math.round(data.freq*10000)/10000;
-				return freq;
+				var freq = data.freq.toFixed(4);
+				$('#freq-display').sevenSeg({value: freq});
 			}
 		}
   });

@@ -1,15 +1,17 @@
 <head>
   <title>pqube3</title>
 	<meta name="viewport" width="device-width">
+	<script src="/sevenSeg.js"></script>
 </head>
 
 <body>
 	<img src="/psl.png">
-  <h1>Frequency:</h1>
+  <h2>Frequency (Hz):</h2>
 	
   {{> hello}}
 </body>
 
 <template name="hello">
-	{{frequency}} Hz
+	<div id="freq-display"></div>
+	{{frequency}}
 </template>
