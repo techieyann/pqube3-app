@@ -7,3 +7,9 @@ img {
 		width: 200px;
 		height: 35px;
 }
+
+#freq-gauge {
+		display:inline-block;
+		width: 200px;
+		height: 200px;
+}

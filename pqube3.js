@@ -13,15 +13,59 @@ if (Meteor.isClient) {
 	Meteor.subscribe('freq');
   // counter starts at 0
   Session.setDefault('counter', 0);
-
+	var freqGauge;
 	
-
+	Template.gauge.rendered = function () {
+		console.log('rendered');
+		var self = this;
+		self.gauge = new TunguskaGauge({
+			id: 'freq-gauge',
+			theme: 'basic',
+			range: {
+				min: 59.9,
+				max: 60.1,
+				sweep: 240,
+				startAngle: -120
+			},
+			background: {
+				image: 'meter_face.jpg',
+				left: -98,
+				top: -98
+			},
+			digital: {
+				font: '0px',
+				color: '#fff'
+			},
+			tick: {
+				major: {
+					startAt: 1,
+					endAt: 1,
+					first: 59.9,
+					last: 60.1,
+					interval: .1,
+					
+					legend: {
+						color: 'black',
+						font: '12px sans serif',
+						radius: .65
+					}
+				}
+			}
+		});
+		self.gauge.theme.pointer.dynamics = {
+			easing: 'easeOutQuint',
+			duration: 250
+		};
+		self.gauge.set(60);
+		freqGauge = self.gauge;
+	};
   Template.hello.helpers({
 		frequency: function () {
 			var data = Freq.findOne();
 			if (data) {
 				var freq = data.freq.toFixed(4);
 				$('#freq-display').sevenSeg({value: freq});
+				freqGauge.set(freq);
 			}
 		}
   });
