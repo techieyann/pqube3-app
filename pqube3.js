@@ -27,11 +27,17 @@ if (Meteor.isClient) {
 				sweep: 240,
 				startAngle: -120
 			},
+			foreground: {
+				image: 'meter_front.png',
+				left: -98,
+				top: -98
+			},
 			background: {
 				image: 'meter_face.jpg',
 				left: -98,
 				top: -98
 			},
+
 			digital: {
 				font: '0px',
 				color: '#fff'
