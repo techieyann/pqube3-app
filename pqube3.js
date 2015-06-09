@@ -20,7 +20,7 @@ if (Meteor.isClient) {
 			theme: 'basic',
 			range: {
 				min: 59.9,
-				lowStop: 59.98,
+				lowStop: 59.89,
 				max: 60.1,
 				highStop: 60.11,
 				sweep: 240,
@@ -61,7 +61,7 @@ if (Meteor.isClient) {
 			easing: 'easeOutQuint',
 			duration: 500
 		};
-		self.gauge.set(59.98);
+		self.gauge.set(59.89);
 		freqGauge = self.gauge;
 	};
   Template.freq.helpers({
