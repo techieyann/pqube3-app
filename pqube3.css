@@ -1,15 +1,15 @@
 /* CSS declarations go here */
 img {
-	width:200px;
+    width:200px;
 }
 
 #freq-display {
-		width: 200px;
-		height: 33px;
+    width: 200px;
+    height: 33px;
 }
 
 #freq-gauge {
-		display:inline-block;
-		width: 200px;
-		height: 200px;
+    display:inline-block;
+    width: 200px;
+    height: 200px;
 }
