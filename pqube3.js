@@ -28,7 +28,7 @@ if (Meteor.isClient) {
       foreground: {
 	image: 'meter_front.png',
 	left: -99,
-	top: -94
+	top: -96
       },
       digital: {
 	font: '18px sans serif',
