@@ -1,22 +1,37 @@
 <head>
   <title>pqube3</title>
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=0, width=device-width">
+  <meta name="author" content="Ian McEachern">
   <script src="/sevenSeg.js"></script>
 </head>
 
 <body>
-  <img src="/psl.png">
-  <h2>Frequency (Hz):</h2>
-  {{> gauge}}	
-  {{> freq}}
+  <div id="container">
+    <img id="logo" src="/psl.png">
+    <br><br>
+    {{> gauge}}	
+  </div>
+  {{> footer}}
 </body>
 
-<template name="freq">
-  <div id="freq-display"></div>
+<template name="gauge">
 
-  {{frequency}}
+  <select id="meter-source">
+    <option>Frequency</option>
+  </select>
+  <br><br>
+  <div id="freq-gauge">
+    <img src="/meter_face.jpg">
+    <div id="tunguska-gauge">
+    </div>
+    <div id="freq-display"></div>
+    {{frequency}}
+  </div>
 </template>
 
-<template name="gauge">
-  <div id="freq-gauge"></div>
+<template name="footer">
+  <footer>
+    <hr>
+     <a href="https://github.com/techieyann/pqube3-app" target="_blank">Source</a> &copy; 2015
+  </footer>
 </template>

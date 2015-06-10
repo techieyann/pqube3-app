@@ -1,23 +1,22 @@
 Freq = new Meteor.Collection('freq');
 
 if (Meteor.isClient) {
-  Meteor.startup(function () {
-    $('#freq-display').sevenSeg({
-      digits: 6,
-      colorOff: "#003200", 
-      colorOn: "Lime",
-      slant: 10
-    });
-  });
-
   Meteor.subscribe('freq');
   var freqGauge;
   
   Template.gauge.rendered = function () {
+    $('#freq-display').sevenSeg({
+      digits: 6,
+      colorOff: "#004200", 
+      colorOn: "#00aa00",
+      colorBackground: "#013500",
+      slant: 3
+    });
+
     var self = this;
-    var round;
+
     self.gauge = new TunguskaGauge({
-      id: 'freq-gauge',
+      id: 'tunguska-gauge',
       range: {
 	min: 59.9,
 	lowStop: 59.89,
@@ -28,18 +27,17 @@ if (Meteor.isClient) {
       },
       foreground: {
 	image: 'meter_front.png',
-	left: -98,
-	top: -98
+	left: -99,
+	top: -94
       },
-      background: {
-	image: 'meter_face.jpg',
-	left: -98,
-	top: -98
-      },
-
       digital: {
-	font: '0px',
-	color: '#fff'
+	font: '18px sans serif',
+	color: '#333',
+        top:57,
+        left:0,
+        callback: function (pV) {
+          return 'Hz';
+        }
       },
       tick: {
 	minor: {
@@ -49,19 +47,18 @@ if (Meteor.isClient) {
 	  lineWidth: 0,
 	  startAt: 1,
 	  endAt: 1,
-	  interval: .05,
+	  interval: .02,
 	  legend: {
 	    color: '#555',
 	    callback: function (n) {
-	      console.log(n);
 	      return  n.toFixed(2);
 	    },
-	    font: '12px sans serif',
-	    radius: .65
+	    font: '7px sans serif',
+	    radius: .7
 
 	  },
 	  first: 59.9,
-	  last: 60.1
+	  last: 60.101
 	}
       }
     });
@@ -72,7 +69,7 @@ if (Meteor.isClient) {
     self.gauge.set(59.89);
     freqGauge = self.gauge;
   };
-  Template.freq.helpers({
+  Template.gauge.helpers({
     frequency: function () {
       var data = Freq.findOne();
       if (data) {

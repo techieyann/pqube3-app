@@ -1,15 +1,39 @@
 /* CSS declarations go here */
-img {
+body {
+    width:100%;
+}
+footer {
+    text-align: center;
+}
+
+#container {
+    width:200px;
+    margin: auto;
+}
+#logo {
     width:200px;
 }
-
-#freq-display {
-    width: 200px;
-    height: 33px;
+#meter-source{
+    width:200px;
+    text-align:center;
+}
+#freq-gauge {
+    position:relative;
 }
 
-#freq-gauge {
+#tunguska-gauge {
+    position:absolute;
+    top:-5px;
+    left:0px;
     display:inline-block;
     width: 200px;
     height: 200px;
+}
+
+#freq-display {
+    position:absolute;
+    top:201px;
+    left:51px;
+    width: 95px;
+    height: 17px;
 }
