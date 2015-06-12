@@ -1,9 +1,14 @@
 /* CSS declarations go here */
 body {
     width:100%;
+    margin:0;
 }
 footer {
     text-align: center;
+}
+
+.hidden {
+    display: none;
 }
 
 #container {
@@ -12,6 +17,24 @@ footer {
 }
 #logo {
     width:200px;
+}
+#setup-modal {
+    border: solid 1px gray;
+    padding: 2px;
+}
+#close-setup {
+    float: right;
+}
+#meta {
+    width: 200px;
+    text-align:center;
+}
+#status-light{
+    width:50px;
+    margin:auto;
+}
+#status-light img{
+    width:100%;
 }
 #meter-source{
     width:200px;

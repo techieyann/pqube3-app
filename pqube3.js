@@ -3,6 +3,42 @@ Freq = new Meteor.Collection('freq');
 if (Meteor.isClient) {
   Meteor.subscribe('freq');
   var freqGauge;
+
+  Template.meta.events({
+    'click #open-setup': function (e) {
+      e.preventDefault();
+      $('#setup-modal').removeClass('hidden');
+    }
+  });
+  Template.meta.helpers({
+    liveData: function () {
+      return Session.equals('live_data', true);
+    }
+  });
+
+  Template.setup.events({
+    'click #close-setup': function (e) {
+      e.preventDefault();
+      $('#setup-modal').addClass('hidden');
+    }
+  });
+
+  Template.language.events({
+    'change #language-select': function (e) {
+      var lang = $(e.target).val();
+      TAPi18n.setLanguage(lang)
+        .done(function () {
+        })
+        .fail(function (err) {
+          console.log(err);
+        });
+    }
+  });
+  Template.language.helpers({
+    currentLanguage: function (lang) {
+      return (lang == TAPi18n.getLanguage() ? 'selected' : '');
+    }
+  });
   
   Template.gauge.rendered = function () {
     $('#freq-display').sevenSeg({
@@ -69,6 +105,7 @@ if (Meteor.isClient) {
     self.gauge.set(59.89);
     freqGauge = self.gauge;
   };
+  var liveTimeout;
   Template.gauge.helpers({
     frequency: function () {
       var data = Freq.findOne();
@@ -76,6 +113,11 @@ if (Meteor.isClient) {
 	var freq = data.freq.toFixed(4);
 	$('#freq-display').sevenSeg({value: freq});
 	freqGauge.set(freq);
+        Meteor.clearTimeout(liveTimeout);
+        Session.set('live_data', true);
+        liveTimeout = Meteor.setTimeout(function () {
+          Session.set('live_data', false);
+        }, 550);
       }
     }
   });

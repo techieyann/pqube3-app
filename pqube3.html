@@ -9,16 +9,47 @@
   <div id="container">
     <a href="http://www.powersensorsltd.com" target="_blank"><img id="logo" alt="Power Sensors Ltd." src="/psl.png"></a>
     <hr>
+    {{> setup}}
+    {{> meta}}
     {{> gauge}}	
     {{> footer}}
   </div>
 
 </body>
 
+<template name="setup">
+  <div id="setup-modal" class="hidden">
+    <a href="#" id="close-setup">{{_ "close"}}</a>
+    {{> language}}    
+  </div>
+</template>
+
+<template name="meta">
+  <div id="meta">
+    <div id="status-light">
+      {{#if liveData}}
+      <img src="/status_on.png">
+      {{else}}
+      <img src="/status_off.png">
+      {{/if}}
+    </div>
+    <p>{{_ "liveData"}}</p>
+    <a href="#" id="open-setup">{{_ "setup"}}</a>
+  </div>
+</template>
+
+<template name="language">
+  <select id="language-select">
+    <option value="en" {{currentLanguage "en"}}>{{_ "english"}}</option>
+    <option value="fr" {{currentLanguage "fr"}}>{{_ "french"}}</option>
+    <option value="pl" {{currentLanguage "pl"}}>{{_ "polish"}}</option>
+  </select>
+</template>
+
 <template name="gauge">
 
   <select id="meter-source">
-    <option>Frequency</option>
+    <option>{{_ "freq"}}</option>
   </select>
   <br><br>
   <div id="freq-gauge">
@@ -33,6 +64,8 @@
 <template name="footer">
   <footer>
     <hr>
-     <a href="https://github.com/techieyann/pqube3-app" target="_blank">Source</a> &copy; 2015
+    <a href="https://ianmceachern.com/imceachern.resume.pdf" target="_blank">Ian McEachern</a> &copy; 2015
+    <br>
+    <a href="https://github.com/techieyann/pqube3-app" target="_blank">{{_ "source"}}</a>
   </footer>
 </template>

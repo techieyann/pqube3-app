@@ -12,3 +12,4 @@ npm-container
 mizzao:jquery-ui
 jquery
 tunguska:gauge
+tap:i18n
