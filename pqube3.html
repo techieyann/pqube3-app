@@ -27,11 +27,7 @@
 <template name="meta">
   <div id="meta">
     <div id="status-light">
-      {{#if liveData}}
-      <img src="/status_on.png">
-      {{else}}
-      <img src="/status_off.png">
-      {{/if}}
+      <img src="/status_{{lightStatus}}.png">
     </div>
     <p>{{_ "liveData"}}</p>
     <a href="#" id="open-setup">{{_ "setup"}}</a>
@@ -65,7 +61,5 @@
   <footer>
     <hr>
     <a href="https://ianmceachern.com/imceachern.resume.pdf" target="_blank">Ian McEachern</a> &copy; 2015
-    <br>
-    <a href="https://github.com/techieyann/pqube3-app" target="_blank">{{_ "source"}}</a>
   </footer>
 </template>
