@@ -1,14 +1,6 @@
 Freq = new Meteor.Collection('freq');
 
 if (Meteor.isClient) {
-  Meteor.startup(function () {
-    Meteor.setInterval(function () {
-      if (Session.equals('running', true)) {
-        var lightStatus = Session.get('light_on');
-        Session.set('light_on', !lightStatus);
-      }
-    }, 1000);
-  });
   Meteor.subscribe('freq');
   var freqGauge;
 
@@ -113,7 +105,6 @@ if (Meteor.isClient) {
     self.gauge.set(59.89);
     freqGauge = self.gauge;
   };
-  var runningTimeout;
   Template.gauge.helpers({
     frequency: function () {
       var data = Freq.findOne();
@@ -121,12 +112,10 @@ if (Meteor.isClient) {
 	var freq = data.freq.toFixed(4);
 	$('#freq-display').sevenSeg({value: freq});
 	freqGauge.set(freq);
-        Meteor.clearTimeout(runningTimeout);
-        Session.set('running', true);
-        runningTimeout = Meteor.setTimeout(function () {
-          Session.set('running', false);
+        Session.set('light_on', true);
+        Meteor.setTimeout(function () {
           Session.set('light_on', false);
-        }, 1000);
+        }, 200);
       }
     }
   });
