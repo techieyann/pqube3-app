@@ -8,8 +8,11 @@ meteor-platform
 meteorhacks:npm
 
 
-npm-container
+
 mizzao:jquery-ui
 jquery
 tunguska:gauge
 tap:i18n
+
+
+npm-container
