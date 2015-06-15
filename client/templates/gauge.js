@@ -42,14 +42,14 @@ Template.gauge.rendered = function () {
 				lineWidth: 0,
 				startAt: 1,
 				endAt: 1,
-				interval: .02,
+				interval: .1,
 				legend: {
 					color: '#555',
 					callback: function (n) {
 						return  n.toFixed(2);
 					},
-					font: '7px sans serif',
-					radius: .7
+					font: '14px sans serif',
+					radius: .60
 
 				},
 				first: 59.9,
