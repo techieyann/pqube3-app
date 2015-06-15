@@ -1,13 +1,15 @@
 <template name="gauge">
-  <select id="meter-source">
-    <option>{{_ "freq"}}</option>
-  </select>
-  <br><br>
-  <div id="freq-gauge">
-    <img src="/meter_face.jpg">
-    <div id="tunguska-gauge">
-    </div>
-    <div id="freq-display"></div>
-    {{frequency}}
-  </div>
+	<div id="meter-1">
+		<select id="meter-source">
+			<option>{{_ "freq"}}</option>
+		</select>
+		<br><br>
+		<div id="freq-gauge">
+			<img src="/meter_face.png">
+			<div id="tunguska-gauge">
+			</div>
+			<div id="freq-display"></div>
+			{{frequency}}
+		</div>
+	</div>
 </template>

@@ -1,6 +1,75 @@
 <template name="setup">
   <div id="setup-modal" class="hidden">
-    <a href="#" id="close-setup">{{_ "close"}}</a>
-    {{> language}}    
+		<div id="setup-branding">
+			<a href="http://www.powersensorsltd.com" target="_blank"><img id="setup-logo" alt="Power Sensors Ltd." src="/psl.png"></a>
+			<p>Power Sensors Ltd <br> www.PowerSendorsLtd.com</p>
+		</div>
+		<div id="setup-controls">
+			<a href="#" class="close-setup">&times;</a>
+			<br><br><br>
+			{{> language}}    
+		</div>
+		<h1 class="centered">PQube 3 Mobile Modbus App</h1>
+		{{> mainSettings}}
+		<br>
+		{{> meterSettings}}
+		<br>
+		{{> alertSettings}}
+		<input type="button" id="cancel" class="close-setup" value="Cancel">
+		<input type="button" id="save" class="close-setup" value="Save">
   </div>
+</template>
+
+
+<template name="mainSettings">
+	<div id="main-settings">
+		<select class="main-select">
+			<option>PSL Main Service</option>
+		</select>
+		<div class="options-right">
+			<p>Name <input type="text" value="PSL Main Service"></p>
+			<p>IP or URL <input type="text" value="MeterDemo.PQube.com"></p>
+			<p>Modbus port <input type="number" value="502"></p>
+			<p>Password <input type="password"></p>
+			<br>
+		</div>
+	</div>
+</template>
+
+<template name="meterSettings">
+	<div id="meter-settings">
+		<select class="main-select">
+			<option>Frequency</option>
+		</select>
+		<div id="alert-setup">
+			<p><input type="checkbox"> Send E-mail alert <input type="checkbox"> Send text alert</p>
+			<p><input type="checkbox"> Alert if Frequency is more than <input class="small-input" type="number" value="59.9"> Hz for more than <input class="small-input" type="number" value="3"> seconds</p>
+			<p><input type="checkbox"> Alert if Frequency is less than <input class="small-input" type="number" value="60.1"> Hz for more than <input class="small-input" type="number" value="3"> seconds</p>
+		</div>
+		<div class="options-right">
+			<p>Multiplier <input type="number" value="1"></p>
+			<p>Units <input type="text" value="Hz"></p>
+			<p>Min. value <input type="number" value="59.9"></p>
+			<p>Max. value <input type="number" value="60.1"></p>
+			<p>Color <input type="text" value="#be0505"></p>
+			<br>
+		</div>
+	</div>
+</template>
+
+<template name="alertSettings">
+	<div id="alert-settings">
+		<select class="main-select">
+			<option>Frequency</option>
+		</select>
+		<div class="options-right">
+			<p>E-mail to <input type="text" value="mail@domain.com"></p>
+			<p class="right">No more than <input class="inline small-input" type="number" value="10"> emails</p>
+			<p class="right">per <input class="inline" type="radio" name="emails" value="hour">Hour <input class="inline" type="radio" name="emails" value="day">Day</p>
+			<p>Text to <input type="text" value="123-456-7890"></p>
+			<p class="right">No more than <input class="inline small-input" type="number" value="10"> texts</p>
+			<p class="right">per <input class="inline" type="radio" name="texts" value="hour">Hour <input class="inline" type="radio" name="texts" value="day">Day</p>
+			<br>
+		</div>
+	</div>
 </template>
