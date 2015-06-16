@@ -7,7 +7,7 @@ var IP = process.env.pqubeIP;
 var client = bus.tcp.connect({
 	port: '502',
 	host: IP,
-	responseTimeout: 500,
+	responseTimeout: 800,
 	noDelay: true
 });
 var freqReq, vectReq;
@@ -15,62 +15,32 @@ var freqReq, vectReq;
 var procRegisters = function (registers, type) {
 	var decoded = decodeRegisters(registers, type);
 	console.log(decoded);
-	switch (type) {
-		case 'freq':
-		if (decoded) {
-			Freq.upsert({_id: 'frequency'}, {$set: decoded});
-		}
-		break;
-		case 'vect':
-
-		break;
-		default:
-		console.log('unknown register type');
-	}
+	if (decoded) PQubeData.upsert({_id: 'pqube3'}, {$set: decoded});
 };
 
-
-var makeFreqRequest = function () {
-	var freqFuture = new Future();
-  var freqReq = client.request({
+var makeRequest = function (type, start, num) {
+	var reqFuture = new Future();
+	var req = client.request({
 		unit: 1,
 		func: bus.Functions.READ_INPUT_REGISTERS,
-		address: 9020,
-		count: 2,
+		address: start,
+		count: num,
 		response: function (err, res) {
-			if (err) {
-				if (err instanceof bus.Errors.TimeoutError) return;
-				freqFuture.throw(err);
-			}
+			if (err) reqFuture.throw(err);
 			else {
-				freqFuture.return(res);
+				reqFuture.return(res);
 			}
 		}
 	});
-	procRegisters(freqFuture.wait(), 'freq');
-};
-
-var makeVectRequest = function () {
-	var vectFuture = new Future();
-  var vectReq = client.request({
-		unit: 1,
-		func: bus.Functions.READ_INPUT_REGISTERS,
-		address: 7098,
-		count: 24,
-		response: function (err, res) {
-			if (err) vectFuture.throw(err);
-			else {
-				vectFuture.return(res);
-			}
-		}
-	});
-	procRegisters(vectFuture.wait(), 'vect');
+	procRegisters(reqFuture.wait(), type);
 };
 
 Meteor.setInterval(function () {
-	makeFreqRequest();
-	makeVectRequest();
-}, 501);
+	makeRequest('freq', 9020, 2);
+	makeRequest('THD', 7194, 2);
+	makeRequest('L1N', 7098, 2);
+//	makeRequest('vect', 7098, 24);
+}, 1000);
 
 
 

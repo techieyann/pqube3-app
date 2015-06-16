@@ -19,6 +19,12 @@ var vectArray = [
 	{name: 'iMagL3', start:40, type:'float'},
 	{name: 'iAngL3', start:44, type:'float'},
 ];
+var THDarray = [
+	{name: 'THDL1', start:0, type:'float'}
+];
+var LNarray = [
+	{name: 'vMagL1N', start:0, type:'float'}
+];
 
 decodeRegisters = function (registers, type) {
 	var buffOpts = {
@@ -28,6 +34,14 @@ decodeRegisters = function (registers, type) {
 	switch(type) {
 		case 'freq':
 		buffOpts.fields = freqArray;
+		expectedLength = 2;
+		break;
+		case 'THD':
+		buffOpts.fields = THDarray;
+		expectedLength = 2;
+		break;
+		case 'L1N':
+		buffOpts.fields = LNarray;
 		expectedLength = 2;
 		break;
 		case 'vect':
@@ -42,7 +56,7 @@ decodeRegisters = function (registers, type) {
 		console.log('error, unexpected num registers');
 		console.log(expectedLength);
 		console.log(registers);
-		return '';
+		return;
 	}
 
 	var octets = registersToOctets(registers);
@@ -55,8 +69,6 @@ decodeRegisters = function (registers, type) {
 
 
 var registersToOctets = function (registers) {
-//	delete registers.byteLength;
-//	delete registers.functionCode;
   var octets = [];
   for (var i=0;i<registers.length;i++) {
     octets.push(registers[i]>>8);
