@@ -1,3 +1,3 @@
-Meteor.publish('freq', function () {
-  return Freq.find();
+Meteor.publish('pqubeData', function () {
+  return PQubeData.find();
 });

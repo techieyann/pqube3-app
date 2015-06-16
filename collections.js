@@ -1,1 +1,1 @@
-Freq = new Meteor.Collection('freq');
+PQubeData = new Meteor.Collection('pqubeData');

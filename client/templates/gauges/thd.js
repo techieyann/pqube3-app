@@ -1,7 +1,7 @@
-var freqGauge;  
-Template.gauge.rendered = function () {
-  $('#freq-display').sevenSeg({
-    digits: 6,
+var thdGauge;  
+Template.THDGauge.rendered = function () {
+  $('#thd-display').sevenSeg({
+    digits: 4,
     colorOff: "#004200", 
     colorOn: "#00aa00",
     colorBackground: "#013500",
@@ -11,12 +11,12 @@ Template.gauge.rendered = function () {
 
   var self = this;
 	var gaugeOptions = {
-    id: 'tunguska-gauge',
+    id: 'thd-tunguska-gauge',
     range: {
-			min: 59.9,
-			lowStop: 59.89,
-			max: 60.1,
-			highStop: 60.11,
+			min: 0,
+			lowStop: -1,
+			max: 5,
+			highStop: 6,
 			sweep: 240,
 			startAngle: -120
     },
@@ -31,7 +31,7 @@ Template.gauge.rendered = function () {
       top:57,
       left:0,
       callback: function (pV) {
-        return 'Hz';
+        return '%';
       }
     },
     tick: {
@@ -42,18 +42,18 @@ Template.gauge.rendered = function () {
 				lineWidth: 0,
 				startAt: 1,
 				endAt: 1,
-				interval: .1,
+				interval: 2.5,
 				legend: {
 					color: '#555',
 					callback: function (n) {
-						return  n.toFixed(2);
+						return  n.toFixed(1);
 					},
 					font: '14px sans serif',
 					radius: .60
 
 				},
-				first: 59.9,
-				last: 60.101
+				first: 0,
+				last: 5
 			}
     }
   };
@@ -63,21 +63,17 @@ Template.gauge.rendered = function () {
     easing: 'easeOutQuint',
     duration: 500
   };
-  self.gauge.set(59.89);
-  freqGauge = self.gauge;
+  self.gauge.set(-0.5);
+  thdGauge = self.gauge;
 };
 
-Template.gauge.helpers({
-  frequency: function () {
-    var data = Freq.findOne();
+Template.THDGauge.helpers({
+  thd: function () {
+    var data = PQubeData.findOne();
     if (data) {
-			var freq = data.freq.toFixed(4);
-			$('#freq-display').sevenSeg({value: freq});
-			freqGauge.set(freq);
-      Session.set('light_on', true);
-      Meteor.setTimeout(function () {
-        Session.set('light_on', false);
-      }, 200);
+			var thd = data.THDL1.toFixed(2);
+			$('#thd-display').sevenSeg({value: thd});
+			thdGauge.set(thd);
     }
   }
 });
