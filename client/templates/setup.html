@@ -13,8 +13,6 @@
 		{{> mainSettings}}
 		<br>
 		{{> meterSettings}}
-		<br>
-		{{> alertSettings}}
 		<input type="button" id="cancel" class="close-setup" value="Cancel">
 		<input type="button" id="save" class="close-setup" value="Save">
   </div>
@@ -25,14 +23,15 @@
 	<div id="main-settings">
 		<select class="main-select">
 			<option>PSL Main Service</option>
+			<option>Add new...</option>
 		</select>
 		<div class="options-right">
 			<p>Name <input type="text" value="PSL Main Service"></p>
 			<p>IP or URL <input type="text" value="MeterDemo.PQube.com"></p>
 			<p>Modbus port <input type="number" value="502"></p>
 			<p>Password <input type="password"></p>
-			<br>
 		</div>
+	{{> alarmSettings}}
 	</div>
 </template>
 
@@ -41,35 +40,31 @@
 		<select class="main-select">
 			<option>Frequency</option>
 		</select>
-		<div id="alert-setup">
-			<p><input type="checkbox"> Send E-mail alert <input type="checkbox"> Send text alert</p>
-			<p>Alert if Frequency is more than <input class="small-input" type="number" value="59.9"> Hz for more than <input class="small-input" type="number" value="3"> seconds</p>
-			<p>Alert if Frequency is less than <input class="small-input" type="number" value="60.1"> Hz for more than <input class="small-input" type="number" value="3"> seconds</p>
+		<div id="alarm-setup">
+			<p><input type="checkbox"> Send E-mail alarm <input type="checkbox"> Send text alarm</p>
+			<p>Alarm if Frequency is less than <input class="small-input" type="number" value="59.9"> Hz for more than <input class="small-input" type="number" value="3"> seconds</p>
+			<p>Alarm if Frequency is more than <input class="small-input" type="number" value="60.1"> Hz for more than <input class="small-input" type="number" value="3"> seconds</p>
 		</div>
-		<div class="options-right">
+		<div id="meter-settings-inputs" class="options-right">
 			<p>Multiplier <input type="number" value="1"></p>
 			<p>Units <input type="text" value="Hz"></p>
 			<p>Min. value <input type="number" value="59.9"></p>
 			<p>Max. value <input type="number" value="60.1"></p>
-			<p>Color <input type="text" value="#be0505"></p>
+			<p>Color <img id="color-boxes-input" src="/color_boxes.png"></p>
 			<br>
 		</div>
 	</div>
 </template>
 
-<template name="alertSettings">
-	<div id="alert-settings">
-		<select class="main-select">
-			<option>Frequency</option>
-		</select>
-		<div class="options-right">
-			<p>E-mail to <input type="text" value="mail@domain.com"></p>
-			<p class="right">No more than <input class="inline small-input" type="number" value="10"> emails</p>
-			<p class="right">per <input class="inline" type="radio" name="emails" value="hour">Hour <input class="inline" type="radio" name="emails" value="day">Day</p>
-			<p>Text to <input type="text" value="123-456-7890"></p>
-			<p class="right">No more than <input class="inline small-input" type="number" value="10"> texts</p>
-			<p class="right">per <input class="inline" type="radio" name="texts" value="hour">Hour <input class="inline" type="radio" name="texts" value="day">Day</p>
-			<br>
-		</div>
+<template name="alarmSettings">
+	<div id="alarm-settings">
+		<h3>Alarm settings:</h3>
+		<p>E-mail to <input type="text" value="mail@domain.com"> 
+			No more than <input class="inline small-input" type="number" value="10"> emails 
+			per <input class="inline" type="radio" name="emails" value="hour">Hour <input class="inline" type="radio" name="emails" value="day" checked>Day</p>
+		<p>Text to <input type="text" value="123-456-7890">
+			No more than <input class="inline small-input" type="number" value="10"> texts
+			per <input class="inline" type="radio" name="texts" value="hour">Hour <input class="inline" type="radio" name="texts" value="day" checked>Day</p>
+		<br>
 	</div>
 </template>
