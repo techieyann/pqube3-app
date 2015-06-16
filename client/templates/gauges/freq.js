@@ -26,7 +26,7 @@ Template.freqGauge.rendered = function () {
 			top: -96
     },
     digital: {
-			font: '18px sans serif',
+			font: '18px sans-serif',
 			color: '#333',
       top:57,
       left:0,
@@ -48,7 +48,7 @@ Template.freqGauge.rendered = function () {
 					callback: function (n) {
 						return  n.toFixed(2);
 					},
-					font: '14px sans serif',
+					font: '14px sans-serif',
 					radius: .60
 
 				},
