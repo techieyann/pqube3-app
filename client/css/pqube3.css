@@ -66,6 +66,9 @@ a:visited {
 #setup-logo {
 		width: 150px;
 }
+.close-setup {
+		font-size: 20px;
+}
 #setup-controls {
 		top: 10px;
 		right: 10px;
@@ -75,7 +78,8 @@ a:visited {
 }
 #setup-controls a{
 		text-decoration: none;
-		font-size:20px;
+		font-size:30px;
+		color: white;
 }
 #language-select {
 		width:150px;
@@ -156,6 +160,10 @@ a:visited {
 		top: 20px;
     text-align:center;
 }
+#meta p {
+		position:relative;
+		top: -12px;
+}
 #status-light{
     width:35px;
     margin:auto;
@@ -163,19 +171,34 @@ a:visited {
 #status-light img{
     width:100%;
 }
-#meter-1 {
+#gauge-selectors {
 		position:absolute;
 		top: 365px;
 		left: 15px;
 }
-#meter-source{
+#meter-1 {
+		position:absolute;
+		top: 390px;
+		left: 15px;
+}
+#meter-2 {
+		position:absolute;
+		top: 390px;
+		left: 220px;
+}
+#meter-3 {
+		position:absolute;
+		top: 390px;
+		left: 425px;
+}
+.meter-source{
     width:200px;
 }
-#freq-gauge {
+.gauge {
     position:relative;
 }
 
-#tunguska-gauge {
+.tunguska-gauge {
     position:absolute;
     top:-5px;
     left:-2px;
@@ -184,10 +207,15 @@ a:visited {
     height: 200px;
 }
 
-#freq-display {
+.display {
     position:absolute;
     top:201px;
     left:51px;
     width: 95px;
     height: 17px;
+}
+
+.strip-chart {
+		position:absolute;
+		top:255px;
 }
