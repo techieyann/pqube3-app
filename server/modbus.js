@@ -1,19 +1,77 @@
-var bus = Meteor.npmRequire('modbus-stack');  
-var RIR = bus.FUNCTION_CODES.READ_INPUT_REGISTERS;
+var Future = Meteor.npmRequire('fibers/future');
+var bus = Meteor.npmRequire('node-modbus');
 
 // IP and port of the MODBUS slave, default port is 502
 var IP = process.env.pqubeIP;
-var client = Meteor.npmRequire('modbus-stack/client').createClient(502, IP);
+
+var client = bus.tcp.connect({
+	port: '502',
+	host: IP,
+	responseTimeout: 500,
+	noDelay: true
+});
+var freqReq, vectReq;
+
+var procRegisters = function (registers, type) {
+	var decoded = decodeRegisters(registers, type);
+	console.log(decoded);
+	switch (type) {
+		case 'freq':
+		if (decoded) {
+			Freq.upsert({_id: 'frequency'}, {$set: decoded});
+		}
+		break;
+		case 'vect':
+
+		break;
+		default:
+		console.log('unknown register type');
+	}
+};
+
+
+var makeFreqRequest = function () {
+	var freqFuture = new Future();
+  var freqReq = client.request({
+		unit: 1,
+		func: bus.Functions.READ_INPUT_REGISTERS,
+		address: 9020,
+		count: 2,
+		response: function (err, res) {
+			if (err) {
+				if (err instanceof bus.Errors.TimeoutError) return;
+				freqFuture.throw(err);
+			}
+			else {
+				freqFuture.return(res);
+			}
+		}
+	});
+	procRegisters(freqFuture.wait(), 'freq');
+};
+
+var makeVectRequest = function () {
+	var vectFuture = new Future();
+  var vectReq = client.request({
+		unit: 1,
+		func: bus.Functions.READ_INPUT_REGISTERS,
+		address: 7098,
+		count: 24,
+		response: function (err, res) {
+			if (err) vectFuture.throw(err);
+			else {
+				vectFuture.return(res);
+			}
+		}
+	});
+	procRegisters(vectFuture.wait(), 'vect');
+};
+
 Meteor.setInterval(function () {
-  // 'req' is an instance of the low-level `ModbusRequestStack` class
-  var req = client.request(RIR, // Function Code: 4
-													 9020,    // Start at address 9020
-													 2);  // Read 2 contiguous registers from 9020;
-
-  var reqAsync = Meteor.wrapAsync(req.on, req);
-
-  reqAsync('response', function(registers) {
-    var freq = calcFreq(registers);
-    Freq.upsert({_id: 'frequency'}, {$set: freq});
-  });
+	makeFreqRequest();
+	makeVectRequest();
 }, 501);
+
+
+
+
