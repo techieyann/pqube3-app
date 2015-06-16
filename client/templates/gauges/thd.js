@@ -10,51 +10,51 @@ Template.THDGauge.rendered = function () {
 
 
   var self = this;
-	var gaugeOptions = {
+  var gaugeOptions = {
     id: 'thd-tunguska-gauge',
     range: {
-			min: 0,
-			lowStop: -1,
-			max: 5,
-			highStop: 6,
-			sweep: 240,
-			startAngle: -120
+      min: 0,
+      lowStop: -1,
+      max: 5,
+      highStop: 6,
+      sweep: 240,
+      startAngle: -120
     },
     foreground: {
-			image: 'meter_front.png',
-			left: -99,
-			top: -96
+      image: 'meter_front.png',
+      left: -99,
+      top: -96
     },
     digital: {
-			font: '18px sans serif',
-			color: '#333',
+      font: '18px sans serif',
+      color: '#333',
       top:57,
       left:0,
       callback: function (pV) {
-        return '%';
+        return '% THD';
       }
     },
     tick: {
-			minor: {
-				alpha: 0
-			},
-			major: {
-				lineWidth: 0,
-				startAt: 1,
-				endAt: 1,
-				interval: 2.5,
-				legend: {
-					color: '#555',
-					callback: function (n) {
-						return  n.toFixed(1);
-					},
-					font: '14px sans serif',
-					radius: .60
+      minor: {
+	alpha: 0
+      },
+      major: {
+	lineWidth: 0,
+	startAt: 1,
+	endAt: 1,
+	interval: 2.5,
+	legend: {
+	  color: '#555',
+	  callback: function (n) {
+	    return  n.toFixed(1);
+	  },
+	  font: '14px sans serif',
+	  radius: .60
 
-				},
-				first: 0,
-				last: 5
-			}
+	},
+	first: 0,
+	last: 5
+      }
     }
   };
 
@@ -71,9 +71,9 @@ Template.THDGauge.helpers({
   thd: function () {
     var data = PQubeData.findOne();
     if (data) {
-			var thd = data.THDL1.toFixed(2);
-			$('#thd-display').sevenSeg({value: thd});
-			thdGauge.set(thd);
+      var thd = data.THDL1.toFixed(2);
+      $('#thd-display').sevenSeg({value: thd});
+      thdGauge.set(thd);
     }
   }
 });

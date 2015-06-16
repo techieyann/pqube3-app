@@ -10,51 +10,51 @@ Template.L1NGauge.rendered = function () {
 
 
   var self = this;
-	var gaugeOptions = {
+  var gaugeOptions = {
     id: 'l1n-tunguska-gauge',
     range: {
-			min: 250,
-			lowStop: 230,
-			max: 300,
-			highStop: 320,
-			sweep: 240,
-			startAngle: -120
+      min: 250,
+      lowStop: 230,
+      max: 300,
+      highStop: 320,
+      sweep: 240,
+      startAngle: -120
     },
     foreground: {
-			image: 'meter_front.png',
-			left: -99,
-			top: -96
+      image: 'meter_front.png',
+      left: -99,
+      top: -96
     },
     digital: {
-			font: '18px sans serif',
-			color: '#333',
+      font: '18px sans serif',
+      color: '#333',
       top:57,
       left:0,
       callback: function (pV) {
-        return 'V';
+        return 'Vrms';
       }
     },
     tick: {
-			minor: {
-				alpha: 0
-			},
-			major: {
-				lineWidth: 0,
-				startAt: 1,
-				endAt: 1,
-				interval: 25,
-				legend: {
-					color: '#555',
-					callback: function (n) {
-						return  n.toFixed(1);
-					},
-					font: '14px sans serif',
-					radius: .60
+      minor: {
+	alpha: 0
+      },
+      major: {
+	lineWidth: 0,
+	startAt: 1,
+	endAt: 1,
+	interval: 25,
+	legend: {
+	  color: '#555',
+	  callback: function (n) {
+	    return  n.toFixed(1);
+	  },
+	  font: '14px sans serif',
+	  radius: .60
 
-				},
-				first: 250,
-				last: 300
-			}
+	},
+	first: 250,
+	last: 300
+      }
     }
   };
 
@@ -71,9 +71,9 @@ Template.L1NGauge.helpers({
   l1n: function () {
     var data = PQubeData.findOne();
     if (data) {
-			var l1n = data.vMagL1N.toFixed(3);
-			$('#l1n-display').sevenSeg({value: l1n});
-			l1nGauge.set(l1n);
+      var l1n = data.vMagL1N.toFixed(3);
+      $('#l1n-display').sevenSeg({value: l1n});
+      l1nGauge.set(l1n);
     }
   }
 });

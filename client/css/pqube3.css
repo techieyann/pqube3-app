@@ -2,21 +2,21 @@
 body {
     width:100%;
     margin:0;
-		color: gray;
+    color: gray;
 }
 footer {
-		width:100%;
-		position:absolute;
-		bottom:20px;
+    width:100%;
+    position:absolute;
+    bottom:20px;
     text-align: center;
 }
 
 a:link {
-		color: #aaa;
+    color: #aaa;
 }
 
 a:visited {
-		color: #ccc;
+    color: #ccc;
 }
 
 .hidden {
@@ -24,145 +24,145 @@ a:visited {
 }
 
 .centered {
-		text-align: center;
+    text-align: center;
 }
 
 #container {
-		position:relative;
+    position:relative;
     width:640px;
-		height: 960px;
+    height: 960px;
     margin: auto;
-		background-image: url('background.png');
-		background-repeat: no-repeat;
+    background-image: url('background.png');
+    background-repeat: no-repeat;
 }
 #logo {
-		position:relative;
-		top: 20px;
-		left: 20px;
+    position:relative;
+    top: 20px;
+    left: 20px;
 }
 #waveforms-placeholder {
-		position:absolute;
-		left:15px;
-		top:116px;
+    position:absolute;
+    left:15px;
+    top:116px;
 }
 #setup-modal {
-		color:black;
-		position: absolute;
+    color:black;
+    position: absolute;
     border: solid 1px #333;
     padding: 2px;
-		background: gray;
-		top:10px;
-		bottom:10px;
-		left:10px;
-		right:10px;
-		z-index:10;
+    background: gray;
+    top:10px;
+    bottom:10px;
+    left:10px;
+    right:10px;
+    z-index:10;
 }
 
 #setup-branding p{
-		position:absolute;
-		left: 160px;
-		top: 42px;
+    position:absolute;
+    left: 160px;
+    top: 42px;
 }
 #setup-logo {
-		width: 150px;
+    width: 150px;
 }
 .close-setup {
-		font-size: 20px;
+    font-size: 20px;
 }
 #setup-controls {
-		top: 10px;
-		right: 10px;
-		position: absolute;
-		text-align:right;
+    top: 10px;
+    right: 10px;
+    position: absolute;
+    text-align:right;
 
 }
 #setup-controls a{
-		text-decoration: none;
-		font-size:30px;
-		color: white;
+    text-decoration: none;
+    font-size:30px;
+    color: white;
 }
 #language-select {
-		width:150px;
+    width:150px;
 }
 #main-settings {
-		background:#a3c5f7;
-		width:600px;
-		margin:auto;
+    background:#a3c5f7;
+    width:600px;
+    margin:auto;
 }
 #meter-settings {
-		position:relative;
-		background:#cbdbcc;
-		width:600px;
-		margin:auto;
-		padding-bottom: 10px;
+    position:relative;
+    background:#cbdbcc;
+    width:600px;
+    margin:auto;
+    padding-bottom: 10px;
 }
 #meter-settings-inputs{
-		position:absolute;
-		top: 20px;
+    position:absolute;
+    top: 20px;
 }
 #alarm-settings {
-		background:#e79090;
-		width:580px;
-		margin:auto;
-		text-align:right;
+    background:#e79090;
+    width:580px;
+    margin:auto;
+    text-align:right;
 }
 #alarm-settings h3 {
-		padding:5px;
-		text-align:left;
+    padding:5px;
+    text-align:left;
 }
 #alarm-setup {
 
-		width:270px;
-		left:20px;
+    width:270px;
+    left:20px;
 
-		padding-left: 5px;
-		padding-right: 5px;
-		border:dashed 1px #e79090;
+    padding-left: 5px;
+    padding-right: 5px;
+    border:dashed 1px #e79090;
 }
 .main-select {
-		position:relative;;
-		left: 10px;
-		top: 10px;
+    position:relative;;
+    left: 10px;
+    top: 10px;
 }
 .options-right {
-		position:relative;
-		top:-20px;
-		left:300px;
-		width:280px;
+    position:relative;
+    top:-20px;
+    left:300px;
+    width:280px;
 }
 .options-right p.right {
-		text-align:right;
-		padding-right:10px;
+    text-align:right;
+    padding-right:10px;
 }
 .small-input {
-		width:40px;
+    width:40px;
 }
 .options-right input:not(.inline), #color-boxes-input{
-		position:absolute;
-		right:10px;
-		text-align:right;
-		width:150px;
+    position:absolute;
+    right:10px;
+    text-align:right;
+    width:150px;
 }
 #cancel {
-		position:absolute;
-		bottom:10px;
-		left: 10px;
+    position:absolute;
+    bottom:10px;
+    left: 10px;
 }
 #save {
-		position:absolute;
-		bottom:10px;
-		right: 10px;
+    position:absolute;
+    bottom:10px;
+    right: 10px;
 }
 
 #meta {
-		position: absolute;
-		right: 20px;
-		top: 20px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
     text-align:center;
 }
 #meta p {
-		position:relative;
-		top: -12px;
+    position:relative;
+    top: -12px;
 }
 #status-light{
     width:35px;
@@ -172,24 +172,24 @@ a:visited {
     width:100%;
 }
 #gauge-selectors {
-		position:absolute;
-		top: 365px;
-		left: 15px;
+    position:absolute;
+    top: 365px;
+    left: 15px;
 }
 #meter-1 {
-		position:absolute;
-		top: 390px;
-		left: 15px;
+    position:absolute;
+    top: 390px;
+    left: 15px;
 }
 #meter-2 {
-		position:absolute;
-		top: 390px;
-		left: 220px;
+    position:absolute;
+    top: 390px;
+    left: 220px;
 }
 #meter-3 {
-		position:absolute;
-		top: 390px;
-		left: 425px;
+    position:absolute;
+    top: 390px;
+    left: 425px;
 }
 .meter-source{
     width:200px;
@@ -216,6 +216,7 @@ a:visited {
 }
 
 .strip-chart {
-		position:absolute;
-		top:255px;
+    position:absolute;
+    top:255px;
+    left:0px;
 }
