@@ -13,8 +13,8 @@
 		{{> mainSettings}}
 		<br>
 		{{> meterSettings}}
-		<input type="button" id="cancel" class="close-setup" value="Cancel">
-		<input type="button" id="save" class="close-setup" value="Save">
+		<input type="button" id="cancel" class="close-setup" value="{{_ 'cancel'}}">
+		<input type="button" id="save" class="close-setup" value="{{_ 'save'}}">
   </div>
 </template>
 
@@ -23,13 +23,13 @@
 	<div id="main-settings">
 		<select class="main-select">
 			<option>PSL Main Service</option>
-			<option>Add new...</option>
+			<option>{{_ "addNew"}}...</option>
 		</select>
 		<div class="options-right">
-			<p>Name <input type="text" value="PSL Main Service"></p>
-			<p>IP or URL <input type="text" value="MeterDemo.PQube.com"></p>
-			<p>Modbus port <input type="number" value="502"></p>
-			<p>Password <input type="password"></p>
+			<p>{{_ "name"}} <input type="text" value="PSL Main Service"></p>
+			<p>IP {{_ "or"}} URL <input type="text" value="MeterDemo.PQube.com"></p>
+			<p>Modbus {{_ "port"}} <input type="number" value="502"></p>
+			<p>{{_ "password"}} <input type="password"></p>
 		</div>
 	{{> alarmSettings}}
 	</div>
@@ -38,19 +38,19 @@
 <template name="meterSettings">
 	<div id="meter-settings">
 		<select class="main-select">
-			<option>Frequency</option>
+			<option>{{_ "freq"}}</option>
 		</select>
 		<div id="alarm-setup">
-			<p><input type="checkbox"> Send E-mail alarm <input type="checkbox"> Send text alarm</p>
-			<p>Alarm if Frequency is less than <input class="small-input" type="number" value="59.9"> Hz for more than <input class="small-input" type="number" value="3"> seconds</p>
-			<p>Alarm if Frequency is more than <input class="small-input" type="number" value="60.1"> Hz for more than <input class="small-input" type="number" value="3"> seconds</p>
+			<p><input type="checkbox"> {{_ "sendEmail"}}<input type="checkbox"> {{_ "sendText"}}</p>
+			<p>{{_ "alarmIf"}} {{_ "frequency"}} {{_ "lessThan"}} <input class="small-input" type="number" value="59.9"> Hz {{_ "forMoreThan"}} <input class="small-input" type="number" value="3"> {{_ "seconds"}}</p>
+			<p>{{_ "alarmIf"}} Frequency {{_ "moreThan"}} <input class="small-input" type="number" value="60.1"> Hz {{_ "forMoreThan"}} <input class="small-input" type="number" value="3"> {{_ "seconds"}}</p>
 		</div>
 		<div id="meter-settings-inputs" class="options-right">
-			<p>Multiplier <input type="number" value="1"></p>
-			<p>Units <input type="text" value="Hz"></p>
-			<p>Min. value <input type="number" value="59.9"></p>
-			<p>Max. value <input type="number" value="60.1"></p>
-			<p>Color <img id="color-boxes-input" src="/color_boxes.png"></p>
+			<p>{{_ "multiplier"}} <input type="number" value="1"></p>
+			<p>{{_ "units"}} <input type="text" value="Hz"></p>
+			<p>{{_ "min"}} <input type="number" value="59.9"></p>
+			<p>{{_ "max"}} <input type="number" value="60.1"></p>
+			<p>{{_ "color"}} <img id="color-boxes-input" src="/color_boxes.png"></p>
 			<br>
 		</div>
 	</div>
@@ -58,13 +58,13 @@
 
 <template name="alarmSettings">
 	<div id="alarm-settings">
-		<h3>Alarm settings:</h3>
-		<p>E-mail to <input type="text" value="mail@domain.com"> 
-			No more than <input class="inline small-input" type="number" value="10"> emails 
-			per <input class="inline" type="radio" name="emails" value="hour">Hour <input class="inline" type="radio" name="emails" value="day" checked>Day</p>
-		<p>Text to <input type="text" value="1-510-555-0000">
-			No more than <input class="inline small-input" type="number" value="10"> texts
-			per <input class="inline" type="radio" name="texts" value="hour">Hour <input class="inline" type="radio" name="texts" value="day" checked>Day</p>
-		<br>
+	  <h3>{{_ "alarmSettings"}}:</h3>
+	  <p>{{_ "emailTo"}} <input type="text" value="alex@powerstandards.com"> 
+	    {{_ "noMore"}} <input class="inline small-input" type="number" value="10"> 
+            {{_ "emailsPer"}} <input class="inline" type="radio" name="emails" value="hour">{{_ "hour"}} <input class="inline" type="radio" name="emails" value="day" checked>{{_ "day"}}</p>
+	  <p>{{_ "textTo"}} <input type="text" value="1-510-555-0000">
+	    {{_ "noMore"}} <input class="inline small-input" type="number" value="10"> 
+            {{_ "textsPer"}} <input class="inline" type="radio" name="texts" value="hour">{{_ "hour"}} <input class="inline" type="radio" name="texts" value="day" checked>{{_ "day"}}</p>
+	  <br>
 	</div>
 </template>
