@@ -63,7 +63,7 @@ Template.L1NGauge.rendered = function () {
     easing: 'easeOutQuint',
     duration: 500
   };
-  self.gauge.set(230);
+  self.gauge.set(240);
   l1nGauge = self.gauge;
 };
 
