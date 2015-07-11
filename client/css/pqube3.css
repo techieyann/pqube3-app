@@ -40,6 +40,17 @@ a:visited {
     top: 20px;
     left: 20px;
 }
+
+#voltage-chart {
+    position:absolute;
+    left:27px;
+    top:127px;
+}
+#current-chart {
+    position:absolute;
+    left:26px;
+    top:217px;
+}
 #waveforms-placeholder {
     position:absolute;
     left:15px;

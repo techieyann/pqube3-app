@@ -33,8 +33,8 @@ Template.gaugeSelectors.events({
   'change .meter-source': function (e) {
     var gaugeSettings = $.extend(true, 
 				 {}, 
-				 gaugeList[e.target.value], 
 				 gaugeDefaults, 
+				 gaugeList[e.target.value], 
 				 {prefix: e.target.dataset.meter, tunguskaGauge: {id: e.target.dataset.meter + '-tunguska-gauge'}});
     Session.set('gauge'+e.target.dataset.meter, gaugeSettings);
   }

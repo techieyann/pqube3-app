@@ -28,15 +28,9 @@ Template.gauge.onRendered(function () {
 Template.gauge.helpers({
   updateData: function () {
     var self = Template.instance();
-    var data = PQubeData.findOne();
-    if (data) {
-      var freq = data[self.data.dataSource].toFixed(self.data.sigFigs);
-      $('#'+this.prefix+'-display').sevenSeg({value: freq});
-      self.gauge.set(freq);
-      Session.set('light_on', true);
-      Meteor.setTimeout(function () {
-        Session.set('light_on', false);
-      }, 200);
-    }
+    var presentVal = Session.get('gauge'+this.prefix+'Value');
+    $('#'+this.prefix+'-display').sevenSeg({value: presentVal});
+    if (self.gauge)
+      self.gauge.set(presentVal);
   }
 });
