@@ -10,7 +10,7 @@ Template.gauge.onRendered(function () {
       $('#'+data.prefix+'-display').sevenSeg(data.sevenSegment);
       var tgOpts = data.tunguskaGauge;
       tgOpts.digital.callback =  function (pV) {
-	return data.tgDigitalUnits;
+	return TAPi18n.__(data.tgDigitalUnits);
       };
       tgOpts.tick.major.legend.callback = function (n) {
 	return  n.toFixed(data.tgMajorLegendSigFigs);
