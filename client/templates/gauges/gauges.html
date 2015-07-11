@@ -1,11 +1,11 @@
 <template name="gauges">
-	<div id="meter-1">
-		{{> freqGauge}}
-	</div>
-	<div id="meter-2">
-		{{> THDGauge}}
-	</div>
-	<div id="meter-3">
-		{{> L1NGauge}}
-	</div>
+  <div id="meter-1">
+    {{> Template.dynamic template="gauge" data=gauge1Data}}
+  </div>
+  <div id="meter-2">
+    {{> Template.dynamic template="gauge" data=gauge2Data}}
+  </div>
+  <div id="meter-3">
+    {{> Template.dynamic template="gauge" data=gauge3Data}}
+  </div>
 </template>

@@ -1,0 +1,10 @@
+<template name="gauge">
+  <div id="{{prefix}}-gauge" class="gauge">
+    <img src="/meter_face.png">
+    <div id="{{prefix}}-tunguska-gauge" class="tunguska-gauge">
+    </div>
+    <div id="{{prefix}}-display" class="display"></div>
+    <img class="strip-chart" src="/strip_chart.png">
+  </div>
+  {{updateData}}
+</template>

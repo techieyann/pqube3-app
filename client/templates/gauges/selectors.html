@@ -1,19 +1,11 @@
 <template name="gaugeSelectors">
   <div id="gauge-selectors">
-    <select data-meter="1" class="meter-source">
-      <option>{{_ "freq"}}</option>
-      <option>THD L1-N</option>
-      <option>L1-N Voltage</option>
+    {{#each gauges}}
+    <select data-meter="{{gaugeNum}}" class="meter-source">
+      {{#each dataSource}}
+      <option value="{{gaugeName}}" {{gaugeSelected ../gaugeNum gaugeName}}>{{_ gaugeName}}</option>
+      {{/each}}
     </select>
-    <select data-meter="2" class="meter-source">
-      <option>{{_ "freq"}}</option>
-      <option selected>THD L1-N</option>
-      <option>L1-N Voltage</option>
-    </select>
-    <select data-meter="3" class="meter-source">
-      <option>{{_ "freq"}}</option>
-      <option>THD L1-N</option>
-      <option selected>L1-N Voltage</option>
-    </select>
+    {{/each}}
   </div>
 </template>
