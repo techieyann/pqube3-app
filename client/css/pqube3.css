@@ -1,5 +1,6 @@
 /* CSS declarations go here */
 body {
+    font: sans-serif;
     width:100%;
     margin:0;
     color: gray;
@@ -42,9 +43,9 @@ a:visited {
 }
 #title {
     position:absolute;
-    left:150px;
+    left:130px;
     bottom:20px;
-    font-size:30px;
+    font-size:25px;
 }
 
 #voltage-chart {
