@@ -6,6 +6,7 @@ Template.gauge.onRendered(function () {
       try {
 	$('#'+data.prefix+'-display').sevenSeg('destroy');
 	self.gauge.set(data.tunguskaGauge.range.lowStop);
+        $('#'+data.prefix+'-tunguska-gauge-lock').remove();
       }
       catch(err) {}
       $('#'+data.prefix+'-display').sevenSeg(data.sevenSegment);
