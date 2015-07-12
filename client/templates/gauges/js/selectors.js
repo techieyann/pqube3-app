@@ -15,8 +15,9 @@ Template.gaugeSelectors.helpers({
   dataSource: function () {
     var array = [];
     for (var key in gaugeList) {
-      array.push(gaugeList[key]);
+      array.push($.extend({gaugeName: key},gaugeList[key]));
     }
+
     return array;
   },
   gaugeSelected: function (gaugeNum, name) {
@@ -31,11 +32,7 @@ Template.gaugeSelectors.helpers({
 
 Template.gaugeSelectors.events({
   'change .meter-source': function (e) {
-    var gaugeSettings = $.extend(true, 
-				 {}, 
-				 gaugeDefaults, 
-				 gaugeList[e.target.value], 
-				 {prefix: e.target.dataset.meter, tunguskaGauge: {id: e.target.dataset.meter + '-tunguska-gauge'}});
+    var gaugeSettings = getGaugeSettings(e.target.value, e.target.dataset.meter);
     Session.set('gauge'+e.target.dataset.meter, gaugeSettings);
   }
 });

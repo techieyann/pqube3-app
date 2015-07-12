@@ -24,7 +24,7 @@ var setPresentVals = function () {
     for (var i=1; i<4; i++) {
       var gaugeSettings = Session.get('gauge'+i);
       if (gaugeSettings) {
-	var presentVal = data[gaugeSettings.dataSource].toFixed(gaugeSettings.sigFigs);
+	var presentVal = (data[gaugeSettings.dataSource]*gaugeSettings.multiplier).toFixed(gaugeSettings.sigFigs);
 	Session.set('gauge'+i+'Value', presentVal);
       }
     }

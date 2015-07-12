@@ -1,4 +1,46 @@
-gaugeDefaults = {
+getGaugeSettings = function (name, meterNum) {
+  var gauge = gaugeList[name];
+  if (gauge) {
+    var range = gauge.max-gauge.min;
+    var extendSettings = {
+      gaugeName: name,
+      prefix: meterNum,
+      dataSource: gauge.dataSource,
+      sigFigs: gauge.sigFigs,
+      units: gauge.units,
+      legendSigFigs: gauge.legendSigFigs,
+      multiplier: gauge.multiplier,
+      sevenSegment: {
+	digits: gauge.displayDigits
+      },
+      tunguskaGauge: {
+	id: meterNum+'-tunguska-gauge',
+	range: {
+	  min: gauge.min,
+	  lowStop: gauge.min-(range/20),
+	  max: gauge.max,
+	  highStop: gauge.max+(range/20)
+	},
+	tick: {
+	  major: {
+	    first: gauge.min,
+	    last: gauge.max,
+	    interval: range/2
+	  }
+	}
+      }
+    };
+    var settings = $.extend(true, 
+			    {}, 
+			    gaugeDefaults, 
+			    extendSettings);
+
+    return settings;
+  }
+  return {};
+};
+
+var gaugeDefaults = {
   sevenSegment: {
     colorOff: "#004200", 
     colorOn: "#00aa00",
@@ -12,7 +54,7 @@ gaugeDefaults = {
     },
     foreground: {
       image: 'meter_front.png',
-      left: -99,
+      left: -98,
       top: -96
     },
     digital: {
@@ -41,81 +83,93 @@ gaugeDefaults = {
 
 gaugeList = {
   freq: {
-    gaugeName: 'freq',
-    startVal: 59.89,
     dataSource: 'freq',
+    min: 59.9,
+    max: 60.1,
     sigFigs: 4,
-    tgDigitalUnits: 'Hz',
-    tgMajorLegendSigFigs: 2,
-    sevenSegment: {
-      digits: 6
-    },
-    tunguskaGauge: {
-      range: {
-	min: 59.9,
-	lowStop: 59.89,
-	max: 60.1,
-	highStop: 60.11
-      },
-      tick:{
-	major: {
-	  interval: .1,
-	  first: 59.9,
-	  last: 60.101
-	}
-      }
-    }
-  },
-  thd: {
-    gaugeName: 'thd',
-    startVal: -0.1,
-    dataSource: 'THDL1',
-    sigFigs: 2,
-    tgDigitalUnits: '%THD',
-    tgMajorLegendSigFigs: 1,
-    sevenSegment: {
-      digits: 4
-    },
-    tunguskaGauge: {
-      range: {
-	min: 0,
-	lowStop: -.5,
-	max: 1,
-	highStop: 1.5
-      },
-      tick:{
-	major: {
-	  interval: .5,
-	  first: 0,
-	  last: 1
-	}
-      }
-    }
+    legendSigFigs: 2,
+    displayDigits: 6,
+    multiplier: 1,
+    units: 'Hz'
   },
   l1n: {
-    gaugeName: 'l1n',
-    startVal: 247.5,
     dataSource: 'vMagL1N',
+    min: 250,
+    max: 300,
     sigFigs: 3,
-    tgDigitalUnits: 'V',
-    tgMajorLegendSigFigs: 1,
-    sevenSegment: {
-      digits: 6
-    },
-    tunguskaGauge: {
-      range: {
-	min: 250,
-	lowStop: 247,
-	max: 300,
-	highStop: 303
-      },
-      tick:{
-	major: {
-	  interval: 25,
-	  first: 250,
-	  last: 300
-	}
-      }
-    }
+    legendSigFigs: 1,
+    displayDigits: 6,
+    multiplier: 1,
+    units: 'V'
+  },
+  thd: {
+    dataSource: 'THDL1',
+    min: 0,
+    max: 1,
+    sigFigs: 2,
+    legendSigFigs: 1,
+    displayDigits: 4,
+    multiplier: 1,
+    units: '%'
+  },
+  watts: {
+    dataSource: 'watts',
+    min: 0,
+    max: 100,
+    sigFigs: 3,
+    legendSigFigs: 1,
+    displayDigits: 6,
+    multiplier: (1/1000),
+    units: 'kW'
+  }, 
+  vars: {
+    dataSource: 'VAR',
+    min: 0,
+    max: 20,
+    sigFigs: 3,
+    legendSigFigs: 1,
+    displayDigits: 5,
+    multiplier: (1/1000),
+    units: 'kVAR'
+  }, 
+  uaneg: {
+    dataSource: 'uANeg',
+    min: 0,
+    max: 10,
+    sigFigs: 2,
+    legendSigFigs: 1,
+    displayDigits: 4,
+    multiplier: 1,
+    units: '%'
+  }, 
+  temp: {
+    dataSource: 'temp',
+    min: 0,
+    max: 50,
+    sigFigs: 2,
+    legendSigFigs: 1,
+    displayDigits: 5,
+    multiplier: 1,
+    units: 'degC'
+  }, 
+  humidity: {
+    dataSource: 'humidity',
+    min: 0,
+    max: 100,
+    sigFigs: 2,
+    legendSigFigs: 1,
+    displayDigits: 5,
+    multiplier: 1,
+    units: '%RH'
+  }, 
+  pressure: {
+    dataSource: 'pressure',
+    min: 0,
+    max: 100,
+    sigFigs: 3,
+    legendSigFigs: 1,
+    displayDigits: 5,
+    multiplier: (1/100),
+    units: 'hPa'
   }
 };

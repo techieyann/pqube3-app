@@ -5,22 +5,24 @@ Template.gauge.onRendered(function () {
     if (data) {
       try {
 	$('#'+data.prefix+'-display').sevenSeg('destroy');
+	self.gauge.set(data.tunguskaGauge.range.lowStop);
       }
       catch(err) {}
       $('#'+data.prefix+'-display').sevenSeg(data.sevenSegment);
+      console.log(data);
       var tgOpts = data.tunguskaGauge;
-      tgOpts.digital.callback =  function (pV) {
-	return TAPi18n.__(data.tgDigitalUnits);
-      };
-      tgOpts.tick.major.legend.callback = function (n) {
-	return  n.toFixed(data.tgMajorLegendSigFigs);
-      };
-      self.gauge = new TunguskaGauge(tgOpts);
+          tgOpts.digital.callback =  function (pV) {
+      return TAPi18n.__(data.units);
+    };
+    tgOpts.tick.major.legend.callback = function (n) {
+      return  n.toFixed(data.legendSigFigs);
+    };
+      self.gauge = new TunguskaGauge(data.tunguskaGauge);
       self.gauge.theme.pointer.dynamics = {
 	easing: 'easeOutQuint',
 	duration: 500
       };
-      self.gauge.set(data.startVal);
+      self.gauge.set(data.tunguskaGauge.range.lowStop);
     }
   });
 });
