@@ -338,8 +338,6 @@
       } else {
         wholePart = !this.format.precision || !fractionalPart(value) || false;
         _ref1 = value.toString().split('').reverse();
-	console.log(_ref1.length);
-
         for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
           digit = _ref1[_j];
           if (digit === '.') {
@@ -348,8 +346,8 @@
           this.addDigit(digit, wholePart);
         }
 	if (this.options.numDigits) {
-	  for (_j; _j<this.options.numDigits; _j++) {
-	    this.addDigit(0, false);
+	  for (_j; _j<=this.options.numDigits; _j++) {
+	    this.addDigit(0, true);
 	  }
 	}
       }
