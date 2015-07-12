@@ -20,7 +20,7 @@ Template.voltageChart.onRendered(function () {
 
   self.autorun(function () {
     if (!self.initialized) {
-      var pqubeData = PQubeData.findOne();
+      var pqubeData = PQubeData.findOne('pqube1');
       if (pqubeData) {
 	self.data = {
 	  labels: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
@@ -41,24 +41,28 @@ Template.voltageChart.onRendered(function () {
       }
     }
     else {
-    var data = {
-      l1Data: Session.get('vL1NGraph'),
-      l2Data:  Session.get('vL2NGraph'),
-      l3Data: Session.get('vL3NGraph')
-    };
-    updateChartData(self.lineChart, data, 32);
-    self.lineChart.update();
+      var data = {
+	l1Data: Session.get('vL1NGraph'),
+	l2Data:  Session.get('vL2NGraph'),
+	l3Data: Session.get('vL3NGraph')
+      };
+      updateChartData(self.lineChart, data, 32);
+      self.lineChart.update();
     }
   });
 });
 
 
 var updateChartData = function (chart, data, length) {
-  for (var i=0; i<length; i++) {
-    var j=0;
-    for (var key in data) {
-      chart.datasets[j].points[i].value = data[key][i];
-      j++;
+  if (chart.datasets.length) {
+    for (var i=0; i<length; i++) {
+      var j=0;
+      for (var key in data) {
+	if (data[key]) {
+	  chart.datasets[j].points[i].value = data[key][i];
+	  j++;
+	}
+      }
     }
   }
 };

@@ -47,9 +47,12 @@ buffArrays = {
     {name: 'uANeg', start:0, type:'float'},
     {name: 'watts', start:8, type:'float'},
     {name: 'VAR', start:24, type:'float'},
-    {name: 'VARh', start:64, type:'float'},
+    {name: 'VARh', start:72, type:'float'},
     {name: 'energy', start:88, type:'float'},
-    {name: 'VAh', start:104, type:'float'}
+    {name: 'VAh', start:104, type:'float'},
+    {name: 'yearER', start: 156, type:'float'},
+    {name: 'monthER', start: 160, type:'float'},
+    {name: 'dayER', start: 164, type:'float'}
   ],
 
   ambientArray: [

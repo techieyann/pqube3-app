@@ -36,7 +36,7 @@ decodeRegisters = function (registers, type) {
     break;
   case 'wPower':
     buffOpts.fields = buffArrays.wPowerArray;
-    expectedLength = 54;
+    expectedLength = 84;
     break;
   case 'ambient':
     buffOpts.fields = buffArrays.ambientArray;

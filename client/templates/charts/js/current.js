@@ -10,8 +10,8 @@ Template.currentChart.onRendered(function () {
     showScale: false,
     scaleOverride: true,
     scaleSteps: 10,
-    scaleStepWidth: 15,
-    scaleStartValue: -75,
+    scaleStepWidth: 10,
+    scaleStartValue: -50,
     showTooltips: false,
     animation: false,
     bezierCurveTension: 0
@@ -20,7 +20,7 @@ Template.currentChart.onRendered(function () {
 
   self.autorun(function () {
     if (!self.initialized) {
-      var pqubeData = PQubeData.findOne();
+      var pqubeData = PQubeData.findOne('pqube1');
       if (pqubeData) {
 	self.data = {
 	  labels: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
@@ -41,13 +41,13 @@ Template.currentChart.onRendered(function () {
       }
     }
     else {
-    var data = {
-      l1Data: Session.get('iL1NGraph'),
-      l2Data:  Session.get('iL2NGraph'),
-      l3Data: Session.get('iL3NGraph')
-    };
-    updateChartData(self.lineChart, data, 32);
-    self.lineChart.update();
+      var data = {
+	l1Data: Session.get('iL1NGraph'),
+	l2Data:  Session.get('iL2NGraph'),
+	l3Data: Session.get('iL3NGraph')
+      };
+      updateChartData(self.lineChart, data, 32);
+      self.lineChart.update();
     }
   });
 });
@@ -57,8 +57,10 @@ var updateChartData = function (chart, data, length) {
   for (var i=0; i<length; i++) {
     var j=0;
     for (var key in data) {
-      chart.datasets[j].points[i].value = data[key][i];
-      j++;
+      if (data[key]) {
+	chart.datasets[j].points[i].value = data[key][i];
+	j++;
+      }
     }
   }
 };

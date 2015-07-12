@@ -1,4 +1,13 @@
 <template name="gaugeSelectors">
+  <div id="site-selectors">
+    {{#each gauges}}
+    <select data-meter="{{gaugeNum}}" class="site-source">
+      {{#each pqube}}
+      <option value="{{id}}" {{siteSelected ../gaugeNum id}}>{{title}}</option>
+      {{/each}}
+    </select>
+    {{/each}}
+  </div>
   <div id="gauge-selectors">
     {{#each gauges}}
     <select data-meter="{{gaugeNum}}" class="meter-source">

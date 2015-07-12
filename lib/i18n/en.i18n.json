@@ -5,6 +5,7 @@
   "newData": "New data",
   "setup": "Setup",
   "close": "Close",
+  "lastReset": "Last reset on",
   "freq": "Frequency",
   "thd": "L1-N THD",
   "l1n": "L1-N Voltage",

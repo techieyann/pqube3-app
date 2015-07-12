@@ -20,6 +20,25 @@ Template.gaugeSelectors.helpers({
 
     return array;
   },
+  pqube: function () {
+    return [
+      {
+	id: 'pqube1',
+	title: Session.get('primaryTitle')
+      },
+      {
+	id: 'pqube2',
+	title: Session.get('secondaryTitle')
+      }
+    ];
+  },
+  siteSelected: function (gaugeNum, name) {
+    var gauge = Session.get('gauge'+gaugeNum);
+    if (gauge) {
+      return (gauge.pqubeID == name ? 'selected':'');
+    }
+    return '';
+  },
   gaugeSelected: function (gaugeNum, name) {
     var gauge = Session.get('gauge'+gaugeNum);
     if (gauge) {
@@ -31,8 +50,16 @@ Template.gaugeSelectors.helpers({
 
 
 Template.gaugeSelectors.events({
+  'change .site-source': function (e) {
+    var gaugeSettings = Session.get('gauge'+e.target.dataset.meter);
+    gaugeSettings.pqubeId = e.target.value;
+    Session.set('gauge'+e.target.dataset.meter, gaugeSettings);
+    console.log(gaugeSettings);
+  },
   'change .meter-source': function (e) {
+    var pqube = Session.get('gauge'+e.target.dataset.meter).pqubeId;
     var gaugeSettings = getGaugeSettings(e.target.value, e.target.dataset.meter);
+    gaugeSettings.pqubeId = pqube;
     Session.set('gauge'+e.target.dataset.meter, gaugeSettings);
   }
 });

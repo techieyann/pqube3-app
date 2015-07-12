@@ -40,6 +40,12 @@ a:visited {
     top: 20px;
     left: 20px;
 }
+#title {
+    position:absolute;
+    left:150px;
+    bottom:20px;
+    font-size:30px;
+}
 
 #voltage-chart {
     position:absolute;
@@ -167,21 +173,65 @@ a:visited {
 
 #meta {
     position: absolute;
-    right: 20px;
-    top: 20px;
-    text-align:center;
-    width: 125px;
+    right: 10px;
+    top: 15px;
+    width: 165px;
+    height: 70px;
 }
 #meta p {
     position:relative;
     top: -12px;
 }
-#status-light{
-    width:35px;
-    margin:auto;
+#new-data {
+    position:absolute;
+    text-align: right;
+    width: 110px;
+    left: 0px;
+    top: 15px;
 }
 #status-light img{
-    width:100%;
+    position:absolute;
+    right:10px;
+    top:7px;
+    width:35px;
+}
+#languages {
+    position:absolute;
+    left: 5px;
+    bottom:2px;
+} 
+#odometers {
+    position:absolute;
+    right: 20px;
+    top: 150px;
+    width:260px;
+    height: 170px;
+}
+#odometer1 {
+    position:absolute;
+    left: 16px;
+    top:6px;
+}
+#odometer2 {
+    position:absolute;
+    left: 16px;
+    top:57px;
+}
+#odometer3 {
+    position:absolute;
+    left: 16px;
+    top:108px;
+}
+#last-reset {
+    position:absolute;
+    bottom:8px;
+    left:15px;
+    
+}
+#site-selectors {
+    position:absolute;
+    top: 335px;
+    left: 15px;
 }
 #gauge-selectors {
     position:absolute;
@@ -203,7 +253,8 @@ a:visited {
     top: 390px;
     left: 425px;
 }
-.meter-source{
+.meter-source,
+.site-source{
     width:200px;
 }
 .gauge {

@@ -47,7 +47,7 @@ reqRegisters = [
   {
     type: 'wPower',
     start: 11832,
-    num: 54
+    num: 84
   },
   {
     type: 'ambient',

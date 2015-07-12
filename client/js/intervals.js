@@ -1,5 +1,4 @@
 startDataIntervals = function () {
-  setPresentVals();
   Meteor.setInterval(function () {
     Tracker.nonreactive(function () {
       setPresentVals();
@@ -9,8 +8,8 @@ startDataIntervals = function () {
 };
 
 
-var setPresentVals = function () {
-  var data = PQubeData.findOne();
+setPresentVals = function () {
+  var data = PQubeData.findOne('pqube1');
   if (data) {
     if (!Session.equals('lastFreq', data.freq)) {
       blinkStatusLight();      
@@ -21,11 +20,18 @@ var setPresentVals = function () {
     Session.set('iL1NGraph', data.iL1NGraph);
     Session.set('iL2NGraph', data.iL2NGraph);
     Session.set('iL3NGraph', data.iL3NGraph);
-    for (var i=1; i<4; i++) {
+    Session.set('odometer1', (data.energy/1000).toFixed(2));
+    Session.set('odometer2', (data.VAh/1000).toFixed(2));
+    Session.set('odometer3', (data.VARh/1000).toFixed(2));
+    Session.set('resetDate', data.yearER+'-'+data.monthER+'-'+data.dayER);
+    for (i=1; i<4; i++) {
       var gaugeSettings = Session.get('gauge'+i);
       if (gaugeSettings) {
-	var presentVal = (data[gaugeSettings.dataSource]*gaugeSettings.multiplier).toFixed(gaugeSettings.sigFigs);
-	Session.set('gauge'+i+'Value', presentVal);
+	var pqubeData = PQubeData.findOne(gaugeSettings.pqubeId);
+	if (pqubeData) {
+	  var presentVal = (pqubeData[gaugeSettings.dataSource]*gaugeSettings.multiplier).toFixed(gaugeSettings.sigFigs);
+	  Session.set('gauge'+i+'Value', presentVal);
+	}
       }
     }
     Session.set('lastFreq', data.freq);

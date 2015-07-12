@@ -1,1 +1,3 @@
-Meteor.subscribe('pqubeData');
+Meteor.subscribe('pqubeData', function () {
+  setPresentVals();
+});

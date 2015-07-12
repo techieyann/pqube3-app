@@ -9,7 +9,6 @@ Template.gauge.onRendered(function () {
       }
       catch(err) {}
       $('#'+data.prefix+'-display').sevenSeg(data.sevenSegment);
-      console.log(data);
       var tgOpts = data.tunguskaGauge;
           tgOpts.digital.callback =  function (pV) {
       return TAPi18n.__(data.units);

@@ -7,10 +7,12 @@
 
 <body>
   <div id="container">
-    <a href="http://www.powersensorsltd.com" target="_blank"><img id="logo" alt="Power Sensors Ltd." src="/header.png"></a>
+    <a href="http://www.powersensorsltd.com" id="logo" target="_blank"><img alt="Power Sensors Ltd." src="/header.png">{{> title}}</a>
+    
     {{> meta}}
     {{> voltageChart}}
     {{> currentChart}}
+    {{> odometers}}
     {{> gaugeSelectors}}
     {{> gauges}}
     {{> footer}}
