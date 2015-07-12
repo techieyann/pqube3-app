@@ -107,7 +107,7 @@
   -webkit-border-radius: 0.2em;
   border-radius: 0.2em 0 0 0.2em;
 }
-.odometer.odometer-auto-theme .odometer-digit:last-child, .odometer.odometer-theme-car .odometer-digit:last-child {
+.odometer.odometer-auto-theme .odometer-digit:last-child, .odometer.odometer-theme-car .odometer-inside>.odometer-radix-mark ~ span{
   -moz-border-radius: 0 0.2em 0.2em 0;
   -webkit-border-radius: 0;
   border-radius: 0 0.2em 0.2em 0;
