@@ -1,3 +1,5 @@
 Meteor.subscribe('pqubeData', function () {
-  setPresentVals();
+  Tracker.nonreactive(function () {
+    setPresentVals();
+  });
 });

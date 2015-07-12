@@ -7,7 +7,9 @@ Template.odometers.onRendered(function () {
 	var opts = {
 	  format: '(,ddd).dd',
 	  duration: 500,
-	  theme: 'car'
+	  theme: 'car',
+	  numDigits: 11,
+	  sigFigs: 2
 	};
 	opts.value = Session.get('odometer1');
 	Odometeor.create('odometer1', 'last-reset', opts);
