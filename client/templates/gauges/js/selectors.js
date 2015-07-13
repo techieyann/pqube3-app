@@ -54,6 +54,7 @@ Template.gaugeSelectors.events({
     var gaugeSettings = Session.get('gauge'+e.target.dataset.meter);
     gaugeSettings.pqubeId = e.target.value;
     Session.set('gauge'+e.target.dataset.meter, gaugeSettings);
+    $('#'+e.target.dataset.meter+'-recorder-head').css('left', null);
     console.log(gaugeSettings);
   },
   'change .meter-source': function (e) {

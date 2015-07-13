@@ -29,7 +29,7 @@ setPresentVals = function () {
       if (gaugeSettings) {
 	var pqubeData = PQubeData.findOne(gaugeSettings.pqubeId);
 	if (pqubeData) {
-	  var presentVal = (pqubeData[gaugeSettings.dataSource]*gaugeSettings.multiplier).toFixed(gaugeSettings.sigFigs);
+	  var presentVal = (pqubeData[gaugeSettings.dataSource]*gaugeSettings.multiplier);
 	  Session.set('gauge'+i+'Value', presentVal);
 	}
       }

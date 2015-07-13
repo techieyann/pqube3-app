@@ -284,3 +284,33 @@ a:visited {
     top:255px;
     left:0px;
 }
+
+.strip-chart-top{
+    position:absolute;
+    top:-20px;
+    left:-5px;
+}
+.strip-chart-recorder {
+    position:absolute;
+    top: 23px;
+    left: 89px;
+    will-change: left;
+}
+.strip-chart-background {
+    position:absolute;
+    background: #e4e4e4;
+    top:25px;
+    left: 30px;
+    width: 135px;
+    height: 200px;
+}
+.strip-chart-canvas {
+    position:absolute;
+    top:25px;
+    left:37px;
+}
+.strip-chart-bottom {
+    position:absolute;
+    top: 200px;
+    left:0px;
+}

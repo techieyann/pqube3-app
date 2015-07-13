@@ -337,6 +337,7 @@
         }
       } else {
         wholePart = !this.format.precision || !fractionalPart(value) || false;
+	if (this.options.sigFigs) value = value.toFixed(this.options.sigFigs);
         _ref1 = value.toString().split('').reverse();
         for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
           digit = _ref1[_j];
