@@ -14,7 +14,7 @@ Template.currentChart.onRendered(function () {
     scaleStartValue: -50,
     showTooltips: false,
     animation: false,
-    bezierCurveTension: 0
+    bezierCurveTension: .1
   };
 
 
