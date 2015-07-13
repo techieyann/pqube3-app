@@ -49,9 +49,8 @@ Template.gauge.onRendered(function () {
 	maxValue: tgOpts.range.max,
 	minValue: tgOpts.range.min,
 	interpolation: 'step',
-	millisPerPixel: 100,
-	dataFreq: 1500,
-	xOffset: 18,
+	millisPerPixel: 200,
+	xOffset: 25,
 	labels: {
 	  disabled: true
 //	  precision: data.legendSigFigs
