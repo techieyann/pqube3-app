@@ -11,6 +11,7 @@ startDataIntervals = function () {
 setPresentVals = function () {
   var data = PQubeData.findOne('pqube1');
   if (data) {
+    var now = new Date().getTime();
     if (!Session.equals('lastFreq', data.freq)) {
       blinkStatusLight();      
     }
@@ -30,7 +31,7 @@ setPresentVals = function () {
 	var pqubeData = PQubeData.findOne(gaugeSettings.pqubeId);
 	if (pqubeData) {
 	  var presentVal = (pqubeData[gaugeSettings.dataSource]*gaugeSettings.multiplier);
-	  Session.set('gauge'+i+'Value', presentVal);
+	  Session.set('gauge'+i+'Value', {time: now, val: presentVal});
 	}
       }
     }

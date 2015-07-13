@@ -705,8 +705,10 @@
       // Retain lastX, lastY for calculating the control points of bezier curves.
       var firstX = 0, lastX = 0, lastY = 0;
       for (var i = 0; i < dataSet.length && dataSet.length !== 1; i++) {
-        var x = timeToXPixel(dataSet[i][0]),
-            y = valueToYPixel(dataSet[i][1]);
+        var x = timeToXPixel(dataSet[i][0]);
+        var y = null;
+        if (dataSet[i][1] != null)
+          y = valueToYPixel(dataSet[i][1]);
 	if (chartOptions.xOffset) x = x + chartOptions.xOffset;
         if (i === 0) {
           firstX = x;
@@ -741,16 +743,20 @@
               break;
             }
             case "step": {
-	      var gap = (x-lastX);
-	      if (chartOptions.scrollBackwards)
-		gap = lastX - x;
-	      if (gap > (chartOptions.dataFreq/chartOptions.millisPerPixel)) {
-		context.moveTo(x,y);
-		context.lineTo(x,y);
+              if (y==null) {
+                if (lastY == null) {
+		  context.moveTo(x,0);
+                }
+                else {
+                  context.lineTo(x,lastY);
+                }
 	      }
+              else if (lastY == null) {
+		context.moveTo(x, y);
+              }
 	      else {
-		context.lineTo(x,lastY);
-		context.lineTo(x,y);
+                context.lineTo(x,lastY);
+		context.moveTo(x,y);
 	      }
               break;
             }

@@ -77,20 +77,24 @@ Template.gauge.helpers({
     var self = Template.instance();
     var presentVal = Session.get('gauge'+this.prefix+'Value');
     if (presentVal) {
-      presentVal = presentVal.toFixed(this.sigFigs);
-      $('#'+this.prefix+'-display').sevenSeg({value: presentVal});
+      var val = presentVal.val.toFixed(this.sigFigs);
+      $('#'+this.prefix+'-display').sevenSeg({value: val});
       if (self.gauge)
-	self.gauge.set(presentVal);
+	self.gauge.set(val);
       if (self.smoothieLine) {
-	self.smoothieLine.append(new Date().getTime(), presentVal);
-	var percent = (presentVal - this.tunguskaGauge.range.min) / (this.tunguskaGauge.range.max-this.tunguskaGauge.range.min);
-	var scaled = percent * (self.smoothieRecorder.max-self.smoothieRecorder.min);
-	var pos = Math.round(scaled + self.smoothieRecorder.min);
-	var selector = $('#'+this.prefix+'-smoothie-recorder');
-	self.recorderTimeout = Meteor.setTimeout(function () {
-	  selector.css('left', pos);
-	}, 1500);
+        if (self.lastVal != presentVal.val) {
+	  self.smoothieLine.append(presentVal.time, val);
+	  var percent = (val - this.tunguskaGauge.range.min) / (this.tunguskaGauge.range.max-this.tunguskaGauge.range.min);
+	  var scaled = percent * (self.smoothieRecorder.max-self.smoothieRecorder.min);
+	  var pos = Math.round(scaled + self.smoothieRecorder.min);
+	  var selector = $('#'+this.prefix+'-smoothie-recorder');
+	  self.recorderTimeout = Meteor.setTimeout(function () {
+	    selector.css('left', pos);
+	  }, 1500);
+        }
+        else self.smoothieLine.append(presentVal.time, null);
       }
+      self.lastVal = presentVal.val;
     }
   },
   smoothieWidth: function () {
