@@ -550,7 +550,7 @@
 
       // Render at least every 1/6th of a second. The canvas may be resized, which there is
       // no reliable way to detect.
-      var maxIdleMillis = Math.min(1000/6, this.options.millisPerPixel);
+      var maxIdleMillis = Math.round(Math.min(1000/60, this.options.millisPerPixel));
 
       if (nowMillis - this.lastRenderTimeMillis < maxIdleMillis) {
         return;
@@ -717,7 +717,22 @@
           switch (chartOptions.interpolation) {
             case "linear":
             case "line": {
-              context.lineTo(x,y);
+
+              if (y != null) {
+                if (lastY == null) {
+                  context.moveTo(lastX, y);
+                  context.lineTo(x, y);
+                }
+                else {
+                  if (Math.abs(lastY-y) < 10)
+                    context.lineTo(x,y);
+                  else if (i != dataSet.length-1) {
+                    context.moveTo(lastX, y);
+                    context.lineTo(x,y);
+                  }
+                }
+                  
+              }
               break;
             }
             case "bezier":
@@ -744,15 +759,13 @@
             }
             case "step": {
               if (y==null) {
-                if (lastY == null) {
-		  context.moveTo(x,0);
-                }
-                else {
+                if (lastY != null) {
                   context.lineTo(x,lastY);
                 }
 	      }
               else if (lastY == null) {
-		context.moveTo(x, y);
+                context.moveTo(lastX, y);
+		context.lineTo(x, y);
               }
 	      else {
                 context.lineTo(x,lastY);

@@ -48,9 +48,9 @@ Template.gauge.onRendered(function () {
 	scrollBackwards: true,
 	maxValue: tgOpts.range.max,
 	minValue: tgOpts.range.min,
-	interpolation: 'step',
-	millisPerPixel: 200,
-	xOffset: 25,
+	interpolation: 'line',
+	millisPerPixel: 500,
+	xOffset: 30,
 	labels: {
 	  disabled: true
 //	  precision: data.legendSigFigs
@@ -58,7 +58,7 @@ Template.gauge.onRendered(function () {
 	grid: {
 	  fillStyle: '#e4e4e4',
 	  sharpLines: true,
-	  millisPerLine:10000,
+	  millisPerLine:20000,
 	  verticalSections: 2
 	}
       });
@@ -89,7 +89,7 @@ Template.gauge.helpers({
 	  var selector = $('#'+this.prefix+'-smoothie-recorder');
 	  self.recorderTimeout = Meteor.setTimeout(function () {
 	    selector.css('left', pos);
-	  }, 1500);
+	  },0);
         }
         else self.smoothieLine.append(presentVal.time, null);
       }
