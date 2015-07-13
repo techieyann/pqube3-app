@@ -2,6 +2,7 @@
   <div id="site-selectors">
     {{#each gauges}}
     <select data-meter="{{gaugeNum}}" class="site-source">
+      <option disabled>{{_ "site"}}</option>
       {{#each pqube}}
       <option value="{{id}}" {{siteSelected ../gaugeNum id}}>{{_ id}}</option>
       {{/each}}
@@ -11,6 +12,7 @@
   <div id="gauge-selectors">
     {{#each gauges}}
     <select data-meter="{{gaugeNum}}" class="meter-source">
+      <option disabled>{{_ "channel"}}</option>
       {{#each dataSource}}
       <option value="{{gaugeName}}" {{gaugeSelected ../gaugeNum gaugeName}}>{{_ gaugeName}}</option>
       {{/each}}
