@@ -1,6 +1,6 @@
 /* CSS declarations go here */
 body {
-    font: sans-serif;
+    font-family: Sans-Serif;
     width:100%;
     margin:0;
     color: gray;
@@ -19,7 +19,11 @@ a:link {
 a:visited {
     color: #ccc;
 }
-
+select {
+    background-color: #40434b;
+    border-color: #222;
+    color: #ccc;
+}
 .hidden {
     display: none;
 }
