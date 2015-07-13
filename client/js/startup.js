@@ -1,6 +1,6 @@
 Meteor.startup(function () {
-  Session.set('primaryTitle', 'PSL Service Entrance');
-  Session.set('secondaryTitle', 'LBNL Building 90');
+  if (BrowserDetect.browser == 'Safari')
+    $('select').css('color', 'black');
   for (var i=0; i<defaultGauges.length; i++) {
     var g = defaultGauges[i];
     var gaugeSettings = getGaugeSettings(g.gaugeName, g.gaugeNum);

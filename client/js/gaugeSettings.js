@@ -89,8 +89,7 @@ gaugeList = {
     sigFigs: 4,
     legendSigFigs: 2,
     displayDigits: 6,
-    multiplier: 1,
-    units: 'Hz'
+    multiplier: 1
   },
   l1n: {
     dataSource: 'vMagL1N',
@@ -99,8 +98,7 @@ gaugeList = {
     sigFigs: 3,
     legendSigFigs: 1,
     displayDigits: 6,
-    multiplier: 1,
-    units: 'V'
+    multiplier: 1
   },
   thd: {
     dataSource: 'THDL1',
@@ -109,8 +107,7 @@ gaugeList = {
     sigFigs: 2,
     legendSigFigs: 1,
     displayDigits: 4,
-    multiplier: 1,
-    units: '%'
+    multiplier: 1
   },
   watts: {
     dataSource: 'watts',
@@ -119,8 +116,7 @@ gaugeList = {
     sigFigs: 3,
     legendSigFigs: 1,
     displayDigits: 6,
-    multiplier: (1/1000),
-    units: 'kW'
+    multiplier: (1/1000)
   }, 
   vars: {
     dataSource: 'VAR',
@@ -129,8 +125,7 @@ gaugeList = {
     sigFigs: 3,
     legendSigFigs: 1,
     displayDigits: 5,
-    multiplier: (1/1000),
-    units: 'kVAR'
+    multiplier: (1/1000)
   }, 
   uaneg: {
     dataSource: 'uANeg',
@@ -139,8 +134,7 @@ gaugeList = {
     sigFigs: 2,
     legendSigFigs: 1,
     displayDigits: 4,
-    multiplier: 1,
-    units: '%'
+    multiplier: 1
   }, 
   temp: {
     dataSource: 'temp',
@@ -149,8 +143,7 @@ gaugeList = {
     sigFigs: 2,
     legendSigFigs: 1,
     displayDigits: 5,
-    multiplier: 1,
-    units: 'degC'
+    multiplier: 1
   }, 
   humidity: {
     dataSource: 'humidity',
@@ -159,8 +152,7 @@ gaugeList = {
     sigFigs: 2,
     legendSigFigs: 1,
     displayDigits: 5,
-    multiplier: 1,
-    units: '%RH'
+    multiplier: 1
   }, 
   pressure: {
     dataSource: 'pressure',
@@ -169,7 +161,6 @@ gaugeList = {
     sigFigs: 3,
     legendSigFigs: 1,
     displayDigits: 5,
-    multiplier: (1/100),
-    units: 'hPa'
+    multiplier: (1/100)
   }
 };

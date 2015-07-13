@@ -21,9 +21,12 @@ setPresentVals = function () {
     Session.set('iL1NGraph', data.iL1NGraph);
     Session.set('iL2NGraph', data.iL2NGraph);
     Session.set('iL3NGraph', data.iL3NGraph);
-    Session.set('odometer1', (data.energy/1000).toFixed(2));
-    Session.set('odometer2', (data.VAh/1000).toFixed(2));
-    Session.set('odometer3', (data.VARh/1000).toFixed(2));
+    var kWh = (data.energy/1000);
+    Session.set('odometer1', kWh.toFixed(2));
+    var kVAh = (data.VAh/1000);
+    Session.set('odometer2', kVAh.toFixed(2));
+    var kVARh = Math.sqrt((kVAh*kVAh) - (kWh*kWh));
+    Session.set('odometer3', kVARh.toFixed(2));
     Session.set('resetDate', data.yearER+'-'+data.monthER+'-'+data.dayER);
     for (i=1; i<4; i++) {
       var gaugeSettings = Session.get('gauge'+i);

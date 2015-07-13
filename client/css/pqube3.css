@@ -31,6 +31,19 @@ select {
 .centered {
     text-align: center;
 }
+#bad-browser {
+    position:relative;
+    width: 480px;
+    margin: auto;
+    color: black;
+}
+
+#bad-browser a:link {
+    color: blue;
+}
+#bad-browser a:visited {
+    color: purple;
+}
 
 #container {
     position:relative;
@@ -47,7 +60,7 @@ select {
 }
 #title {
     position:absolute;
-    left:130px;
+    left:115px;
     bottom:20px;
     font-size:25px;
 }
@@ -190,6 +203,7 @@ select {
 #new-data {
     position:absolute;
     text-align: right;
+    font-size: 14px;
     width: 110px;
     left: 0px;
     top: 15px;
@@ -231,7 +245,7 @@ select {
     position:absolute;
     bottom:8px;
     left:15px;
-    
+    font-size:14px;
 }
 #site-selectors {
     position:absolute;

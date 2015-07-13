@@ -32,7 +32,7 @@ Template.gauge.onRendered(function () {
       $('#'+data.prefix+'-display').sevenSeg(data.sevenSegment);
       var tgOpts = data.tunguskaGauge;
       tgOpts.digital.callback =  function (pV) {
-	return TAPi18n.__(data.units);
+	return TAPi18n.__(data.gaugeName+'Units');
       };
       tgOpts.tick.major.legend.callback = function (n) {
 	return  n.toFixed(data.legendSigFigs);
