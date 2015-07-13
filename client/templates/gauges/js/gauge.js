@@ -37,6 +37,21 @@ Template.gauge.onRendered(function () {
       tgOpts.tick.major.legend.callback = function (n) {
 	return  n.toFixed(data.legendSigFigs);
       };
+      var color;
+      switch (data.prefix) {
+        case 1:
+        color = "purple";
+        break;
+        case 2:
+        color = "orange";
+        break;
+        case 3:
+        color = "green";
+        break;
+      }
+        data.tunguskaGauge.pointer = {
+            fillColor: color
+        };
       self.gauge = new TunguskaGauge(data.tunguskaGauge);
       self.gauge.theme.pointer.dynamics = {
 	easing: 'easeOutQuint',
@@ -65,7 +80,7 @@ Template.gauge.onRendered(function () {
 
       self.smoothie.streamTo(self.canvas);
       self.smoothieLine = new TimeSeries();
-      self.smoothie.addTimeSeries(self.smoothieLine, {lineWidth:2, strokeStyle:'red'});
+      self.smoothie.addTimeSeries(self.smoothieLine, {lineWidth:2, strokeStyle:color});
       $('#'+self.prefix+'-smoothie-recorder').css('left', null);
     }
   });
