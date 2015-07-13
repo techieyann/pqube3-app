@@ -43,12 +43,13 @@ Template.gauge.onRendered(function () {
         color = "purple";
         break;
         case 2:
-        color = "orange";
+        color = "#D66A00";
         break;
         case 3:
         color = "green";
         break;
       }
+
         data.tunguskaGauge.pointer = {
             fillColor: color
         };
@@ -64,8 +65,8 @@ Template.gauge.onRendered(function () {
 	maxValue: tgOpts.range.max,
 	minValue: tgOpts.range.min,
 	interpolation: 'line',
-	millisPerPixel: 500,
-	xOffset: 30,
+	millisPerPixel: 750,
+	xOffset: 32,
 	labels: {
 	  disabled: true
 //	  precision: data.legendSigFigs
@@ -73,7 +74,7 @@ Template.gauge.onRendered(function () {
 	grid: {
 	  fillStyle: '#e4e4e4',
 	  sharpLines: true,
-	  millisPerLine:20000,
+	  millisPerLine:30000,
 	  verticalSections: 2
 	}
       });

@@ -59,7 +59,7 @@ Template.gaugeSelectors.events({
   },
   'change .meter-source': function (e) {
     var pqube = Session.get('gauge'+e.target.dataset.meter).pqubeId;
-    var gaugeSettings = getGaugeSettings(e.target.value, e.target.dataset.meter);
+    var gaugeSettings = getGaugeSettings(e.target.value, parseInt(e.target.dataset.meter,10));
     gaugeSettings.pqubeId = pqube;
     Session.set('gauge'+e.target.dataset.meter, gaugeSettings);
   }
