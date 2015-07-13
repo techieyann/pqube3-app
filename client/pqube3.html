@@ -8,6 +8,7 @@
 </head>
 
 <body>
+  {{#if browserSupported}}
   <div id="container">
     <a href="http://www.powersensorsltd.com" id="logo" target="_blank"><img alt="Power Sensors Ltd." src="/header.png">{{> title}}</a>
     
@@ -19,4 +20,7 @@
     {{> gauges}}
     {{> footer}}
   </div>
+  {{else}}
+  {{> unsupportedBrowser}}
+  {{/if}} 
 </body>
