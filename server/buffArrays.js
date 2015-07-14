@@ -27,10 +27,10 @@ buffArrays = {
   freqVectArray: [
     {name: 'freq', start:0, type:'float'},
     {name: 'vMagL1N', start:4, type:'float'},
-    {name: 'vAngL1N', start:8, type:'float'},
-    {name: 'vMagL2N', start:12, type:'float'},
-    {name: 'vAngL2N', start:16, type:'float'},
-    {name: 'vMagL3N', start:20, type:'float'},
+    {name: 'vMagL2N', start:8, type:'float'},
+    {name: 'vMagL3N', start:12, type:'float'},
+    {name: 'vAngL1N', start:16, type:'float'},
+    {name: 'vAngL2N', start:20, type:'float'},
     {name: 'vAngL3N', start:24, type:'float'}
   ],
 
