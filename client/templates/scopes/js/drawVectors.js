@@ -25,7 +25,7 @@ drawVectors = function (vectType, vectors) {
 var arrowPath = function (magnitude, scale, radius) {
   var path = new Path2D();
   if (magnitude) {
-    var length = (magnitude / (scale*6)) * (radius);
+    var length = (magnitude / (scale*6)) * radius * 1.414;
 
     path.moveTo(radius,radius);
     path.lineTo(radius,radius+1);

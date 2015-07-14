@@ -1,5 +1,5 @@
 <template name="scopes">
-  <select id="scope-site-source">
+  <select id="scope-site-source" class="site-source">
     <option disabled>{{_ "site"}}</option>
     {{#each pqube}}
     <option value="{{id}}" {{siteSelected id}}>{{_ id}}</option>

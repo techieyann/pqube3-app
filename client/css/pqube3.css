@@ -58,6 +58,11 @@ select {
     top: 20px;
     left: 20px;
 }
+#title-font-sizing {
+    position:absolute;
+    visibility: hidden;
+    overflow: nowrap;
+}
 #title {
     position:absolute;
     left:115px;
