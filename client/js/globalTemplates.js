@@ -3,3 +3,15 @@ Template.registerHelper('browserSupported', function () {
     return false;
   return true;
 });
+
+
+Template.registerHelper('pqube', function () {
+  return [
+    {
+      id: 'pqube1'
+    },
+    {
+      id: 'pqube2'
+    }
+  ];
+});

@@ -36,10 +36,10 @@ buffArrays = {
 
   iVectArray: [
     {name: 'iMagL1N', start:0, type:'float'},
-    {name: 'iAngL1N', start:4, type:'float'},
-    {name: 'iMagL2N', start:8, type:'float'},
-    {name: 'iAngL2N', start:12, type:'float'},
-    {name: 'iMagL3N', start:16, type:'float'},
+    {name: 'iMagL2N', start:4, type:'float'},
+    {name: 'iMagL3N', start:8, type:'float'},
+    {name: 'iAngL1N', start:12, type:'float'},
+    {name: 'iAngL2N', start:16, type:'float'},
     {name: 'iAngL3N', start:20, type:'float'}
   ],
 

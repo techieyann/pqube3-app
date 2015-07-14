@@ -20,18 +20,6 @@ Template.gaugeSelectors.helpers({
 
     return array;
   },
-  pqube: function () {
-    return [
-      {
-	id: 'pqube1',
-	title: Session.get('primaryTitle')
-      },
-      {
-	id: 'pqube2',
-	title: Session.get('secondaryTitle')
-      }
-    ];
-  },
   siteSelected: function (gaugeNum, name) {
     var gauge = Session.get('gauge'+gaugeNum);
     if (gauge) {
@@ -55,7 +43,6 @@ Template.gaugeSelectors.events({
     gaugeSettings.pqubeId = e.target.value;
     Session.set('gauge'+e.target.dataset.meter, gaugeSettings);
     $('#'+e.target.dataset.meter+'-recorder-head').css('left', null);
-    console.log(gaugeSettings);
   },
   'change .meter-source': function (e) {
     var pqube = Session.get('gauge'+e.target.dataset.meter).pqubeId;

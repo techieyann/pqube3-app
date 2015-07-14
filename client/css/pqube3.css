@@ -54,7 +54,7 @@ select {
     background-repeat: no-repeat;
 }
 #logo {
-    position:relative;
+    position:absolute;
     top: 20px;
     left: 20px;
 }
@@ -64,21 +64,47 @@ select {
     bottom:20px;
     font-size:25px;
 }
-
+#scope-site-source {
+    position:absolute;
+    left:22px;
+    top:92px;
+}
+#scopes-panel {
+    position:absolute;
+    left: -2px;
+    top: 113px;
+}
 #voltage-chart {
     position:absolute;
     left:27px;
     top:127px;
 }
+#voltage-vectors {
+    position:absolute;
+    left: 271px;
+    top: 128px;
+}
 #current-chart {
     position:absolute;
     left:26px;
-    top:217px;
+    top:210px;
 }
-#waveforms-placeholder {
+#current-vectors {
     position:absolute;
-    left:15px;
-    top:116px;
+    left: 271px;
+    top: 218px;
+}
+#voltage-chart-scale {
+    position:absolute;
+    left:200px;
+    top:197px;
+    font-size:10px;
+}
+#current-chart-scale {
+    position:absolute;
+    left:200px;
+    top:288px;
+    font-size:10px;
 }
 #setup-modal {
     color:black;
@@ -109,7 +135,6 @@ select {
     right: 10px;
     position: absolute;
     text-align:right;
-
 }
 #setup-controls a{
     text-decoration: none;

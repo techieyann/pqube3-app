@@ -9,9 +9,9 @@ Template.currentChart.onRendered(function () {
     scaleShowGridLines: false,
     showScale: false,
     scaleOverride: true,
-    scaleSteps: 10,
+    scaleSteps: 12,
     scaleStepWidth: 10,
-    scaleStartValue: -50,
+    scaleStartValue: -60,
     showTooltips: false,
     animation: false,
     bezierCurveTension: .1

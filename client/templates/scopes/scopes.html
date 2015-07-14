@@ -1,0 +1,17 @@
+<template name="scopes">
+  <select id="scope-site-source">
+    <option disabled>{{_ "site"}}</option>
+    {{#each pqube}}
+    <option value="{{id}}" {{siteSelected id}}>{{_ id}}</option>
+    {{/each}}
+  </select>
+
+  {{> voltageChart}}
+  {{> voltageVectors}}
+  {{> currentChart}}
+  {{> currentVectors}}
+  <img id="scopes-panel" src="/scopes.png">
+  <span id="voltage-chart-scale">{{voltageScale}}</span>
+  <span id="current-chart-scale">{{currentScale}}</span>
+  {{> odometers}}
+</template>
