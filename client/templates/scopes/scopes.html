@@ -13,5 +13,7 @@
   <img id="scopes-panel" src="/scopes.png">
   <span id="voltage-chart-scale">{{voltageScale}}</span>
   <span id="current-chart-scale">{{currentScale}}</span>
+  {{#unless odoReset}}
   {{> odometers}}
+  {{/unless}}
 </template>

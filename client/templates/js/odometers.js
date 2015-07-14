@@ -20,8 +20,7 @@ Template.odometers.onRendered(function () {
 	self.initialized = true;
       }
     }
-
-});
+  });
 });
 
 Template.odometers.helpers({

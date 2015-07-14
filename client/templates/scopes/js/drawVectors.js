@@ -7,11 +7,10 @@ drawVectors = function (vectType, vectors) {
   var colors = {
     l1: 'red',
     l2:'yellow',
-    l3: 'blue'
+    l3: '#0066FF'
   };
-  var normalize;
+  var normalize = Session.get('vectorNormalize');
   for (var key in vectors) {
-    if (key == 'l1') normalize = vectors[key].angle;
     var path = arrowPath(vectors[key].magnitude, scale, radius);
     ctx.save();
     ctx.translate(radius, radius);
@@ -24,19 +23,23 @@ drawVectors = function (vectType, vectors) {
 };
 
 var arrowPath = function (magnitude, scale, radius) {
-  var length = (magnitude / scale) * (radius/4);
   var path = new Path2D();
-  path.moveTo(radius,radius);
-  path.lineTo(radius,radius+1);
-  path.lineTo(radius+length-8,radius+1);
-  path.lineTo(radius+length-8, radius+4);
-  path.lineTo(radius+length-6, radius+1);
-  path.lineTo(radius+length, radius);
-  path.lineTo(radius+length-6, radius-1);
-  path.lineTo(radius+length-8, radius-4);
-  path.lineTo(radius+length-8,radius-1);
-  path.lineTo(radius+length, radius-1);
-  path.lineTo(radius, radius-1);
-  path.lineTo(radius, radius);
+  if (magnitude) {
+    var length = (magnitude / (scale*6)) * (radius);
+
+    path.moveTo(radius,radius);
+    path.lineTo(radius,radius+1);
+    path.lineTo(radius+length-6,radius+1);
+    path.lineTo(radius+length-6, radius+4);
+    path.lineTo(radius+length-3, radius+1);
+    path.lineTo(radius+length, radius);
+    path.lineTo(radius+length-3, radius-1);
+    path.lineTo(radius+length-6, radius-4);
+    path.lineTo(radius+length-6,radius-1);
+    path.lineTo(radius+length, radius-1);
+    path.lineTo(radius, radius-1);
+    path.lineTo(radius, radius);
+
+  }
   return path;
 };

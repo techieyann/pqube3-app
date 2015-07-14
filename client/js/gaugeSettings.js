@@ -156,11 +156,11 @@ gaugeList = {
   }, 
   pressure: {
     dataSource: 'pressure',
-    min: 0,
-    max: 100,
-    sigFigs: 3,
+    min: 9.5,
+    max: 10.5,
+    sigFigs: 4,
     legendSigFigs: 1,
-    displayDigits: 5,
+    displayDigits: 6,
     multiplier: (1/100)
   }
 };

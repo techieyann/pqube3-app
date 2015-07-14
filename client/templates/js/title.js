@@ -1,5 +1,5 @@
 Template.title.helpers({
   title: function () {
-    return Session.get('primaryTitle');
+    return Session.get('scopesSource');
   }
 });
