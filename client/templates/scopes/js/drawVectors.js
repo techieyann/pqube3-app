@@ -1,7 +1,6 @@
 drawVectors = function (vectType, vectors) {
   var scale = Session.get(vectType+'ScopeScale');
   var ctx = $('#'+vectType+'-vectors').get(0).getContext('2d');
-
   var radius = 40;
   ctx.clearRect(0,0,80,80);
   var colors = {

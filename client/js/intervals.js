@@ -7,11 +7,20 @@ startDataIntervals = function () {
   },1500);
 };
 
-
 setPresentVals = function () {
+  var now = new Date().getTime();
+  for (i=1; i<4; i++) {
+    var gaugeSettings = Session.get('gauge'+i);
+    if (gaugeSettings) {
+      var pqubeData = PQubeData.findOne(gaugeSettings.pqubeId);
+      if (pqubeData) {
+	var presentVal = (pqubeData[gaugeSettings.dataSource]*gaugeSettings.multiplier);
+	Session.set('gauge'+i+'Value', {time: now, val: presentVal});
+      }
+    }
+  }
   var data = PQubeData.findOne(Session.get('scopesSource'));
   if (data) {
-    var now = new Date().getTime();
     if (!Session.equals('lastFreq', data.freq)) {
       blinkStatusLight();      
     }
@@ -59,16 +68,6 @@ setPresentVals = function () {
     Session.set('odometer3', kVARh.toFixed(2));
     Session.set('resetDate', data.yearER+'-'+data.monthER+'-'+data.dayER);
     Session.set('lastFreq', data.freq);
-  }
-  for (i=1; i<4; i++) {
-    var gaugeSettings = Session.get('gauge'+i);
-    if (gaugeSettings) {
-      var pqubeData = PQubeData.findOne(gaugeSettings.pqubeId);
-      if (pqubeData) {
-	var presentVal = (pqubeData[gaugeSettings.dataSource]*gaugeSettings.multiplier);
-	Session.set('gauge'+i+'Value', {time: now, val: presentVal});
-      }
-    }
   }
 };
 

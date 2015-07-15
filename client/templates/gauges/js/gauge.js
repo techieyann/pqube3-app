@@ -78,7 +78,6 @@ Template.gauge.onRendered(function () {
 	  verticalSections: 2
 	}
       });
-
       self.smoothie.streamTo(self.canvas);
       self.smoothieLine = new TimeSeries();
       self.smoothie.addTimeSeries(self.smoothieLine, {lineWidth:2, strokeStyle:color});
@@ -100,6 +99,8 @@ Template.gauge.helpers({
         if (self.lastVal != presentVal.val) {
 	  self.smoothieLine.append(presentVal.time, val);
 	  var percent = (val - this.tunguskaGauge.range.min) / (this.tunguskaGauge.range.max-this.tunguskaGauge.range.min);
+          if (percent < 0) percent = 0;
+          if (percent > 1) percent = 1;
 	  var scaled = percent * (self.smoothieRecorder.max-self.smoothieRecorder.min);
 	  var pos = Math.round(scaled + self.smoothieRecorder.min);
 	  var selector = $('#'+this.prefix+'-smoothie-recorder');

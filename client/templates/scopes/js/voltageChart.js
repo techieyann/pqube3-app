@@ -14,7 +14,7 @@ Template.voltageChart.onRendered(function () {
     scaleStepWidth: 100,
     scaleStartValue: -500,
     showTooltips: false,
-//        animation: false,
+        animation: false,
     bezierCurveTension: .5
   };
   self.autorun(function () {
