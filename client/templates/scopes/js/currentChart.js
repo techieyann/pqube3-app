@@ -2,7 +2,6 @@ Template.currentChart.onRendered(function () {
   var self = this;
 
   self.initialized = false;
-  self.animationReady = false;
   self.ctx = $('#current-chart').get(0).getContext('2d');
   self.options = {
     datasetFill: false,
@@ -42,12 +41,8 @@ Template.currentChart.onRendered(function () {
       };
       self.lineChart = new Chart(self.ctx).Line(self.data, self.options);      
       self.initialized = true;
-
-      Meteor.setTimeout(function () {
-	self.animationReady = true;
-      }, 500);
     }
-    else if (self.animationReady) {
+    else {
       var data = {
 	l1Data: Session.get('iL1NGraph'),
 	l2Data:  Session.get('iL2NGraph'),

@@ -2,7 +2,6 @@ Template.voltageChart.onRendered(function () {
   var self = this;
 
   self.initialized = false;
-  self.animationReady = false;
   self.ctx = $('#voltage-chart').get(0).getContext('2d');
   self.options = {
     datasetFill: false,
@@ -39,11 +38,8 @@ Template.voltageChart.onRendered(function () {
       };
       self.lineChart = new Chart(self.ctx).Line(self.data, self.options);      
       self.initialized = true;
-      Meteor.setTimeout(function () {
-	self.animationReady = true;
-      }, 500);
     }
-    else if (self.animationReady) {
+    else {
       var data = {
 	l1Data: l1Graph,
 	l2Data: l2Graph,

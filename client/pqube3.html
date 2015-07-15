@@ -3,19 +3,25 @@
   <meta name="viewport" content="initial-scale=1, width=device-width">
   <meta name="author" content="Ian McEachern">
   <meta charset="utf8">
-  <script src="/sevenSeg.js"></script>
-  <script src="/smoothie.js"></script>
+  <script src="/js/sevenSeg.js"></script>
+  <script src="/js/smoothie.js"></script>
 </head>
 
 <body>
   {{#if browserSupported}}
   <div id="container">
-    <a href="http://www.powersensorsltd.com" id="logo" target="_blank"><img alt="Power Sensors Ltd." src="/header.png">{{> title}}</a>
-    
-    {{> meta}}
-    {{> scopes}}
-    {{> gaugeSelectors}}
-    {{> gauges}}
+    <div id="header">
+      <a href="http://www.powersensorsltd.com" id="logo" target="_blank"><img alt="Power Sensors Ltd." src="/images/header.png">{{> title}}</a>
+      
+      {{> meta}}
+    </div>
+    <div id="scopes">
+      {{> scopes}}
+    </div>
+    <div id="gauges">
+      {{> gaugeSelectors}}
+      {{> gauges}}
+    </div>
     {{> footer}}
   </div>
   {{else}}

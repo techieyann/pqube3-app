@@ -53,7 +53,7 @@ var gaugeDefaults = {
       startAngle: -120
     },
     foreground: {
-      image: 'meter_front.png',
+      image: 'images/meter_front.png',
       left: -98,
       top: -96
     },

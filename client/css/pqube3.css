@@ -50,7 +50,7 @@ select {
     width:640px;
     height: 960px;
     margin: auto;
-    background-image: url('background.png');
+    background-image: url('images/background.png');
     background-repeat: no-repeat;
 }
 #logo {
