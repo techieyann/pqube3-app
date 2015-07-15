@@ -210,6 +210,10 @@
     while (this.data.length - removeCount >= maxDataSetLength && this.data[removeCount + 1][0] < oldestValidTime) {
       removeCount++;
     }
+    // If everything but one has been removed, get rid of it too!
+    if (this.data.length - removeCount == maxDataSetLength && this.data[removeCount][0] < oldestValidTime) {
+      removeCount++;
+    }
     if (removeCount !== 0) {
       this.data.splice(0, removeCount);
     }
