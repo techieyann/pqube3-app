@@ -20,7 +20,7 @@ var defaultGauges = [
   },
   {
     gaugeNum: 2,
-    gaugeName: 'thd'
+    gaugeName: 'watts'
   },
   {
     gaugeNum: 3,
