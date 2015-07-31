@@ -65,16 +65,15 @@ Template.gauge.onRendered(function () {
 	maxValue: tgOpts.range.max,
 	minValue: tgOpts.range.min,
 	interpolation: 'step',
-	millisPerPixel: 1500,
-	xOffset: 32,
+	millisPerPixel: 500,
+	xOffset: 30,
 	labels: {
 	  disabled: true
-//	  precision: data.legendSigFigs
 	},
 	grid: {
 	  fillStyle: '#e4e4e4',
 	  sharpLines: true,
-	  millisPerLine:60000,
+	  millisPerLine:30000,
 	  verticalSections: 2
 	}
       });

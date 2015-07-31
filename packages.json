@@ -1,4 +1,4 @@
 {
-	"node-modbus": "0.1.0",
-	"decoder-ring": "0.5.0"
+  "h5.modbus": "0.1.0",
+  "decoder-ring": "0.5.0"
 }

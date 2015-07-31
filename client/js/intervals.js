@@ -4,7 +4,7 @@ startDataIntervals = function () {
       setPresentVals();
 
     });
-  },1500);
+  },500);
 };
 
 setPresentVals = function () {
@@ -76,5 +76,5 @@ var blinkStatusLight = function () {
   Session.set('light_on', true);
   Meteor.setTimeout(function () {
     Session.set('light_on', false);
-  }, 500);
+  }, 250);
 };

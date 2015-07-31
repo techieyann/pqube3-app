@@ -10,37 +10,29 @@ decodeRegisters = function (registers, type) {
   var expectedLength;
   if (type.substring(2) == 'Graph') {
     buffOpts.fields = buffArrays.graphArray;
-    expectedLength = 64;
     graphDataFlag = true;
   }
   switch(type) {
   case 'freq':
     buffOpts.fields = buffArrays.freqArray;
-    expectedLength = 2;
     break;
   case 'THD':
     buffOpts.fields = buffArrays.THDarray;
-    expectedLength = 2;
     break;
   case 'vect':
     buffOpts.fields = buffArrays.vectArray;
-    expectedLength = 24;
     break;
   case 'freqVVect':
     buffOpts.fields = buffArrays.freqVectArray;
-    expectedLength = 14;
     break;
   case 'iVect':
     buffOpts.fields = buffArrays.iVectArray;
-    expectedLength = 12;
     break;
   case 'wPower':
     buffOpts.fields = buffArrays.wPowerArray;
-    expectedLength = 84;
     break;
   case 'ambient':
     buffOpts.fields = buffArrays.ambientArray;
-    expectedLength = 6;
     break;
   case 'v1Graph':
     graphDataIndex = 'vL1NGraph';
@@ -63,18 +55,7 @@ decodeRegisters = function (registers, type) {
   default:
     return;
   }
-
-  
-  if (registers.length != expectedLength) {
-    console.log('error, unexpected num registers');
-    console.log(expectedLength);
-    console.log(registers);
-    return;
-  }
-
-  var octets = registersToOctets(registers);
-  var buff = new Buffer(octets);
-  var data = decoderRing.decode(buff, buffOpts);
+  var data = decoderRing.decode(registers, buffOpts);
   if (graphDataFlag) {
     var graphData = {};
     graphData[graphDataIndex] = [];
