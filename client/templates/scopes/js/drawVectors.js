@@ -10,35 +10,29 @@ drawVectors = function (vectType, vectors) {
   };
   var normalize = Session.get('vectorNormalize');
   for (var key in vectors) {
-    var path = arrowPath(vectors[key].magnitude, scale, radius);
     ctx.save();
     ctx.translate(radius, radius);
     ctx.rotate((Math.PI/180)*(-(vectors[key].angle-normalize)));
     ctx.translate(-radius, -radius);
+
+    var magnitude = vectors[key].magnitude;
+    var length = (magnitude / (scale*6)) * radius * 1.414;
+    ctx.beginPath();
     ctx.fillStyle = colors[key];
-    ctx.fill(path);
+    ctx.moveTo(radius,radius);
+    ctx.lineTo(radius,radius+1);
+    ctx.lineTo(radius+length-6,radius+1);
+    ctx.lineTo(radius+length-6, radius+4);
+    ctx.lineTo(radius+length-3, radius+1);
+    ctx.lineTo(radius+length, radius);
+    ctx.lineTo(radius+length-3, radius-1);
+    ctx.lineTo(radius+length-6, radius-4);
+    ctx.lineTo(radius+length-6,radius-1);
+    ctx.lineTo(radius+length, radius-1);
+    ctx.lineTo(radius, radius-1);
+    ctx.lineTo(radius, radius);
+    ctx.fill();
+    ctx.closePath();
     ctx.restore();
   }
-};
-
-var arrowPath = function (magnitude, scale, radius) {
-  var path = new Path2D();
-  if (magnitude) {
-    var length = (magnitude / (scale*6)) * radius * 1.414;
-
-    path.moveTo(radius,radius);
-    path.lineTo(radius,radius+1);
-    path.lineTo(radius+length-6,radius+1);
-    path.lineTo(radius+length-6, radius+4);
-    path.lineTo(radius+length-3, radius+1);
-    path.lineTo(radius+length, radius);
-    path.lineTo(radius+length-3, radius-1);
-    path.lineTo(radius+length-6, radius-4);
-    path.lineTo(radius+length-6,radius-1);
-    path.lineTo(radius+length, radius-1);
-    path.lineTo(radius, radius-1);
-    path.lineTo(radius, radius);
-
-  }
-  return path;
 };
