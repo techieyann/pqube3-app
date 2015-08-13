@@ -1,3 +1,10 @@
+if(!document.getElementsByClassName) {
+    document.getElementsByClassName = function(className) {
+        return this.querySelectorAll("." + className);
+    };
+    Element.prototype.getElementsByClassName = document.getElementsByClassName;
+}
+
 Meteor.startup(function () {
   if (BrowserDetect.browser == 'Safari')
     $('select').css('color', 'black');
@@ -27,3 +34,4 @@ var defaultGauges = [
     gaugeName: 'l1n'
   }
 ];
+

@@ -11,7 +11,7 @@ getGaugeSettings = function (name, meterNum) {
       legendSigFigs: gauge.legendSigFigs,
       multiplier: gauge.multiplier,
       sevenSegment: {
-	digits: gauge.displayDigits
+        pattern: getPattern(gauge.displayDigits, gauge.sigFigs)
       },
       tunguskaGauge: {
 	id: meterNum+'-tunguska-gauge',
@@ -43,9 +43,7 @@ getGaugeSettings = function (name, meterNum) {
 var gaugeDefaults = {
   sevenSegment: {
     colorOff: "#004200", 
-    colorOn: "#00aa00",
-    colorBackground: "#013500",
-    slant: 3
+    colorOn: "#00aa00"
   },
   tunguskaGauge: {
     range: {
@@ -79,6 +77,34 @@ var gaugeDefaults = {
       }
     }
   }
+};
+
+getPattern = function (numDigits, numSigFigs) {
+  var pattern = '';
+  for (var i=0;i<numDigits-numSigFigs; i++) {
+    pattern = pattern + '#';
+  }
+  if (numSigFigs) {
+    pattern = pattern + '.';
+    for (i=0;i<numSigFigs; i++) {
+      pattern = pattern + '#';
+    }
+  }
+  return pattern;
+};
+
+alignToPattern = function (value, pattern) {
+  var lengthDiff = pattern.length - value.length;
+  if (lengthDiff) {
+    var alignedValue;
+    for (var i = 0; i<lengthDiff; i++) {
+      alignedValue += ' ';
+    }
+    alignedValue += value;
+    return alignedValue;
+  }
+  else return value;
+  
 };
 
 gaugeList = {

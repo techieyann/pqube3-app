@@ -29,7 +29,20 @@ Template.gauge.onRendered(function () {
 
       }
       catch(err) {}
-      $('#'+data.prefix+'-display').sevenSeg(data.sevenSegment);
+      self.sevenSeg = new SegmentDisplay(data.prefix+'-display');
+      console.log(data.sevenSegment.pattern);
+      self.sevenSeg.pattern         = data.sevenSegment.pattern;
+      self.sevenSeg.displayAngle    = 12;
+      self.sevenSeg.digitHeight     = 20;
+      self.sevenSeg.digitWidth      = 15;
+      self.sevenSeg.digitDistance   = 4;
+      self.sevenSeg.segmentWidth    = 2.5;
+      self.sevenSeg.segmentDistance = 0.5;
+      self.sevenSeg.segmentCount    = 7;
+      self.sevenSeg.cornerType      = 0;
+      self.sevenSeg.colorOn         = data.sevenSegment.colorOn;
+      self.sevenSeg.colorOff        = data.sevenSegment.colorOff;
+      self.sevenSeg.draw();
       var tgOpts = data.tunguskaGauge;
       tgOpts.digital.callback =  function (pV) {
 	return TAPi18n.__(data.gaugeName+'Units');
@@ -88,10 +101,13 @@ Template.gauge.onRendered(function () {
 Template.gauge.helpers({
   updateData: function () {
     var self = Template.instance();
+    var data = Template.currentData();
     var presentVal = Session.get('gauge'+this.prefix+'Value');
     if (presentVal) {
       var val = presentVal.val.toFixed(this.sigFigs);
-      $('#'+this.prefix+'-display').sevenSeg({value: val});
+      if (self.sevenSeg) {
+        self.sevenSeg.setValue(alignToPattern(val, self.sevenSeg.pattern));
+      }
       if (self.gauge)
 	self.gauge.set(val);
       if (self.smoothieLine) {
