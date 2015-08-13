@@ -15,7 +15,7 @@ Template.gauge.onRendered(function () {
     if (data) {
       self.canvas = document.getElementById(data.prefix+'-smoothie-canvas');
       try {
-	$('#'+data.prefix+'-display').sevenSeg('destroy');
+        self.sevenSeg = null;
 	self.gauge.set(data.tunguskaGauge.range.lowStop);
         $('#'+data.prefix+'-tunguska-gauge-lock').remove();
 	if(self.smoothie) {
@@ -30,7 +30,6 @@ Template.gauge.onRendered(function () {
       }
       catch(err) {}
       self.sevenSeg = new SegmentDisplay(data.prefix+'-display');
-      console.log(data.sevenSegment.pattern);
       self.sevenSeg.pattern         = data.sevenSegment.pattern;
       self.sevenSeg.displayAngle    = 12;
       self.sevenSeg.digitHeight     = 20;
