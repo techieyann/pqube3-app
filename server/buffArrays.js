@@ -58,7 +58,13 @@ buffArrays = {
   ambientArray: [
     {name: 'temp', start:0, type:'float'},
     {name: 'humidity', start:4, type:'float'},
-    {name: 'pressure', start:8, type:'float'}
+    {name: 'pressure', start:8, type:'float'},
+    {name: 'pqYear', start: 140, type:'float'},
+    {name: 'pqMonth', start: 144, type:'float'},
+    {name: 'pqDay', start: 148, type:'float'},
+    {name: 'pqHour', start: 152, type:'float'},
+    {name: 'pqMinute', start: 156, type:'float'},
+    {name: 'pqSecond', start: 160, type:'float'}
   ],
 
   graphArray: [

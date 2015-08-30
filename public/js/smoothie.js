@@ -650,7 +650,9 @@
           gx -= 0.5;
         }
         context.moveTo(gx, 0);
-        context.lineTo(gx, dimensions.height);
+        context.lineTo(gx, dimensions.height/4);
+	context.moveTo(gx, dimensions.height*3/4);
+	context.lineTo(gx, dimensions.height);
       }
       context.stroke();
       context.closePath();
@@ -662,11 +664,18 @@
       if (chartOptions.grid.sharpLines) {
         gy -= 0.5;
       }
-      context.beginPath();
-      context.moveTo(0, gy);
+	context.beginPath();
+	context.moveTo(0, gy);
+      for (var t = time - (time % chartOptions.grid.millisPerLine);
+           t >= oldestValidTime;
+           t -= chartOptions.grid.millisPerLine) {
+	context.lineTo(timeToXPixel(t)-10, gy);
+	context.moveTo(timeToXPixel(t)+8, gy);
+      }
       context.lineTo(dimensions.width, gy);
-      context.stroke();
-      context.closePath();
+	context.stroke();
+	context.closePath();
+
     }
     // Bounding rectangle.
     if (chartOptions.grid.borderVisible) {
@@ -801,55 +810,69 @@
       context.restore();
     }
 
+
     // Draw the axis values on the chart.
     if (!chartOptions.labels.disabled && !isNaN(this.valueRange.min) && !isNaN(this.valueRange.max)) {
       var maxValueString = chartOptions.yMaxFormatter(this.valueRange.max, chartOptions.labels.precision),
-          minValueString = chartOptions.yMinFormatter(this.valueRange.min, chartOptions.labels.precision),
-          labelPos = chartOptions.scrollBackwards ? 0 : dimensions.width - context.measureText(maxValueString).width - 2;
+          minValueString = chartOptions.yMinFormatter(this.valueRange.min, chartOptions.labels.precision);
       context.fillStyle = chartOptions.labels.fillStyle;
-      
-      context.fillText(maxValueString, labelPos, chartOptions.labels.fontSize);
-      context.fillText(minValueString, labelPos, dimensions.height - 2);
+//      var labelPos = chartOptions.scrollBackwards ? 0+chartOptions.xOffset/2 : dimensions.width - context.measureText(maxValueString).width - 2;
+      var labelPos = timeToXPixel(Math.floor((time/60000)-1)*60000)+chartOptions.xOffset;
+      context.fillText(maxValueString, labelPos-(context.measureText(maxValueString).width/2), chartOptions.labels.fontSize);
+      context.fillText(minValueString, labelPos-(context.measureText(minValueString).width/2), dimensions.height - 2);
+      for (var i=0; i<2; i++) {
+	labelPos -= 60000/chartOptions.millisPerPixel;
+	context.fillText(maxValueString, labelPos-(context.measureText(maxValueString).width/2), chartOptions.labels.fontSize);
+	context.fillText(minValueString, labelPos-(context.measureText(minValueString).width/2), dimensions.height - 2);
+      }
     }
 
     // Display timestamps along x-axis at the bottom of the chart.
+    context.save();
+      context.translate(canvas.clientHeight / 2, canvas.clientWidth / 2);
+      context.rotate(-Math.PI/2);
+      context.translate(-(canvas.clientWidth / 2), -(canvas.clientHeight / 2));
     if (chartOptions.timestampFormatter && chartOptions.grid.millisPerLine > 0) {
       var textUntilX = chartOptions.scrollBackwards
         ? context.measureText(minValueString).width
         : dimensions.width - context.measureText(minValueString).width + 4;
-      for (var t = time - (time % chartOptions.grid.millisPerLine);
+      var pqubeTime = new Date(Session.get(chartOptions.pqubeId+'Time'));
+      for (var t = pqubeTime - (pqubeTime % chartOptions.grid.millisPerLine);
            t >= oldestValidTime;
            t -= chartOptions.grid.millisPerLine) {
-        var gx = timeToXPixel(t);
+	var gx = timeToXPixel(t)+3;
         // Only draw the timestamp if it won't overlap with the previously drawn one.
-        if ((!chartOptions.scrollBackwards && gx < textUntilX) || (chartOptions.scrollBackwards && gx > textUntilX))  {
-          // Formats the timestamp based on user specified formatting function
-          // SmoothieChart.timeFormatter function above is one such formatting option
-          var tx = new Date(t),
-            ts = chartOptions.timestampFormatter(tx),
-            tsWidth = context.measureText(ts).width;
+	//        if ((!chartOptions.scrollBackwards && gx < textUntilX) || (chartOptions.scrollBackwards && gx > textUntilX))  {
+        // Formats the timestamp based on user specified formatting function
+        // SmoothieChart.timeFormatter function above is one such formatting option
+	var offset = (chartOptions.xOffset ? (chartOptions.xOffset*chartOptions.millisPerPixel) : 0);
+        var tx = new Date(t+offset),
+        ts = chartOptions.timestampFormatter(tx),
+        tsWidth = context.measureText(ts).width;
 
-          textUntilX = chartOptions.scrollBackwards
-            ? gx + tsWidth + 2
-            : gx - tsWidth - 2;
+        textUntilX = chartOptions.scrollBackwards
+          ? gx + tsWidth + 2
+          : gx - tsWidth - 2;
 
-          context.fillStyle = chartOptions.labels.fillStyle;
-          if(chartOptions.scrollBackwards) {
-            context.fillText(ts, gx, dimensions.height - 2);
-          } else {
-            context.fillText(ts, gx - tsWidth, dimensions.height - 2);
-          }
+        context.fillStyle = chartOptions.labels.fillStyle;
+	context.textAlign = 'center';
+        if(chartOptions.scrollBackwards) {
+          context.fillText(ts, dimensions.height/2, gx);
+//	  context.fillText(ts, gx, dimensions.height - 2);
+        } else {
+          context.fillText(ts, gx - tsWidth, dimensions.height - 2);
         }
       }
+      //      }
     }
-
+    context.restore();
     context.restore(); // See .save() above.
     context.restore();
   };
 
   // Sample timestamp formatting function
   SmoothieChart.timeFormatter = function(date) {
-    function pad2(number) { return (number < 10 ? '0' : '') + number }
+    function pad2(number) { return (number < 10 ? '0' : '') + number; }
     return pad2(date.getHours()) + ':' + pad2(date.getMinutes()) + ':' + pad2(date.getSeconds());
   };
 

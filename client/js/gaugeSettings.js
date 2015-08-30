@@ -95,7 +95,6 @@ getPattern = function (numDigits, numSigFigs) {
 
 alignToPattern = function (value, pattern) {
   var lengthDiff = pattern.length - value.length;
-  console.log(lengthDiff);
   if (lengthDiff) {
     var alignedValue = '';
     for (var i = 0; i<lengthDiff; i++) {

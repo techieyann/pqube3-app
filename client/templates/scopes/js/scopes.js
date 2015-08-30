@@ -2,6 +2,9 @@ Template.scopes.helpers({
   siteSelected: function (id) {
     return (Session.equals('scopesSource', id) ? 'selected':'');
   },
+  pqubeTime: function () {
+    return Session.get(Session.get('scopesSource')+'Time');
+  },
   voltageScale: function () {
     return Session.get('voltageScopeScale')+'V/div';
   },

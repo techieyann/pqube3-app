@@ -1,11 +1,13 @@
 <template name="scopes">
+  <div id="scope-selection">
   <select id="scope-site-source" class="site-source">
     <option disabled>{{_ "site"}}</option>
     {{#each pqube}}
     <option value="{{id}}" {{siteSelected id}}>{{_ id}}</option>
     {{/each}}
   </select>
-
+  <span id="pqube-time">{{_ 'localTime'}} {{pqubeTime id}}</span>
+  </div>
   {{> voltageChart}}
   {{> voltageVectors}}
   {{> currentChart}}

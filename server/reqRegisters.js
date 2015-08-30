@@ -52,6 +52,6 @@ reqRegisters = [
   {
     type: 'ambient',
     start: 13822,
-    num: 6
+    num: 84
   }
 ];

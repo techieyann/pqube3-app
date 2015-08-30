@@ -69,10 +69,15 @@ select {
     bottom:20px;
     font-size:25px;
 }
-#scope-site-source {
+#scope-selection{
     position:absolute;
     left:22px;
     top:92px;
+}
+#pqube-time {
+    position:relative;
+    left:20px;
+    font-size:14px;
 }
 #scopes-panel {
     position:absolute;

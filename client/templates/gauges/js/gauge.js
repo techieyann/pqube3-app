@@ -80,14 +80,17 @@ Template.gauge.onRendered(function () {
 	millisPerPixel: 500,
 	xOffset: 30,
 	labels: {
-	  disabled: true
+	  disabled: false,
+	  fillStyle: '#141414'
 	},
 	grid: {
 	  fillStyle: '#e4e4e4',
 	  sharpLines: true,
 	  millisPerLine:30000,
 	  verticalSections: 2
-	}
+	},
+	timestampFormatter:SmoothieChart.timeFormatter,
+	pqubeId: data.pqubeId
       });
       self.smoothie.streamTo(self.canvas);
       self.smoothieLine = new TimeSeries();

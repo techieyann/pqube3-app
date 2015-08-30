@@ -6,9 +6,19 @@ startDataIntervals = function () {
     });
   },500);
 };
+function pad2(number) { return (number < 10 ? '0' : '') + number; }
 
 setPresentVals = function () {
   var now = new Date().getTime();
+  for (i=1; i<3; i++) {
+    var pqubeId = 'pqube'+i;
+      var pqubeData = PQubeData.findOne(pqubeId);
+    if (pqubeData) {
+      var pqDate = pqubeData.pqYear+'-'+pqubeData.pqMonth+'-'+pqubeData.pqDay;
+      var pqTime = pqubeData.pqHour+':'+pad2(pqubeData.pqMinute)+':'+pad2(pqubeData.pqSecond);
+      Session.set(pqubeId+'Time', pqDate+' '+pqTime);
+    }
+  }
   for (i=1; i<4; i++) {
     var gaugeSettings = Session.get('gauge'+i);
     if (gaugeSettings) {
@@ -60,6 +70,8 @@ setPresentVals = function () {
       }
     };
     Session.set('iVectors', currVects);
+
+
     var kWh = (data.energy/1000);
     Session.set('odometer1', kWh.toFixed(2));
     var kVAh = (data.VAh/1000);
@@ -67,6 +79,7 @@ setPresentVals = function () {
     var kVARh = Math.sqrt((kVAh*kVAh) - (kWh*kWh));
     Session.set('odometer3', kVARh.toFixed(2));
     Session.set('resetDate', data.yearER+'-'+data.monthER+'-'+data.dayER);
+
     Session.set('lastFreq', data.freq);
   }
 };
