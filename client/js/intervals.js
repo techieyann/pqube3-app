@@ -14,9 +14,13 @@ setPresentVals = function () {
     var pqubeId = 'pqube'+i;
       var pqubeData = PQubeData.findOne(pqubeId);
     if (pqubeData) {
-      var pqDate = pqubeData.pqYear+'-'+pqubeData.pqMonth+'-'+pqubeData.pqDay;
+      var pqDate = pqubeData.pqYear+'-'+pad2(pqubeData.pqMonth)+'-'+pad2(pqubeData.pqDay);
       var pqTime = pqubeData.pqHour+':'+pad2(pqubeData.pqMinute)+':'+pad2(pqubeData.pqSecond);
       Session.set(pqubeId+'Time', pqDate+' '+pqTime);
+      if (BrowserDetect.browser == "Chrome")
+	Session.set(pqubeId+'Timestamp', pqDate+' '+pqTime);
+      else 
+	Session.set(pqubeId+'Timestamp', pqDate+'T'+pqTime);
     }
   }
   for (i=1; i<4; i++) {

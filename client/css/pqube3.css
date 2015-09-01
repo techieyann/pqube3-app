@@ -365,7 +365,7 @@ select {
 }
 .strip-chart-canvas {
     position:absolute;
-    top:23px;
+    top:21px;
     left:34px;
 }
 .strip-chart-bottom {

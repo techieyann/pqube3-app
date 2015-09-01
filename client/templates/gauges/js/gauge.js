@@ -3,7 +3,7 @@ Template.gauge.onCreated(function () {
   self.smoothieWidth = 130;
   self.smoothieHeight = 210;
   self.smoothieRecorder = {
-    min: 29,
+    min: 31,
     max: 149
   };
 });
@@ -71,6 +71,7 @@ Template.gauge.onRendered(function () {
 	duration: 500
       };
       self.gauge.set(data.tunguskaGauge.range.lowStop);
+      var unitStr = TAPi18n.__(data.gaugeName+'Units');
       self.smoothie = new SmoothieChart({
 	rotate: true,
 	scrollBackwards: true,
@@ -81,16 +82,21 @@ Template.gauge.onRendered(function () {
 	xOffset: 30,
 	labels: {
 	  disabled: false,
-	  fillStyle: '#343434'
+	  fillStyle: '#545454',
+	  unit: unitStr,
+	  precision: data.legendSigFigs,
+	  fontSize:8
 	},
 	grid: {
 	  fillStyle: '#e4e4e4',
+	  strokeStyle: '#545454',
 	  sharpLines: true,
 	  millisPerLine:30000,
 	  verticalSections: 2
 	},
 	timestampFormatter:SmoothieChart.timeFormatter,
 	pqubeId: data.pqubeId
+
       });
       self.smoothie.streamTo(self.canvas);
       self.smoothieLine = new TimeSeries();

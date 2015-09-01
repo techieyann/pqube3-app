@@ -305,7 +305,7 @@
     labels: {
       fillStyle: '#ffffff',
       disabled: false,
-      fontSize: 8,
+      fontSize: 10,
       fontFamily: 'monospace',
       precision: 2
     },
@@ -586,19 +586,19 @@
       if (chartOptions.minValue && chartOptions.maxValue) {
 	var offset = value - chartOptions.minValue;
 	var range = chartOptions.maxValue - chartOptions.minValue;
-	      var yPixel = (dimensions.height+dimensions.top) - (Math.round((offset/range) *(dimensions.height+dimensions.top)));
+	      var yPixel = (dimensions.height) - (Math.round((offset/range) *(dimensions.height)))+dimensions.top;
 	return yPixel;
       }
       else {
 	var offset = value - this.currentVisMinValue;
 	return this.currentValueRange === 0
-          ? dimensions.height
-          : dimensions.height - (Math.round((offset / this.currentValueRange) * dimensions.height));
+          ? dimensions.height+dimensions.top
+          : (dimensions.height+dimensions.top) - (Math.round((offset / this.currentValueRange) * (dimensions.height+dimensions.top)));
       }
     }.bind(this),
     timeToXPixel = function(t) {
       if(chartOptions.scrollBackwards) {
-        return Math.round((time - t) / chartOptions.millisPerPixel);
+        return Math.round((time - t) / chartOptions.millisPerPixel)+dimensions.left;
       }
       return Math.round(dimensions.width - ((time - t) / chartOptions.millisPerPixel));
     };
@@ -650,8 +650,8 @@
           gx -= 0.5;
         }
         context.moveTo(gx, dimensions.top);
-        context.lineTo(gx, (dimensions.top+dimensions.height)/3);
-        context.moveTo(gx, (dimensions.top+dimensions.height)*2/3);
+/*        context.lineTo(gx, (conHeight)/3);
+        context.moveTo(gx, (conHeight)*2/3);*/
         context.lineTo(gx, dimensions.height+dimensions.top);
       }
       context.stroke();
@@ -660,18 +660,18 @@
 
     // Horizontal (value) dividers.
     for (var v = 1; v < chartOptions.grid.verticalSections; v++) {
-      var gy = Math.round(v * (dimensions.height+dimensions.top) / chartOptions.grid.verticalSections);
+      var gy = Math.round(v * (dimensions.height) / chartOptions.grid.verticalSections)+dimensions.top;
       if (chartOptions.grid.sharpLines) {
         gy -= 0.5;
       }
 	    context.beginPath();
-	    context.moveTo(dimensions.top, gy);
-      for (var t = time - (time % chartOptions.grid.millisPerLine);
+      context.moveTo(0, gy);
+/*      for (var t = time - (time % chartOptions.grid.millisPerLine);
            t >= oldestValidTime;
            t -= chartOptions.grid.millisPerLine) {
 	      context.lineTo(timeToXPixel(t)-5, gy);
 	      context.moveTo(timeToXPixel(t)+3, gy);
-      }
+      }*/
       context.lineTo(conWidth, gy);
       context.stroke();
       context.closePath();
@@ -679,6 +679,8 @@
     // Bounding rectangle.
     if (chartOptions.grid.borderVisible) {
       context.beginPath();
+      context.lineWidth = 1;
+      context.strokeStyle = chartOptions.grid.strokeStyle;
       context.strokeRect(0, dimensions.left, conWidth, dimensions.height);
       context.closePath();
     }
@@ -689,7 +691,7 @@
       for (var hl = 0; hl < chartOptions.horizontalLines.length; hl++) {
         var line = chartOptions.horizontalLines[hl],
             hly = Math.round(valueToYPixel(line.value)) - 0.5;
-        context.strokeStyle = line.color || '#ffffff';
+        context.strokeStyle = chartOptions.grid.strokeStyle;
         context.lineWidth = line.lineWidth || 1;
         context.beginPath();
         context.moveTo(dimensions.top, hly);
@@ -698,6 +700,67 @@
         context.closePath();
       }
     }
+
+    // Draw the axis values on the chart.
+    if (!chartOptions.labels.disabled && !isNaN(this.valueRange.min) && !isNaN(this.valueRange.max)) {
+     var maxValueString = chartOptions.yMaxFormatter(this.valueRange.max, chartOptions.labels.precision)+' '+chartOptions.labels.unit,
+          minValueString = chartOptions.yMinFormatter(this.valueRange.min, chartOptions.labels.precision)+' '+chartOptions.labels.unit;
+
+
+			//      var labelPos = chartOptions.scrollBackwards ? 0+chartOptions.xOffset/2 : dimensions.width - context.measureText(maxValueString).width - 2;
+      var labelPos = timeToXPixel(Math.floor((time/60000)-1)*60000)+chartOptions.xOffset;
+      var minStrWidth = context.measureText(minValueString).width;
+      var maxStrWidth = context.measureText(maxValueString).width;
+      var labelHeight = chartOptions.labels.fontSize;
+      context.fillStyle = chartOptions.grid.fillStyle;
+      context.fillRect(labelPos-maxStrWidth/2, 0, maxStrWidth, labelHeight);
+      context.fillRect(labelPos-minStrWidth/2, dimensions.height, minStrWidth, labelHeight);
+      for (var i=0; i<2; i++) {
+        labelPos -= 60000/chartOptions.millisPerPixel;
+	context.fillRect(labelPos-maxStrWidth/2, 0, maxStrWidth, labelHeight);
+	context.fillRect(labelPos-minStrWidth/2, dimensions.height, minStrWidth, labelHeight);
+
+      }
+    }
+
+    // Display timestamps along x-axis at the bottom of the chart.
+    context.save();
+      context.translate(canvas.clientHeight / 2, canvas.clientWidth / 2);
+      context.rotate(-Math.PI/2);
+      context.translate(-(canvas.clientWidth / 2), -(canvas.clientHeight / 2));
+    if (chartOptions.timestampFormatter && chartOptions.grid.millisPerLine > 0) {
+      var textUntilX = chartOptions.scrollBackwards
+        ? context.measureText(minValueString).width
+        : dimensions.width - context.measureText(minValueString).width + 4;
+      var pqubeTime = new Date(Session.get(chartOptions.pqubeId+'Timestamp'));
+      for (var t = pqubeTime - (pqubeTime % chartOptions.grid.millisPerLine)+chartOptions.grid.millisPerLine;
+           t >= oldestValidTime;
+           t -= chartOptions.grid.millisPerLine) {
+	      var gx = timeToXPixel(t)+2;
+        // Formats the timestamp based on user specified formatting function
+        // SmoothieChart.timeFormatter function above is one such formatting option
+	      var offset = (chartOptions.xOffset ? (chartOptions.xOffset*chartOptions.millisPerPixel) : 0);
+        var tx = new Date(t+offset),
+            ts = chartOptions.timestampFormatter(tx),
+            tsWidth = context.measureText(ts).width,
+	tsHeight = chartOptions.labels.fontSize;
+
+        textUntilX = chartOptions.scrollBackwards
+          ? gx + tsWidth + 2
+          : gx - tsWidth - 2;
+
+	      context.textAlign = 'center';
+        if(chartOptions.scrollBackwards) {
+
+	  context.fillStyle = chartOptions.grid.fillStyle;
+	  context.fillRect(dimensions.height/2+dimensions.top-tsWidth/2,gx-tsHeight/2-4, tsWidth, tsHeight+2);
+
+        } else {
+          context.fillText(ts, gx - tsWidth, dimensions.height - 2);
+        }
+      }
+    }
+    context.restore();
 
     // For each data set...
     for (var d = 0; d < this.seriesSet.length; d++) {
@@ -809,21 +872,24 @@
       context.restore();
     }
 
-
     // Draw the axis values on the chart.
     if (!chartOptions.labels.disabled && !isNaN(this.valueRange.min) && !isNaN(this.valueRange.max)) {
-      var maxValueString = chartOptions.yMaxFormatter(this.valueRange.max, chartOptions.labels.precision),
-          minValueString = chartOptions.yMinFormatter(this.valueRange.min, chartOptions.labels.precision);
-      context.fillStyle = chartOptions.labels.fillStyle;
-			//      var labelPos = chartOptions.scrollBackwards ? 0+chartOptions.xOffset/2 : dimensions.width - context.measureText(maxValueString).width - 2;
       var labelPos = timeToXPixel(Math.floor((time/60000)-1)*60000)+chartOptions.xOffset;
-      
-      context.fillText(maxValueString, labelPos-(context.measureText(maxValueString).width/2), chartOptions.labels.fontSize);
-      context.fillText(minValueString, labelPos-(context.measureText(minValueString).width/2), dimensions.top+dimensions.height+3);
+/*     var maxValueString = chartOptions.yMaxFormatter(this.valueRange.max, chartOptions.labels.precision)+' '+chartOptions.labels.unit,
+          minValueString = chartOptions.yMinFormatter(this.valueRange.min, chartOptions.labels.precision)+' '+chartOptions.labels.unit;
+
+			//      var labelPos = chartOptions.scrollBackwards ? 0+chartOptions.xOffset/2 : dimensions.width - context.measureText(maxValueString).width - 2;
+
+      var minStrWidth = context.measureText(minValueString).width;
+      var maxStrWidth = context.measureText(maxValueString).width;
+      var labelHeight = chartOptions.labels.fontSize;*/
+      context.fillStyle = chartOptions.labels.fillStyle;
+      context.fillText(maxValueString, labelPos-(maxStrWidth/2), chartOptions.labels.fontSize);
+      context.fillText(minValueString, labelPos-(minStrWidth/2), dimensions.top+dimensions.height+3);
       for (var i=0; i<2; i++) {
         labelPos -= 60000/chartOptions.millisPerPixel;
-        context.fillText(maxValueString, labelPos-(context.measureText(maxValueString).width/2), chartOptions.labels.fontSize);
-        context.fillText(minValueString, labelPos-(context.measureText(minValueString).width/2), dimensions.top+dimensions.height+3);
+        context.fillText(maxValueString, labelPos-(maxStrWidth/2), labelHeight);
+        context.fillText(minValueString, labelPos-(minStrWidth/2), dimensions.top+dimensions.height+3);
       }
     }
 
@@ -833,11 +899,7 @@
       context.rotate(-Math.PI/2);
       context.translate(-(canvas.clientWidth / 2), -(canvas.clientHeight / 2));
     if (chartOptions.timestampFormatter && chartOptions.grid.millisPerLine > 0) {
-      var textUntilX = chartOptions.scrollBackwards
-        ? context.measureText(minValueString).width
-        : dimensions.width - context.measureText(minValueString).width + 4;
-      var pqubeTime = new Date(Session.get(chartOptions.pqubeId+'Time'));
-      for (var t = pqubeTime - (pqubeTime % chartOptions.grid.millisPerLine);
+      for (var t = (pqubeTime - (pqubeTime % chartOptions.grid.millisPerLine)+chartOptions.grid.millisPerLine);
            t >= oldestValidTime;
            t -= chartOptions.grid.millisPerLine) {
 	      var gx = timeToXPixel(t)+2;
@@ -846,7 +908,8 @@
 	      var offset = (chartOptions.xOffset ? (chartOptions.xOffset*chartOptions.millisPerPixel) : 0);
         var tx = new Date(t+offset),
             ts = chartOptions.timestampFormatter(tx),
-            tsWidth = context.measureText(ts).width;
+            tsWidth = context.measureText(ts).width,
+	tsHeight = chartOptions.labels.fontSize;
 
         textUntilX = chartOptions.scrollBackwards
           ? gx + tsWidth + 2
@@ -855,15 +918,15 @@
         context.fillStyle = chartOptions.labels.fillStyle;
 	      context.textAlign = 'center';
         if(chartOptions.scrollBackwards) {
-          context.fillText(ts, (dimensions.height+dimensions.top)/2, gx);
-          //	  context.fillText(ts, gx, dimensions.height - 2);
+          context.fillText(ts, (dimensions.height)/2+dimensions.top, gx);
+
         } else {
           context.fillText(ts, gx - tsWidth, dimensions.height - 2);
         }
       }
-      //      }
     }
     context.restore();
+
     context.restore(); // See .save() above.
     context.restore();
   };
