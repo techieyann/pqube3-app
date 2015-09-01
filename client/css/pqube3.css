@@ -77,7 +77,7 @@ select {
 #pqube-time {
     position:absolute;
     left:400px;
-    font-size:14px;
+    font-size:10px;
 }
 #scopes-panel {
     position:absolute;
@@ -286,7 +286,7 @@ select {
     position:absolute;
     bottom:8px;
     left:15px;
-    font-size:14px;
+    font-size:12px;
 }
 #site-selectors {
     position:absolute;
