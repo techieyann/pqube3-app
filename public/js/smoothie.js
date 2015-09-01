@@ -305,7 +305,7 @@
     labels: {
       fillStyle: '#ffffff',
       disabled: false,
-      fontSize: 10,
+      fontSize: 8,
       fontFamily: 'monospace',
       precision: 2
     },
@@ -579,14 +579,14 @@
       conWidth = canvas.clientHeight;
       conHeight = canvas.clientWidth;
     }
-    var dimensions = { top: 0, left: 0, width: conWidth, height: conHeight },
+    var dimensions = { top: 5, left: 5, width: conWidth-10, height: conHeight-10 },
         // Calculate the threshold time for the oldest data points.
     oldestValidTime = time - (dimensions.width * chartOptions.millisPerPixel),
     valueToYPixel = function(value) {
       if (chartOptions.minValue && chartOptions.maxValue) {
 	var offset = value - chartOptions.minValue;
 	var range = chartOptions.maxValue - chartOptions.minValue;
-	var yPixel = dimensions.height - (Math.round((offset/range) *dimensions.height));
+	      var yPixel = (dimensions.height+dimensions.top) - (Math.round((offset/range) *(dimensions.height+dimensions.top)));
 	return yPixel;
       }
       else {
@@ -624,15 +624,15 @@
     // This prevents the occasional pixels from curves near the edges overrunning and creating
     // screen cheese (that phrase should need no explanation).
     context.beginPath();
-    context.rect(0, 0, dimensions.width, dimensions.height);
+    context.rect(0, 0, conWidth, conHeight);
     context.clip();
 
     // Clear the working area.
     context.save();
 
     context.fillStyle = chartOptions.grid.fillStyle;
-    context.clearRect(0, 0, dimensions.width, dimensions.height);
-    context.fillRect(0, 0, dimensions.width, dimensions.height);
+    context.clearRect(0, 0, conWidth, conHeight);
+    context.fillRect(0, 0, conWidth, conHeight);
     context.restore();
 
     // Grid lines...
@@ -649,10 +649,10 @@
         if (chartOptions.grid.sharpLines) {
           gx -= 0.5;
         }
-        context.moveTo(gx, 0);
-        context.lineTo(gx, dimensions.height/4);
-	context.moveTo(gx, dimensions.height*3/4);
-	context.lineTo(gx, dimensions.height);
+        context.moveTo(gx, dimensions.top);
+        context.lineTo(gx, (dimensions.top+dimensions.height)/3);
+        context.moveTo(gx, (dimensions.top+dimensions.height)*2/3);
+        context.lineTo(gx, dimensions.height+dimensions.top);
       }
       context.stroke();
       context.closePath();
@@ -660,27 +660,26 @@
 
     // Horizontal (value) dividers.
     for (var v = 1; v < chartOptions.grid.verticalSections; v++) {
-      var gy = Math.round(v * dimensions.height / chartOptions.grid.verticalSections);
+      var gy = Math.round(v * (dimensions.height+dimensions.top) / chartOptions.grid.verticalSections);
       if (chartOptions.grid.sharpLines) {
         gy -= 0.5;
       }
-	context.beginPath();
-	context.moveTo(0, gy);
+	    context.beginPath();
+	    context.moveTo(dimensions.top, gy);
       for (var t = time - (time % chartOptions.grid.millisPerLine);
            t >= oldestValidTime;
            t -= chartOptions.grid.millisPerLine) {
-	context.lineTo(timeToXPixel(t)-10, gy);
-	context.moveTo(timeToXPixel(t)+8, gy);
+	      context.lineTo(timeToXPixel(t)-5, gy);
+	      context.moveTo(timeToXPixel(t)+3, gy);
       }
-      context.lineTo(dimensions.width, gy);
-	context.stroke();
-	context.closePath();
-
+      context.lineTo(conWidth, gy);
+      context.stroke();
+      context.closePath();
     }
     // Bounding rectangle.
     if (chartOptions.grid.borderVisible) {
       context.beginPath();
-      context.strokeRect(0, 0, dimensions.width, dimensions.height);
+      context.strokeRect(0, dimensions.left, conWidth, dimensions.height);
       context.closePath();
     }
     context.restore();
@@ -693,7 +692,7 @@
         context.strokeStyle = line.color || '#ffffff';
         context.lineWidth = line.lineWidth || 1;
         context.beginPath();
-        context.moveTo(0, hly);
+        context.moveTo(dimensions.top, hly);
         context.lineTo(dimensions.width, hly);
         context.stroke();
         context.closePath();
@@ -816,14 +815,15 @@
       var maxValueString = chartOptions.yMaxFormatter(this.valueRange.max, chartOptions.labels.precision),
           minValueString = chartOptions.yMinFormatter(this.valueRange.min, chartOptions.labels.precision);
       context.fillStyle = chartOptions.labels.fillStyle;
-//      var labelPos = chartOptions.scrollBackwards ? 0+chartOptions.xOffset/2 : dimensions.width - context.measureText(maxValueString).width - 2;
+			//      var labelPos = chartOptions.scrollBackwards ? 0+chartOptions.xOffset/2 : dimensions.width - context.measureText(maxValueString).width - 2;
       var labelPos = timeToXPixel(Math.floor((time/60000)-1)*60000)+chartOptions.xOffset;
+      
       context.fillText(maxValueString, labelPos-(context.measureText(maxValueString).width/2), chartOptions.labels.fontSize);
-      context.fillText(minValueString, labelPos-(context.measureText(minValueString).width/2), dimensions.height - 2);
+      context.fillText(minValueString, labelPos-(context.measureText(minValueString).width/2), dimensions.top+dimensions.height+3);
       for (var i=0; i<2; i++) {
-	labelPos -= 60000/chartOptions.millisPerPixel;
-	context.fillText(maxValueString, labelPos-(context.measureText(maxValueString).width/2), chartOptions.labels.fontSize);
-	context.fillText(minValueString, labelPos-(context.measureText(minValueString).width/2), dimensions.height - 2);
+        labelPos -= 60000/chartOptions.millisPerPixel;
+        context.fillText(maxValueString, labelPos-(context.measureText(maxValueString).width/2), chartOptions.labels.fontSize);
+        context.fillText(minValueString, labelPos-(context.measureText(minValueString).width/2), dimensions.top+dimensions.height+3);
       }
     }
 
@@ -840,25 +840,23 @@
       for (var t = pqubeTime - (pqubeTime % chartOptions.grid.millisPerLine);
            t >= oldestValidTime;
            t -= chartOptions.grid.millisPerLine) {
-	var gx = timeToXPixel(t)+3;
-        // Only draw the timestamp if it won't overlap with the previously drawn one.
-	//        if ((!chartOptions.scrollBackwards && gx < textUntilX) || (chartOptions.scrollBackwards && gx > textUntilX))  {
+	      var gx = timeToXPixel(t)+2;
         // Formats the timestamp based on user specified formatting function
         // SmoothieChart.timeFormatter function above is one such formatting option
-	var offset = (chartOptions.xOffset ? (chartOptions.xOffset*chartOptions.millisPerPixel) : 0);
+	      var offset = (chartOptions.xOffset ? (chartOptions.xOffset*chartOptions.millisPerPixel) : 0);
         var tx = new Date(t+offset),
-        ts = chartOptions.timestampFormatter(tx),
-        tsWidth = context.measureText(ts).width;
+            ts = chartOptions.timestampFormatter(tx),
+            tsWidth = context.measureText(ts).width;
 
         textUntilX = chartOptions.scrollBackwards
           ? gx + tsWidth + 2
           : gx - tsWidth - 2;
 
         context.fillStyle = chartOptions.labels.fillStyle;
-	context.textAlign = 'center';
+	      context.textAlign = 'center';
         if(chartOptions.scrollBackwards) {
-          context.fillText(ts, dimensions.height/2, gx);
-//	  context.fillText(ts, gx, dimensions.height - 2);
+          context.fillText(ts, (dimensions.height+dimensions.top)/2, gx);
+          //	  context.fillText(ts, gx, dimensions.height - 2);
         } else {
           context.fillText(ts, gx - tsWidth, dimensions.height - 2);
         }

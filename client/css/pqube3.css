@@ -55,7 +55,7 @@ select {
 }
 #logo {
     position:absolute;
-    top: 20px;
+    top: 40px;
     left: 20px;
 }
 #title-font-sizing {
@@ -69,14 +69,14 @@ select {
     bottom:20px;
     font-size:25px;
 }
-#scope-selection{
+#scope-site-source{
     position:absolute;
-    left:22px;
-    top:92px;
+    left:175px;
+    bottom: 2px;
 }
 #pqube-time {
-    position:relative;
-    left:20px;
+    position:absolute;
+    left:400px;
     font-size:14px;
 }
 #scopes-panel {
@@ -226,14 +226,20 @@ select {
 
 #meta {
     position: absolute;
-    right: 10px;
-    top: 15px;
-    width: 165px;
-    height: 70px;
+    left: 20px;
+    top: 10px;
+		width: 600px;
+    height: 20px;
 }
 #meta p {
     position:relative;
     top: -12px;
+}
+#new-data-status {
+		position:absolute;
+		right: 20px;
+		top: 40px;
+		width: 175px;
 }
 #new-data {
     position:absolute;
@@ -351,7 +357,7 @@ select {
 }
 .strip-chart-background {
     position:absolute;
-    background: #e4e4e4;
+/*    background: #e4e4e4;*/
     top:25px;
     left: 30px;
     width: 135px;
@@ -359,8 +365,8 @@ select {
 }
 .strip-chart-canvas {
     position:absolute;
-    top:25px;
-    left:37px;
+    top:23px;
+    left:34px;
 }
 .strip-chart-bottom {
     position:absolute;

@@ -1,11 +1,14 @@
 <template name="meta">
   <div id="meta">
-      <span id="new-data">{{_ "newData"}}</span>
-      <span id="status-light">
-	<img src="/images/status_{{lightStatus}}.png">
-      </span>
-      <div id="languages">
-	{{> language}}
-      </div>
+		<div id="languages">
+			{{> language}}
+    </div>
+		<select id="scope-site-source" class="site-source">
+			<option disabled>{{_ "site"}}</option>
+			{{#each pqube}}
+			<option value="{{id}}" {{siteSelected id}}>{{_ id}}</option>
+			{{/each}}
+		</select>
+		<span id="pqube-time">{{_ 'localTime'}} {{pqubeTime id}}</span>
   </div>
 </template>

@@ -1,7 +1,7 @@
 Template.gauge.onCreated(function () {
   var self = this;
-  self.smoothieWidth = 120;
-  self.smoothieHeight = 200;
+  self.smoothieWidth = 130;
+  self.smoothieHeight = 210;
   self.smoothieRecorder = {
     min: 29,
     max: 149
@@ -81,7 +81,7 @@ Template.gauge.onRendered(function () {
 	xOffset: 30,
 	labels: {
 	  disabled: false,
-	  fillStyle: '#141414'
+	  fillStyle: '#343434'
 	},
 	grid: {
 	  fillStyle: '#e4e4e4',
