@@ -297,9 +297,12 @@ select {
     top: 322px;
     text-align:center;
 }
+#selector-switch {
+    width:50px;
+}
 #view-selector span {
     position:relative;
-    top:-20px;
+    top:-15px;
 }
 #site-selectors {
     position:absolute;
