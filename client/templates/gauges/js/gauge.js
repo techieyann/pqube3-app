@@ -82,14 +82,14 @@ Template.gauge.onRendered(function () {
 	xOffset: 30,
 	labels: {
 	  disabled: false,
-	  fillStyle: '#545454',
+	  fillStyle: '#747474',
 	  unit: unitStr,
 	  precision: data.legendSigFigs,
 	  fontSize:7
 	},
 	grid: {
 	  fillStyle: '#e4e4e4',
-	  strokeStyle: '#545454',
+	  strokeStyle: '#747474',
 	  sharpLines: true,
 	  millisPerLine:30000,
 	  verticalSections: 2
