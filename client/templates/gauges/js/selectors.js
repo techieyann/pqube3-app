@@ -23,7 +23,9 @@ Template.gaugeSelectors.helpers({
   siteSelected: function (gaugeNum, name) {
     var gauge = Session.get('gauge'+gaugeNum);
     if (gauge) {
-      return (gauge.pqubeID == name ? 'selected':'');
+      console.log(gauge.pqubeId);
+      console.log(name);
+      return (gauge.pqubeId == name ? 'selected':'');
     }
     return '';
   },
