@@ -1,5 +1,5 @@
 {
-	"language": "Language...",
+  "language": "Language...",
   "english": "English",
   "french": "Français",
   "japanese": "日本人",
@@ -10,6 +10,8 @@
   "site": "Site...",
   "pqube1": "PSL Main Service",
   "pqube2": "LBNL Building 90",
+  "meters": "Meters",
+  "spectra": "Spectra",
   "channel": "Channel...",
   "freq": "Frequency",
   "freqUnits": "Hz",
