@@ -2,7 +2,8 @@
   <div id="new-data-status">
     <span id="new-data">{{_ "newData"}}</span>
     <span id="status-light">
-      <img src="/images/status_{{lightStatus}}.png">
+      <img class="{{hidden 'on'}}" src="/images/status_on.png">
+      <img class="{{hidden 'off'}}" src="/images/status_off.png">
     </span>
   </div>
 </template>
