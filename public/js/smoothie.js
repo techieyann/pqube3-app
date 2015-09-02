@@ -714,7 +714,7 @@
         ? context.measureText(minValueString).width
         : dimensions.width - context.measureText(minValueString).width + 4;
       var pqubeTime = new Date(Session.get(chartOptions.pqubeId+'Timestamp'));
-      for (var t = pqubeTime - (pqubeTime % chartOptions.grid.millisPerLine)+chartOptions.grid.millisPerLine;
+      for (var t = time - (time % chartOptions.grid.millisPerLine);
            t >= oldestValidTime;
            t -= chartOptions.grid.millisPerLine) {
 	      var gx = timeToXPixel(t)+2;
@@ -867,14 +867,14 @@
       context.rotate(-Math.PI/2);
       context.translate(-(canvas.clientWidth / 2), -(canvas.clientHeight / 2));
     if (chartOptions.timestampFormatter && chartOptions.grid.millisPerLine > 0) {
-      for (var t = (pqubeTime - (pqubeTime % chartOptions.grid.millisPerLine)+chartOptions.grid.millisPerLine);
-           t >= oldestValidTime;
-           t -= chartOptions.grid.millisPerLine) {
+      t = (time - (time % chartOptions.grid.millisPerLine)+chartOptions.grid.millisPerLine);
+      var pqt = (pqubeTime - (pqubeTime % chartOptions.grid.millisPerLine)+chartOptions.grid.millisPerLine);
+      for (var i=0; i<4; i++) {
 	      var gx = timeToXPixel(t)+2;
         // Formats the timestamp based on user specified formatting function
         // SmoothieChart.timeFormatter function above is one such formatting option
 	      var offset = (chartOptions.xOffset ? (chartOptions.xOffset*chartOptions.millisPerPixel) : 0);
-        var tx = new Date(t+offset),
+        var tx = new Date(pqt+offset),
             ts = chartOptions.timestampFormatter(tx),
             tsWidth = context.measureText(ts).width,
 	tsHeight = chartOptions.labels.fontSize;
@@ -891,6 +891,8 @@
         } else {
           context.fillText(ts, gx - tsWidth, dimensions.height - 2);
         }
+           t -= chartOptions.grid.millisPerLine;
+        pqt -= chartOptions.grid.millisPerLine;
       }
     }
     context.restore();
