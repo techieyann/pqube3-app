@@ -650,40 +650,24 @@
           gx -= 0.5;
         }
         context.moveTo(gx, dimensions.top);
-/*        context.lineTo(gx, (conHeight)/3);
-        context.moveTo(gx, (conHeight)*2/3);*/
         context.lineTo(gx, dimensions.height+dimensions.top);
       }
       context.stroke();
       context.closePath();
     }
-
     // Horizontal (value) dividers.
-    for (var v = 1; v < chartOptions.grid.verticalSections; v++) {
+    for (var v = 0; v <= chartOptions.grid.verticalSections; v++) {
       var gy = Math.round(v * (dimensions.height) / chartOptions.grid.verticalSections)+dimensions.top;
       if (chartOptions.grid.sharpLines) {
         gy -= 0.5;
       }
 	    context.beginPath();
       context.moveTo(0, gy);
-/*      for (var t = time - (time % chartOptions.grid.millisPerLine);
-           t >= oldestValidTime;
-           t -= chartOptions.grid.millisPerLine) {
-	      context.lineTo(timeToXPixel(t)-5, gy);
-	      context.moveTo(timeToXPixel(t)+3, gy);
-      }*/
       context.lineTo(conWidth, gy);
       context.stroke();
       context.closePath();
     }
-    // Bounding rectangle.
-    if (chartOptions.grid.borderVisible) {
-      context.beginPath();
-      context.lineWidth = 1;
-      context.strokeStyle = chartOptions.grid.strokeStyle;
-      context.strokeRect(0, dimensions.left, conWidth, dimensions.height);
-      context.closePath();
-    }
+
     context.restore();
 
     // Draw any horizontal lines...
@@ -705,20 +689,17 @@
     if (!chartOptions.labels.disabled && !isNaN(this.valueRange.min) && !isNaN(this.valueRange.max)) {
      var maxValueString = chartOptions.yMaxFormatter(this.valueRange.max, chartOptions.labels.precision)+' '+chartOptions.labels.unit,
           minValueString = chartOptions.yMinFormatter(this.valueRange.min, chartOptions.labels.precision)+' '+chartOptions.labels.unit;
-
-
-			//      var labelPos = chartOptions.scrollBackwards ? 0+chartOptions.xOffset/2 : dimensions.width - context.measureText(maxValueString).width - 2;
       var labelPos = timeToXPixel(Math.floor((time/60000)-1)*60000)+chartOptions.xOffset;
       var minStrWidth = context.measureText(minValueString).width;
       var maxStrWidth = context.measureText(maxValueString).width;
       var labelHeight = chartOptions.labels.fontSize;
       context.fillStyle = chartOptions.grid.fillStyle;
-      context.fillRect(labelPos-maxStrWidth/2, 0, maxStrWidth, labelHeight);
-      context.fillRect(labelPos-minStrWidth/2, dimensions.height, minStrWidth, labelHeight);
+      context.fillRect(labelPos-maxStrWidth/2-2, 0, maxStrWidth+4, labelHeight);
+      context.fillRect(labelPos-minStrWidth/2-2, dimensions.height, minStrWidth+4, labelHeight);
       for (var i=0; i<2; i++) {
         labelPos -= 60000/chartOptions.millisPerPixel;
-	context.fillRect(labelPos-maxStrWidth/2, 0, maxStrWidth, labelHeight);
-	context.fillRect(labelPos-minStrWidth/2, dimensions.height, minStrWidth, labelHeight);
+	context.fillRect(labelPos-maxStrWidth/2-2, 0, maxStrWidth+4, labelHeight);
+	context.fillRect(labelPos-minStrWidth/2-2, dimensions.height, minStrWidth+4, labelHeight);
 
       }
     }
@@ -750,14 +731,9 @@
           : gx - tsWidth - 2;
 
 	      context.textAlign = 'center';
-        if(chartOptions.scrollBackwards) {
 
 	  context.fillStyle = chartOptions.grid.fillStyle;
-	  context.fillRect(dimensions.height/2+dimensions.top-tsWidth/2,gx-tsHeight/2-4, tsWidth, tsHeight+2);
-
-        } else {
-          context.fillText(ts, gx - tsWidth, dimensions.height - 2);
-        }
+	  context.fillRect(dimensions.height/2+dimensions.top-tsWidth/2-2,gx-tsHeight/2-4, tsWidth+4, tsHeight+2);
       }
     }
     context.restore();
@@ -875,21 +851,13 @@
     // Draw the axis values on the chart.
     if (!chartOptions.labels.disabled && !isNaN(this.valueRange.min) && !isNaN(this.valueRange.max)) {
       var labelPos = timeToXPixel(Math.floor((time/60000)-1)*60000)+chartOptions.xOffset;
-/*     var maxValueString = chartOptions.yMaxFormatter(this.valueRange.max, chartOptions.labels.precision)+' '+chartOptions.labels.unit,
-          minValueString = chartOptions.yMinFormatter(this.valueRange.min, chartOptions.labels.precision)+' '+chartOptions.labels.unit;
-
-			//      var labelPos = chartOptions.scrollBackwards ? 0+chartOptions.xOffset/2 : dimensions.width - context.measureText(maxValueString).width - 2;
-
-      var minStrWidth = context.measureText(minValueString).width;
-      var maxStrWidth = context.measureText(maxValueString).width;
-      var labelHeight = chartOptions.labels.fontSize;*/
       context.fillStyle = chartOptions.labels.fillStyle;
-      context.fillText(maxValueString, labelPos-(maxStrWidth/2), chartOptions.labels.fontSize);
-      context.fillText(minValueString, labelPos-(minStrWidth/2), dimensions.top+dimensions.height+3);
+      context.fillText(maxValueString, labelPos-(maxStrWidth/2), labelHeight);
+      context.fillText(minValueString, labelPos-(minStrWidth/2), dimensions.top+dimensions.height+2);
       for (var i=0; i<2; i++) {
         labelPos -= 60000/chartOptions.millisPerPixel;
         context.fillText(maxValueString, labelPos-(maxStrWidth/2), labelHeight);
-        context.fillText(minValueString, labelPos-(minStrWidth/2), dimensions.top+dimensions.height+3);
+        context.fillText(minValueString, labelPos-(minStrWidth/2), dimensions.top+dimensions.height+2);
       }
     }
 

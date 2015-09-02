@@ -8,8 +8,9 @@ body {
 footer {
     width:100%;
     position:absolute;
-    bottom:20px;
+    top:970px;
     text-align: center;
+    font: black;
 }
 
 a:link {
@@ -77,6 +78,7 @@ select {
 #pqube-time {
     position:absolute;
     left:400px;
+    top:3px;
     font-size:10px;
 }
 #scopes-panel {
@@ -288,29 +290,53 @@ select {
     left:15px;
     font-size:12px;
 }
+#view-selector {
+    position:absolute;
+    left:0px;
+    width:640px;
+    top: 322px;
+    text-align:center;
+}
+#view-selector span {
+    position:relative;
+    top:-20px;
+}
 #site-selectors {
     position:absolute;
-    top: 335px;
+    top: 2px;
     left: 15px;
+    width:630px;
+}
+#spectra {
+position:absolute;
+top:375px;
+left:0px;
+width:640px;
+text-align:center;
+}
+#gauges {
+    position:absolute;
+    top:375px;
 }
 #gauge-selectors {
     position:absolute;
-    top: 365px;
+    top: 32px;
     left: 15px;
+    width: 630px;
 }
 #meter-1 {
     position:absolute;
-    top: 390px;
+    top: 60px;
     left: 15px;
 }
 #meter-2 {
     position:absolute;
-    top: 390px;
+    top: 60px;
     left: 220px;
 }
 #meter-3 {
     position:absolute;
-    top: 390px;
+    top: 60px;
     left: 425px;
 }
 .meter-source,
@@ -354,6 +380,23 @@ select {
     top: 23px;
     left: 89px;
     will-change: left;
+}
+.strip-chart-recorder .circle {
+    position:absolute;
+    top: 23px;
+    left:4px;
+    width:9px;
+    height:9px;
+    border-radius:50%;
+}
+#circle-1 {
+background-color: purple;
+}
+#circle-2 {
+background-color: #D66A00;
+}
+#circle-3 {
+background-color: green;
 }
 .strip-chart-background {
     position:absolute;

@@ -4,6 +4,9 @@ Template.registerHelper('browserSupported', function () {
   return true;
 });
 
+Template.registerHelper('spectraSelected', function () {
+  return Session.get('spectraSelected');
+});
 
 Template.registerHelper('pqube', function () {
   return [

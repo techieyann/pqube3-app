@@ -85,7 +85,7 @@ Template.gauge.onRendered(function () {
 	  fillStyle: '#545454',
 	  unit: unitStr,
 	  precision: data.legendSigFigs,
-	  fontSize:8
+	  fontSize:7
 	},
 	grid: {
 	  fillStyle: '#e4e4e4',

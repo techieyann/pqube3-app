@@ -9,6 +9,7 @@ Meteor.startup(function () {
   if (BrowserDetect.browser == 'Safari')
     $('select').css('color', 'black');
   Session.set('scopesSource', 'pqube1');
+  Session.set('gaugesSelected', true);
   Session.set('voltageScopeScale', 100);
   Session.set('currentScopeScale', 10);
   for (var i=0; i<defaultGauges.length; i++) {
