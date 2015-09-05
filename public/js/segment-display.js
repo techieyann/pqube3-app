@@ -26,7 +26,7 @@ SegmentDisplay.RoundedCorner   = 2;
 function SegmentDisplay(displayId) {
   this.displayId       = displayId;
   this.pattern         = '##:##:##';
-  this.value           = '12:34:56';
+  this.value           = '';
   this.digitHeight     = 20;
   this.digitWidth      = 10;
   this.digitDistance   = 2.5;

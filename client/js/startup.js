@@ -18,7 +18,7 @@ Meteor.startup(function () {
     gaugeSettings.pqubeId = 'pqube1';
     Session.set('gauge'+g.gaugeNum, gaugeSettings);
   }
-  startDataIntervals();
+  startDataInterval();
 });
 
 var defaultGauges = [

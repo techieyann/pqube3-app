@@ -586,7 +586,7 @@
       if (chartOptions.minValue && chartOptions.maxValue) {
 	var offset = value - chartOptions.minValue;
 	var range = chartOptions.maxValue - chartOptions.minValue;
-	      var yPixel = (dimensions.height) - (Math.round((offset/range) *(dimensions.height)))+dimensions.top;
+	      var yPixel = (dimensions.height+dimensions.top) - (Math.round((offset/range) *(dimensions.height)));
 	return yPixel;
       }
       else {
@@ -714,26 +714,28 @@
         ? context.measureText(minValueString).width
         : dimensions.width - context.measureText(minValueString).width + 4;
       var pqubeTime = new Date(Session.get(chartOptions.pqubeId+'Timestamp'));
-      for (var t = time - (time % chartOptions.grid.millisPerLine);
-           t >= oldestValidTime;
-           t -= chartOptions.grid.millisPerLine) {
-	      var gx = timeToXPixel(t)+2;
-        // Formats the timestamp based on user specified formatting function
-        // SmoothieChart.timeFormatter function above is one such formatting option
-	      var offset = (chartOptions.xOffset ? (chartOptions.xOffset*chartOptions.millisPerPixel) : 0);
-        var tx = new Date(t+offset),
-            ts = chartOptions.timestampFormatter(tx),
-            tsWidth = context.measureText(ts).width,
-	tsHeight = chartOptions.labels.fontSize;
+      if (pqubeTime != 'Invalid Date') {
+	for (var t = time - (time % chartOptions.grid.millisPerLine);
+             t >= oldestValidTime;
+             t -= chartOptions.grid.millisPerLine) {
+	  var gx = timeToXPixel(t)+2;
+          // Formats the timestamp based on user specified formatting function
+          // SmoothieChart.timeFormatter function above is one such formatting option
+	  var offset = (chartOptions.xOffset ? (chartOptions.xOffset*chartOptions.millisPerPixel) : 0);
+          var tx = new Date(t+offset),
+          ts = chartOptions.timestampFormatter(tx),
+          tsWidth = context.measureText(ts).width,
+	  tsHeight = chartOptions.labels.fontSize;
 
-        textUntilX = chartOptions.scrollBackwards
-          ? gx + tsWidth + 2
-          : gx - tsWidth - 2;
+          textUntilX = chartOptions.scrollBackwards
+            ? gx + tsWidth + 2
+            : gx - tsWidth - 2;
 
-	      context.textAlign = 'center';
+	  context.textAlign = 'center';
 
 	  context.fillStyle = chartOptions.grid.fillStyle;
 	  context.fillRect(dimensions.height/2+dimensions.top-tsWidth/2-2,gx-tsHeight/2-4, tsWidth+4, tsHeight+2);
+	}
       }
     }
     context.restore();
@@ -756,16 +758,21 @@
       // Retain lastX, lastY for calculating the control points of bezier curves.
       var firstX = 0, lastX = 0, lastY = 0;
       for (var i = 0; i < dataSet.length && dataSet.length !== 1; i++) {
-        var x = timeToXPixel(dataSet[i][0]);
-        var y = null;
-        if (dataSet[i][1] != null)
-          y = valueToYPixel(dataSet[i][1]);
-	if (chartOptions.xOffset) x = x + chartOptions.xOffset;
-        if (i === 0) {
-          firstX = x;
-          context.moveTo(x, y);
-        } else {
-          switch (chartOptions.interpolation) {
+	var outOfRange = false;
+	if (dataSet[i][1] != null) {
+	  if (dataSet[i][1]> chartOptions.maxValue || dataSet[i][1] < chartOptions.minValue) outOfRange = true;
+	}
+	if (!outOfRange) {
+          var x = timeToXPixel(dataSet[i][0]);
+          var y = null;
+          if (dataSet[i][1] != null)
+            y = valueToYPixel(dataSet[i][1]);
+	  if (chartOptions.xOffset) x = x + chartOptions.xOffset;
+          if (i === 0) {
+            firstX = x;
+            context.moveTo(x, y);
+          } else {
+            switch (chartOptions.interpolation) {
             case "linear":
             case "line": {
 
@@ -782,7 +789,7 @@
                     context.lineTo(x,y);
                   }
                 }
-                  
+                
               }
               break;
             }
@@ -824,10 +831,11 @@
 	      }
               break;
             }
+            }
           }
-        }
 
-        lastX = x; lastY = y;
+          lastX = x; lastY = y;
+	}
       }
 
       if (dataSet.length > 1) {
@@ -866,10 +874,10 @@
       context.translate(canvas.clientHeight / 2, canvas.clientWidth / 2);
       context.rotate(-Math.PI/2);
       context.translate(-(canvas.clientWidth / 2), -(canvas.clientHeight / 2));
-    if (chartOptions.timestampFormatter && chartOptions.grid.millisPerLine > 0) {
+    if (chartOptions.timestampFormatter && chartOptions.grid.millisPerLine > 0 && pqubeTime != 'Invalid Date') {
       t = (time - (time % chartOptions.grid.millisPerLine)+chartOptions.grid.millisPerLine);
       var pqt = (pqubeTime - (pqubeTime % chartOptions.grid.millisPerLine)+chartOptions.grid.millisPerLine);
-      for (var i=0; i<4; i++) {
+      for (var i=0; i<5; i++) {
 	      var gx = timeToXPixel(t)+2;
         // Formats the timestamp based on user specified formatting function
         // SmoothieChart.timeFormatter function above is one such formatting option
