@@ -19,7 +19,6 @@ setPresentVals = function () {
 	  blinkNewData.call(dC);
 	  updateScopes.call(dC);
 	}
-        console.log('updating gauges');
 	updateGauges.call(dC);
       }
       else {
