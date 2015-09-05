@@ -19,19 +19,17 @@ setPresentVals = function () {
 	  blinkNewData.call(dC);
 	  updateScopes.call(dC);
 	}
+        console.log('updating gauges');
 	updateGauges.call(dC);
       }
       else {
-
-	if (dC.scopesFlag) clearScopes();
-	clearGauges.call(dC);
+        clearGauges.call(dC);
       }
     }
   }
 };
 
 var newVals = function () {
-  var newData = false;
   var resetStatusFlag = false;
   var pqDate = this.pqubeData.pqYear+'-'+pad2(this.pqubeData.pqMonth)+'-'+pad2(this.pqubeData.pqDay);
   var pqTime = this.pqubeData.pqHour+':'+pad2(this.pqubeData.pqMinute)+':'+pad2(this.pqubeData.pqSecond);
@@ -51,7 +49,7 @@ var newVals = function () {
       if (pqubeStatus.strikesLeft != 0) {
 	pqubeStatus.strikesLeft--;
 	Session.set(this.pqubeId+'Status', pqubeStatus);
-	newData = true;
+        return true;
       }
     }
     else resetStatusFlag = true;
@@ -59,12 +57,12 @@ var newVals = function () {
   if (resetStatusFlag) {
     pqubeStatus = {
       lastNew: pqTimeStamp,
-      strikesLeft: 3
+      strikesLeft: Meteor.settings.public.numStrikes
     };
     Session.set(this.pqubeId+'Status', pqubeStatus);
-    newData = true;
+    return true;
   }
-  return newData;
+  return false;
 };
 
 var updateGauges = function () {
@@ -81,7 +79,13 @@ var updateGauges = function () {
 
 var clearGauges = function () {
   for (var i=1; i<4; i++) {
-    Session.set('gauge'+i+'Value', {time: this.now, val: ''});
+    var gaugeSettings = Session.get('gauge'+i);
+    if (gaugeSettings) {
+      if (gaugeSettings.pqubeId == this.pqubeId) {
+	var presentVal = (this.pqubeData[gaugeSettings.dataSource]*gaugeSettings.multiplier);
+	Session.set('gauge'+i+'Value', {time: this.now, val: ''});
+      }
+    }
   }
 };
 
