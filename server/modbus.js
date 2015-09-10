@@ -55,11 +55,10 @@ Meteor.startup(function () {
     });
     var pqube1Sync = Meteor.wrapAsync(pqubes[1].once, pqubes[1]);
     pqube1Sync('connected', function () {
-      Meteor.setInterval(function () {
-        for (var i=0; i<reqRegisters.length; i++) {
+      console.log('connected to pqube1');
+      for (var i=0; i<reqRegisters.length; i++) {
           initRequest(reqRegisters[i], 1);
-        }
-      }, 500);
+      }
     });
   }
 
@@ -89,38 +88,33 @@ Meteor.startup(function () {
     });
     var pqube2Sync = Meteor.wrapAsync(pqubes[2].once, pqubes[2]);
     pqube2Sync('connected', function () {
-      Meteor.setInterval(function () {
-        for (var i=0; i<reqRegisters.length; i++) {
-          initRequest(reqRegisters[i], 2);
-        }
-      }, 500);
+      for (var i=0; i<reqRegisters.length; i++) {
+        initRequest(reqRegisters[i], 2);
+      }
     });
   }
 
-  var procRegisters = function (registers, type, pqube) {
-    var decoded = decodeRegisters(registers, type);
+  var procRegisters = function (registers, reqRegister, pqube) {
+    var decoded = decodeRegisters(registers, reqRegister);
     console.log(decoded);
     if (decoded) PQubeData.upsert({_id: 'pqube'+pqube}, {$set: decoded});
   };
+  
   var initRequest = function (reqRegister, pqube) {
-    var reqFuture = new Future();
+
+    var requestComplete = Meteor.bindEnvironment(
+      function (err, response) {
+        if(!err && response.values) procRegisters(response.values, reqRegister, pqube);
+      }
+    );
     var pqubeReq = pqubes[pqube].readInputRegisters(reqRegister.start, reqRegister.num, {
       maxRetries: 0,
-      timeout: 1000,
-      interval: -1,
-      onComplete: function (err, response) {
-        if (err) reqFuture.throw(err.message);
-        else if(response.values) reqFuture.return(response.values);
-      }
+      timeout: 500,
+      interval: 500,
+      onComplete: requestComplete
     });
     pqubeReq.on('error', function (err) {
-      console.log(err.message);
+      console.log('pqube'+pqube+': '+reqRegister.type+' timeout');
     });
-    procRegisters(reqFuture.wait(), reqRegister.type, pqube);
   };
 });
-
-
-
-
-
