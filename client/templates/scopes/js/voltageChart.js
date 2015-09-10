@@ -45,22 +45,12 @@ Template.voltageChart.onRendered(function () {
 	l2Data: l2Graph,
 	l3Data: l3Graph
       };
-      updateChartData(self.lineChart, data, 32);
+      var i = 0;
+      for (var key in data) { 
+        updateChartData(self.lineChart, data[key], 'points', i);
+        i++;
+      }
       self.lineChart.update();
     }
   });
 });
-
-var updateChartData = function (chart, data, length) {
-  if (chart.datasets.length) {
-    for (var i=0; i<length; i++) {
-      var j=0;
-      for (var key in data) {
-	if (data[key]) {
-	  chart.datasets[j].points[i].value = data[key][i];
-	  j++;
-	}
-      }
-    }
-  }
-};

@@ -1,9 +1,3 @@
-if(!document.getElementsByClassName) {
-    document.getElementsByClassName = function(className) {
-        return this.querySelectorAll("." + className);
-    };
-    Element.prototype.getElementsByClassName = document.getElementsByClassName;
-}
 
 Meteor.startup(function () {
   if (BrowserDetect.browser == 'Safari')
@@ -18,6 +12,7 @@ Meteor.startup(function () {
     gaugeSettings.pqubeId = 'pqube1';
     Session.set('gauge'+g.gaugeNum, gaugeSettings);
   }
+  Session.set('spectraSource', 'L1NvHarmonics');
   startDataInterval();
 });
 

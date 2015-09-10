@@ -1,0 +1,9 @@
+<template name="spectra">
+  {{#if isHarmonic}}
+  <div id="harmonic-fundamental">
+    {{_ 'fundamental'}}: {{fundamental}} {{_ harmonicUnits}}
+    </div>
+  {{/if}}
+  <canvas id="spectra-chart" width="580" height="500"></canvas>
+  
+</template>

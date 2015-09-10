@@ -114,30 +114,33 @@ Template.gauge.helpers({
     if (presentVal) {
       var val = '';
       if (presentVal.val != '') val = presentVal.val.toFixed(this.sigFigs);
+      
       if (self.sevenSeg) {
         self.sevenSeg.setValue(alignToPattern(val, self.sevenSeg.pattern));
       }
       if (self.gauge) {
-        self.gauge.set(val);
+        if (self.lastVal == '' && val != '') $('#'+this.prefix+'-tunguska-gauge-3').show();
+        if (val == '') $('#'+this.prefix+'-tunguska-gauge-3').hide();
+        else self.gauge.set(val);
       }
       if (self.smoothieLine) {
-	var selector = $('#'+this.prefix+'-smoothie-recorder');
+	      var selector = $('#'+this.prefix+'-smoothie-recorder');
         if (val == '') {
-	  self.smoothieLine.append(presentVal.time, null);
-//	  self.recorderTimeout = Meteor.setTimeout(function () {
-	    selector.css('left', self.smoothieRecorder.min);
-//	  },1500);
-	}
-	else {
-	  self.smoothieLine.append(presentVal.time, val);
-	  var percent = (val - this.tunguskaGauge.range.min) / (this.tunguskaGauge.range.max-this.tunguskaGauge.range.min);
+          self.smoothieLine.append(presentVal.time, null);
+          //	  self.recorderTimeout = Meteor.setTimeout(function () {
+	        selector.css('left', self.smoothieRecorder.min);
+          //	  },1500);
+	      }
+	      else {
+	        self.smoothieLine.append(presentVal.time, val);
+	        var percent = (val - this.tunguskaGauge.range.min) / (this.tunguskaGauge.range.max-this.tunguskaGauge.range.min);
           if (percent < 0) percent = 0;
           if (percent > 1) percent = 1;
-	  var scaled = percent * (self.smoothieRecorder.max-self.smoothieRecorder.min);
-	  var pos = Math.round(scaled + self.smoothieRecorder.min);
-//	  self.recorderTimeout = Meteor.setTimeout(function () {
-	    selector.css('left', pos);
-//	  },1500);
+	        var scaled = percent * (self.smoothieRecorder.max-self.smoothieRecorder.min);
+	        var pos = Math.round(scaled + self.smoothieRecorder.min);
+          //	  self.recorderTimeout = Meteor.setTimeout(function () {
+	        selector.css('left', pos);
+          //	  },1500);
         }
       }
       self.lastVal = presentVal.val;

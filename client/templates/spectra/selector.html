@@ -1,0 +1,10 @@
+<template name="spectraSelector">
+  <div>
+  <select id="spectra-source">
+    <option disabled>{{_ "spectraSource"}}</option>
+    {{#each spectraSource}}
+      <option value="{{spectraName}}" {{spectraSelected spectraName}}>{{_ spectraName}}</option>    
+    {{/each}}
+  </select>
+  </div>
+</template>

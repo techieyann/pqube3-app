@@ -18,6 +18,7 @@ setPresentVals = function () {
         if (dC.scopesFlag) {
           blinkNewData.call(dC);
           updateScopes.call(dC);
+          updateSpectra.call(dC);
         }
 	      updateGauges.call(dC);
       }
@@ -69,10 +70,9 @@ var updateGauges = function () {
     var gaugeSettings = Session.get('gauge'+i);
     if (gaugeSettings) {
       if (gaugeSettings.pqubeId == this.pqubeId) {
-
         var presentVal = (this.pqubeData[gaugeSettings.dataSource]*gaugeSettings.multiplier);
+        if (isNaN(presentVal)) presentVal = '';
         Session.set('gauge'+i+'Value', {time: this.now, val: presentVal});
-        $('#'+i+'-tunguska-gauge-3').show();
       }
     }
   }
@@ -83,10 +83,8 @@ var clearGauges = function () {
     var gaugeSettings = Session.get('gauge'+i);
     if (gaugeSettings) {
       if (gaugeSettings.pqubeId == this.pqubeId) {
-        $('#'+i+'-tunguska-gauge-3').hide();
         var presentVal = (this.pqubeData[gaugeSettings.dataSource]*gaugeSettings.multiplier);
         Session.set('gauge'+i+'Value', {time: this.now, val: ''});
-
       }
     }
   }
@@ -149,6 +147,21 @@ var clearScopes = function () {
   Session.set('iL3NGraph', emptyGraph);
   Session.set('vVectors', {});
   Session.set('iVectors', {});
+};
+
+var updateSpectra = function () {
+  var spectraSource = Session.get('spectraSource');
+  var spectraSelector = spectraList[spectraSource].dataSource;
+  if (spectraList[spectraSource].type == 'harmonic') {
+    var spectraArray = this.pqubeData[spectraSelector];
+    var spectraData = {
+      type: 'harmonic',
+      fundamental: spectraArray.shift().toFixed(4),
+      dataSet: spectraArray
+    };
+    Session.set('spectraData', spectraData);
+  }
+  else Session.set('spectraData', {type: 'freq', dataSet: []});
 };
 
 var blinkNewData = function () {

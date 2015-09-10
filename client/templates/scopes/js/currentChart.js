@@ -48,21 +48,12 @@ Template.currentChart.onRendered(function () {
 	l2Data:  Session.get('iL2NGraph'),
 	l3Data: Session.get('iL3NGraph')
       };
-      updateChartData(self.lineChart, data, 32);
+      var i = 0;
+      for (var key in data) { 
+        updateChartData(self.lineChart, data[key], 'points', i);
+        i++;
+      }
       self.lineChart.update();
     }
   });
 });
-
-
-var updateChartData = function (chart, data, length) {
-  for (var i=0; i<length; i++) {
-    var j=0;
-    for (var key in data) {
-      if (data[key]) {
-	chart.datasets[j].points[i].value = data[key][i];
-	j++;
-      }
-    }
-  }
-};
