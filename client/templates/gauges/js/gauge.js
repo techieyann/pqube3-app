@@ -118,8 +118,7 @@ Template.gauge.helpers({
         self.sevenSeg.setValue(alignToPattern(val, self.sevenSeg.pattern));
       }
       if (self.gauge) {
-	if (val == '') self.gauge.set(data.tunguskaGauge.range.lowStop);
-	else self.gauge.set(val);
+        self.gauge.set(val);
       }
       if (self.smoothieLine) {
 	var selector = $('#'+this.prefix+'-smoothie-recorder');

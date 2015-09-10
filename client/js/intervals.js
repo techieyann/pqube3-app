@@ -15,11 +15,11 @@ setPresentVals = function () {
     dC.scopesFlag = Session.equals('scopesSource', dC.pqubeId);
     if (dC.pqubeData) {
       if(newVals.call(dC)) {
-	if (dC.scopesFlag) {
-	  blinkNewData.call(dC);
-	  updateScopes.call(dC);
-	}
-	updateGauges.call(dC);
+        if (dC.scopesFlag) {
+          blinkNewData.call(dC);
+          updateScopes.call(dC);
+        }
+	      updateGauges.call(dC);
       }
       else {
         clearGauges.call(dC);
@@ -69,8 +69,10 @@ var updateGauges = function () {
     var gaugeSettings = Session.get('gauge'+i);
     if (gaugeSettings) {
       if (gaugeSettings.pqubeId == this.pqubeId) {
-	var presentVal = (this.pqubeData[gaugeSettings.dataSource]*gaugeSettings.multiplier);
-	Session.set('gauge'+i+'Value', {time: this.now, val: presentVal});
+
+        var presentVal = (this.pqubeData[gaugeSettings.dataSource]*gaugeSettings.multiplier);
+        Session.set('gauge'+i+'Value', {time: this.now, val: presentVal});
+        $('#'+i+'-tunguska-gauge-3').show();
       }
     }
   }
@@ -81,8 +83,10 @@ var clearGauges = function () {
     var gaugeSettings = Session.get('gauge'+i);
     if (gaugeSettings) {
       if (gaugeSettings.pqubeId == this.pqubeId) {
-	var presentVal = (this.pqubeData[gaugeSettings.dataSource]*gaugeSettings.multiplier);
-	Session.set('gauge'+i+'Value', {time: this.now, val: ''});
+        $('#'+i+'-tunguska-gauge-3').hide();
+        var presentVal = (this.pqubeData[gaugeSettings.dataSource]*gaugeSettings.multiplier);
+        Session.set('gauge'+i+'Value', {time: this.now, val: ''});
+
       }
     }
   }
