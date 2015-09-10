@@ -117,6 +117,33 @@ gaugeList = {
     displayDigits: 6,
     multiplier: 1
   },
+  iL1: {
+    dataSource: 'iL1',
+    min: 0,
+    max: 50,
+    sigFigs: 3,
+    legendSigFigs: 1,
+    displayDigits: 5,
+    multiplier: 1
+  },
+  iL2: {
+    dataSource: 'iL2',
+    min: 0,
+    max: 50,
+    sigFigs: 3,
+    legendSigFigs: 1,
+    displayDigits: 5,
+    multiplier: 1
+  },
+  iL3: {
+    dataSource: 'iL3',
+    min: 0,
+    max: 50,
+    sigFigs: 3,
+    legendSigFigs: 1,
+    displayDigits: 5,
+    multiplier: 1
+  },
   l1n: {
     dataSource: 'vMagL1N',
     min: 250,
@@ -188,5 +215,50 @@ gaugeList = {
     legendSigFigs: 1,
     displayDigits: 6,
     multiplier: (1/100)
+  },
+  xAcc: {
+    dataSource: 'xAcc',
+    min: 0,
+    max: 1,
+    sigFigs: 3,
+    legendSigFigs: 1,
+    displayDigits: 4,
+    multiplier: -1
+  },
+  yAcc: {
+    dataSource: 'yAcc',
+    min: 0,
+    max: 1,
+    sigFigs: 3,
+    legendSigFigs: 1,
+    displayDigits: 4,
+    multiplier: -1
+  },
+  zAcc: {
+    dataSource: 'zAcc',
+    min: 0,
+    max: 18,
+    sigFigs: 3,
+    legendSigFigs: 1,
+    displayDigits: 4,
+    multiplier: -1
+  },
+  L12k9k: {
+    dataSource: 'L1E2k9k',
+    min: 0,
+    max: 1,
+    sigFigs: 3,
+    legendSigFigs: 1,
+    displayDigits: 4,
+    multiplier: 1    
+  },
+  L18k150k: {
+    dataSource: 'L1E8k150k',
+    min: 0,
+    max: 1,
+    sigFigs: 3,
+    legendSigFigs: 1,
+    displayDigits: 4,
+    multiplier: 1    
   }
 };
