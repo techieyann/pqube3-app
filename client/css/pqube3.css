@@ -317,6 +317,15 @@ left:0px;
 width:640px;
 text-align:center;
 }
+#harmonic-fundamental {
+    margin-top:10px;
+}
+#spectra-chart {
+    background-color: #1A301C;
+    border: solid 1px black;
+    padding:5px;
+    margin-top:15px;
+}
 #gauges {
     position:absolute;
     top:375px;

@@ -3,7 +3,7 @@ Meteor.startup(function () {
   if (BrowserDetect.browser == 'Safari')
     $('select').css('color', 'black');
   Session.set('scopesSource', 'pqube1');
-  Session.set('gaugesSelected', true);
+  Session.set('spectraSelected', false);
   Session.set('voltageScopeScale', 100);
   Session.set('currentScopeScale', 10);
   for (var i=0; i<defaultGauges.length; i++) {
@@ -13,6 +13,7 @@ Meteor.startup(function () {
     Session.set('gauge'+g.gaugeNum, gaugeSettings);
   }
   Session.set('spectraSource', 'L1NvHarmonics');
+  setSubscription();
   startDataInterval();
 });
 

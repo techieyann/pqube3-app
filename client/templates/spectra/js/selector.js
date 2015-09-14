@@ -13,7 +13,6 @@ Template.spectraSelector.helpers({
 
 Template.spectraSelector.events({
   'change #spectra-source': function (e) {
-    console.log(e.target.value);
     Session.set('spectraSource', e.target.value);
   }
 });

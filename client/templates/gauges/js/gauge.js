@@ -44,10 +44,10 @@ Template.gauge.onRendered(function () {
       self.sevenSeg.draw();
       var tgOpts = data.tunguskaGauge;
       tgOpts.digital.callback =  function (pV) {
-	return TAPi18n.__(data.gaugeName+'Units');
+        return TAPi18n.__(data.gaugeName+'Units');
       };
       tgOpts.tick.major.legend.callback = function (n) {
-	return  n.toFixed(data.legendSigFigs);
+        return  n.toFixed(data.legendSigFigs);
       };
       var color;
       switch (data.prefix) {
@@ -67,8 +67,8 @@ Template.gauge.onRendered(function () {
         };
       self.gauge = new TunguskaGauge(data.tunguskaGauge);
       self.gauge.theme.pointer.dynamics = {
-	easing: 'easeOutQuint',
-	duration: 500
+        easing: 'easeOutQuint',
+        duration: 500
       };
       self.gauge.set(data.tunguskaGauge.range.lowStop);
       var unitStr = TAPi18n.__(data.gaugeName+'Units');

@@ -5,37 +5,51 @@ Template.spectra.onRendered(function () {
   self.source = Session.get('spectraSource');
   self.autorun(function () {
     var spectraData = Session.get('spectraData');
-    if (!Session.equals('spectraSource', self.source)) {
-      self.initialized = false;
-      self.source = Session.get('spectraSource');
-    }
-    if (!self.initialized) {
-      var data = {
-        labels: spectraList[self.source].labels,
-        datasets: [
-          {
-            label: "My First dataset",
-            fillColor: "rgba(220,220,220,0.5)",
-            strokeColor: "rgba(220,220,220,0.8)",
-            highlightFill: "rgba(220,220,220,0.75)",
-            highlightStroke: "rgba(220,220,220,1)",
-            data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-          }
-        ]
-      };
-      var options = {};
-      self.barChart = new Chart(self.ctx).Bar(data, options);
-      if (spectraData.type == 'harmonic') {
-        Session.set('spectraFundamental',0);
+    if (spectraData) {
+      if (!Session.equals('spectraSource', self.source)) {
+        self.initialized = false;
+        self.source = Session.get('spectraSource');
       }
-      self.initialized = true;
-    }
-    else {
-      if (spectraData.type == 'harmonic') {
-        Session.set('spectraFundamental',spectraData.fundamental);
+      if (!self.initialized) {
+        var data = {
+          //        labels: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
+          labels: spectraList[self.source].labels,
+          datasets: [
+            {
+              //            label: "My First dataset",
+              fillColor: "rgba(0,163,0,0.5)",
+              //            strokeColor: "rgba(220,220,220,0.8)",
+              highlightFill: "rgba(0,163,0,0.75)",
+              //            highlightStroke: "rgba(220,220,220,1)",
+              data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            }
+          ]
+        };
+        var options = {
+          barValueSpacing: 1,
+          barShowStroke: false,
+          animation: false,
+          omitXLabels: true,
+          scaleShowGridLines: false,
+          scaleShowVerticalLines: false,
+          scaleFontColor: 'rgba(0,163,0,.75)',
+          scaleGridLineColor : 'rgba(0,163,0,1)',
+          scaleLineColor: 'rgba(0,163,0,1)'
+
+        };
+        self.barChart = new Chart(self.ctx).Bar(data, options);
+        if (spectraData.type == 'harmonic') {
+          Session.set('spectraFundamental',0);
+        }
+        self.initialized = true;
       }
-      updateChartData(self.barChart, spectraData.dataSet, 'bars', 0);
-      self.barChart.update();
+      else {
+        if (spectraData.type == 'harmonic') {
+          Session.set('spectraFundamental',spectraData.fundamental);
+        }
+        updateChartData(self.barChart, spectraData.dataSet, 'bars', 0);
+        self.barChart.update();
+      }
     }
   });
 });

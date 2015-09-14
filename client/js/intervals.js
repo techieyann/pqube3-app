@@ -18,7 +18,8 @@ setPresentVals = function () {
         if (dC.scopesFlag) {
           blinkNewData.call(dC);
           updateScopes.call(dC);
-          updateSpectra.call(dC);
+          if (Session.get('spectraSelected'))
+            updateSpectra.call(dC);
         }
 	      updateGauges.call(dC);
       }

@@ -25,13 +25,13 @@ Template.voltageChart.onRendered(function () {
       self.data = {
 	labels: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
 	datasets:[
-	  {label: 'L1-N Current',
+	  {label: 'L1-N Voltage',
 	   strokeColor: "red",
 	   data:emptyGraph},
-	  {label: 'L2-N Current',
+	  {label: 'L2-N Voltage',
 	   strokeColor: "yellow",
 	   data:emptyGraph},
-	  {label: 'L3-N Current',
+	  {label: 'L3-N Voltage',
 	   strokeColor: "#0066FF",
 	   data:emptyGraph}
 	]
