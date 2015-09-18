@@ -1,6 +1,6 @@
 Template.voltageChart.onRendered(function () {
   var self = this;
-
+  var scale = Session.get('voltageScopeScale');
   self.initialized = false;
   self.ctx = $('#voltage-chart').get(0).getContext('2d');
   self.options = {
@@ -10,8 +10,8 @@ Template.voltageChart.onRendered(function () {
     showScale: false,
     scaleOverride: true,
     scaleSteps: 10,
-    scaleStepWidth: 100,
-    scaleStartValue: -500,
+    scaleStepWidth: scale,
+    scaleStartValue: -5*scale,
     showTooltips: false,
         animation: false,
     bezierCurveTension: .5
@@ -20,30 +20,42 @@ Template.voltageChart.onRendered(function () {
     var l1Graph = Session.get('vL1NGraph');
     var l2Graph = Session.get('vL2NGraph');
     var l3Graph = Session.get('vL3NGraph');
+    var stepWidth = Session.get('voltageScopeScale');
+    var initGraph = false;
     if (!self.initialized) {
-      var emptyGraph = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+      l1Graph = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+      l2Graph = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+      l3Graph = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+      initGraph = true;
+    }
+    if (stepWidth != self.options.scaleStepWidth) {
+      self.options.scaleStepWidth = stepWidth;
+      self.options.scaleStartValue = -5*stepWidth;
+      initGraph = true;
+    }
+    if (initGraph) {
       self.data = {
-	labels: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
-	datasets:[
-	  {label: 'L1-N Voltage',
-	   strokeColor: "red",
-	   data:emptyGraph},
-	  {label: 'L2-N Voltage',
-	   strokeColor: "yellow",
-	   data:emptyGraph},
-	  {label: 'L3-N Voltage',
-	   strokeColor: "#0066FF",
-	   data:emptyGraph}
-	]
+        labels: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
+        datasets:[
+          {label: 'L1-N Voltage',
+           strokeColor: "red",
+	         data:l1Graph},
+	        {label: 'L2-N Voltage',
+	         strokeColor: "yellow",
+	         data:l2Graph},
+	        {label: 'L3-N Voltage',
+	         strokeColor: "#0066FF",
+	         data:l3Graph}
+        ]
       };
       self.lineChart = new Chart(self.ctx).Line(self.data, self.options);      
       self.initialized = true;
     }
     else {
       var data = {
-	l1Data: l1Graph,
-	l2Data: l2Graph,
-	l3Data: l3Graph
+	      l1Data: l1Graph,
+	      l2Data: l2Graph,
+	      l3Data: l3Graph
       };
       var i = 0;
       for (var key in data) { 

@@ -77,7 +77,7 @@ Template.gauge.onRendered(function () {
 	scrollBackwards: true,
 	maxValue: tgOpts.range.max,
 	minValue: tgOpts.range.min,
-	interpolation: 'step',
+	interpolation: 'line',
 	millisPerPixel: 500,
 	xOffset: 30,
 	labels: {
@@ -119,17 +119,14 @@ Template.gauge.helpers({
         self.sevenSeg.setValue(alignToPattern(val, self.sevenSeg.pattern));
       }
       if (self.gauge) {
-        if (self.lastVal == '' && val != '') $('#'+this.prefix+'-tunguska-gauge-3').show();
-        if (val == '') $('#'+this.prefix+'-tunguska-gauge-3').hide();
+        if (self.lastVal == '' && val != '') $('#'+this.prefix+'-tunguska-gauge-3, #circle-'+this.prefix).show();
+        if (val == '') $('#'+this.prefix+'-tunguska-gauge-3, #circle-'+this.prefix).hide();
         else self.gauge.set(val);
       }
       if (self.smoothieLine) {
 	      var selector = $('#'+this.prefix+'-smoothie-recorder');
         if (val == '') {
           self.smoothieLine.append(presentVal.time, null);
-          //	  self.recorderTimeout = Meteor.setTimeout(function () {
-	        selector.css('left', self.smoothieRecorder.min);
-          //	  },1500);
 	      }
 	      else {
 	        self.smoothieLine.append(presentVal.time, val);
@@ -138,9 +135,9 @@ Template.gauge.helpers({
           if (percent > 1) percent = 1;
 	        var scaled = percent * (self.smoothieRecorder.max-self.smoothieRecorder.min);
 	        var pos = Math.round(scaled + self.smoothieRecorder.min);
-          //	  self.recorderTimeout = Meteor.setTimeout(function () {
+//          	  self.recorderTimeout = Meteor.setTimeout(function () {
 	        selector.css('left', pos);
-          //	  },1500);
+//          	  },1000);
         }
       }
       self.lastVal = presentVal.val;

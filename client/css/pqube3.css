@@ -89,7 +89,7 @@ select {
 #voltage-chart {
     position:absolute;
     left:27px;
-    top:127px;
+    top:125px;
 }
 #voltage-vectors {
     position:absolute;
@@ -99,7 +99,7 @@ select {
 #current-chart {
     position:absolute;
     left:26px;
-    top:210px;
+    top:215px;
 }
 #current-vectors {
     position:absolute;

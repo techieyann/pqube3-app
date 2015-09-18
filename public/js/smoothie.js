@@ -581,20 +581,20 @@
     }
     var dimensions = { top: 5, left: 5, width: conWidth-10, height: conHeight-10 },
         // Calculate the threshold time for the oldest data points.
-    oldestValidTime = time - (dimensions.width * chartOptions.millisPerPixel),
-    valueToYPixel = function(value) {
-      if (chartOptions.minValue && chartOptions.maxValue) {
-	var offset = value - chartOptions.minValue;
-	var range = chartOptions.maxValue - chartOptions.minValue;
-	      var yPixel = (dimensions.height+dimensions.top) - (Math.round((offset/range) *(dimensions.height)));
-	return yPixel;
-      }
-      else {
-	var offset = value - this.currentVisMinValue;
-	return this.currentValueRange === 0
-          ? dimensions.height+dimensions.top
-          : (dimensions.height+dimensions.top) - (Math.round((offset / this.currentValueRange) * (dimensions.height+dimensions.top)));
-      }
+        oldestValidTime = time - (dimensions.width * chartOptions.millisPerPixel),
+        valueToYPixel = function(value) {
+          if (chartOptions.minValue && chartOptions.maxValue) {
+	          var offset = value - chartOptions.minValue;
+	          var range = chartOptions.maxValue - chartOptions.minValue;
+	          var yPixel = (dimensions.height+dimensions.top) - (Math.round((offset/range) *(dimensions.height)));
+	          return yPixel;
+          }
+          else {
+	          var offset = value - this.currentVisMinValue;
+	          return this.currentValueRange === 0
+              ? dimensions.height+dimensions.top
+              : (dimensions.height+dimensions.top) - (Math.round((offset / this.currentValueRange) * (dimensions.height)));
+          }
     }.bind(this),
     timeToXPixel = function(t) {
       if(chartOptions.scrollBackwards) {
@@ -782,12 +782,12 @@
                   context.lineTo(x, y);
                 }
                 else {
-                  if (Math.abs(lastY-y) < 10)
+//                  if (Math.abs(lastY-y) < 10)
                     context.lineTo(x,y);
-                  else if (i != dataSet.length-1) {
+/*                  else if (i != dataSet.length-1) {
                     context.moveTo(lastX, y);
                     context.lineTo(x,y);
-                  }
+                  }*/
                 }
                 
               }

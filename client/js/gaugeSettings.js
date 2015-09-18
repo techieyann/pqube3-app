@@ -183,7 +183,7 @@ gaugeList = {
   uaneg: {
     dataSource: 'uANeg',
     min: 0,
-    max: 10,
+    max: 20,
     sigFigs: 2,
     legendSigFigs: 1,
     displayDigits: 4,
@@ -218,30 +218,30 @@ gaugeList = {
   },
   xAcc: {
     dataSource: 'xAcc',
-    min: 0,
-    max: 1,
+    min: -10,
+    max: 10,
     sigFigs: 3,
     legendSigFigs: 1,
-    displayDigits: 4,
-    multiplier: -1
+    displayDigits: 5,
+    multiplier: 1
   },
   yAcc: {
     dataSource: 'yAcc',
-    min: 0,
-    max: 1,
+    min: -10,
+    max: 10,
     sigFigs: 3,
     legendSigFigs: 1,
-    displayDigits: 4,
-    multiplier: -1
+    displayDigits: 5,
+    multiplier: 1
   },
   zAcc: {
     dataSource: 'zAcc',
-    min: 0,
-    max: 18,
+    min: -10,
+    max: 10,
     sigFigs: 3,
     legendSigFigs: 1,
-    displayDigits: 4,
-    multiplier: -1
+    displayDigits: 5,
+    multiplier: 1
   },
   L12k9k: {
     dataSource: 'L1E2k9k',

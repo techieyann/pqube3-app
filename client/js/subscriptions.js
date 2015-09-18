@@ -1,12 +1,16 @@
 setSubscription = function () {
   Tracker.autorun(function () {
     var subOpts = {
-      pqube1: {},
-      pqube2: {}
+      pqube1: pqubeTime,
+      pqube2: pqubeTime
     };
     var spectraSelected = Session.get('spectraSelected');
     var scopesSource = Session.get('scopesSource');
-    subOpts[scopesSource] = scopesDataSources;
+    subOpts[scopesSource] = $.extend(true, 
+			                               {}, 
+			                               pqubeTime,
+                                     scopesDataSources);
+
 
     if (spectraSelected) {
       var spectraSource = Session.get('spectraSource');
@@ -26,14 +30,16 @@ setSubscription = function () {
     Meteor.subscribe('pqube2Data', subOpts.pqube2);
   });
 };
-
-var scopesDataSources = {
+var pqubeTime =  {
   pqYear: true,
   pqMonth: true,
   pqDay: true,
   pqHour: true,
   pqMinute: true,
-  pqSecond: true,
+  pqSecond: true
+};
+
+var scopesDataSources = {
   vMagL1N: true,
   vAngL1N: true,
   vMagL2N: true,
