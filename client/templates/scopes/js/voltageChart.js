@@ -2,7 +2,8 @@ Template.voltageChart.onRendered(function () {
   var self = this;
   var scale = Session.get('voltageScopeScale');
   self.initialized = false;
-  self.ctx = $('#voltage-chart').get(0).getContext('2d');
+  self.width = 243;
+  self.height = 86;
   self.options = {
     datasetFill: false,
     pointDot: false,
@@ -34,6 +35,7 @@ Template.voltageChart.onRendered(function () {
       initGraph = true;
     }
     if (initGraph) {
+      if (self.lineChart) self.lineChart.destroy();
       self.data = {
         labels: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
         datasets:[
@@ -48,7 +50,10 @@ Template.voltageChart.onRendered(function () {
 	         data:l3Graph}
         ]
       };
-      self.lineChart = new Chart(self.ctx).Line(self.data, self.options);      
+      var ctx = $('#voltage-chart').get(0).getContext('2d');
+      ctx.canvas.width = self.width;
+      ctx.canvas.height = self.height;
+      self.lineChart = new Chart(ctx).Line(self.data, self.options);      
       self.initialized = true;
     }
     else {

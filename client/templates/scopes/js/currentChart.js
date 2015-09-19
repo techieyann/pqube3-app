@@ -1,10 +1,10 @@
 Template.currentChart.onRendered(function () {
   var self = this;
-
-  self.initialized = false;
-  self.rescale = false;
-  self.ctx = $('#current-chart').get(0).getContext('2d');
   var scale = Session.get('currentScopeScale');
+  self.initialized = false;
+  self.width = 243;
+  self.height = 86;
+
   self.options = {
     datasetFill: false,
     pointDot: false,
@@ -40,6 +40,7 @@ Template.currentChart.onRendered(function () {
       initGraph = true;
     }
     if (initGraph) {
+      if (self.lineChart) self.lineChart.destroy();
       self.data = {
 	      labels: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
 	      datasets:[
@@ -54,7 +55,10 @@ Template.currentChart.onRendered(function () {
 	         data:l3Graph}
 	      ]
       };
-      self.lineChart = new Chart(self.ctx).Line(self.data, self.options);      
+      var ctx = $('#current-chart').get(0).getContext('2d');
+      ctx.canvas.width = self.width;
+      ctx.canvas.height = self.height;
+      self.lineChart = new Chart(ctx).Line(self.data, self.options);      
       self.initialized = true;
     }
     else {
@@ -64,7 +68,7 @@ Template.currentChart.onRendered(function () {
 	      l3Data: l3Graph
       };
       var i = 0;
-      for (var key in data) { 
+      for (var key in data) {
         updateChartData(self.lineChart, data[key], 'points', i);
         i++;
       }

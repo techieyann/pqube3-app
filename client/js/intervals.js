@@ -128,16 +128,20 @@ var updateScopes = function (pqubeData) {
     }
   };
   Session.set('iVectors', currVects);
-  var vArrays = this.pqubeData.vL1NGraph.concat(this.pqubeData.vL2NGraph, this.pqubeData.vL3NGraph);
-  var vMax = Math.max.apply(null, vArrays);
-  var vMin = Math.min.apply(null, vArrays);
-  var vAbsMax = Math.max(Math.abs(vMax), Math.abs(vMin));
-  scopeRescale('voltageScopeScale', vAbsMax);
-  var iArrays = this.pqubeData.iL1NGraph.concat(this.pqubeData.iL2NGraph, this.pqubeData.iL3NGraph);
-  var iMax = Math.max.apply(null, iArrays);
-  var iMin = Math.min.apply(null, iArrays);
-  var iAbsMax = Math.max(Math.abs(iMax), Math.abs(iMin));
-  scopeRescale('currentScopeScale', iAbsMax);
+  if (this.pqubeData.vL1NGraph) {
+    var vArrays = this.pqubeData.vL1NGraph.concat(this.pqubeData.vL2NGraph, this.pqubeData.vL3NGraph);
+    var vMax = Math.max.apply(null, vArrays);
+    var vMin = Math.min.apply(null, vArrays);
+    var vAbsMax = Math.max(Math.abs(vMax), Math.abs(vMin));
+    scopeRescale('voltageScopeScale', vAbsMax);
+  }
+  if (this.pqubeData.iL1NGraph) {
+    var iArrays = this.pqubeData.iL1NGraph.concat(this.pqubeData.iL2NGraph, this.pqubeData.iL3NGraph);
+    var iMax = Math.max.apply(null, iArrays);
+    var iMin = Math.min.apply(null, iArrays);
+    var iAbsMax = Math.max(Math.abs(iMax), Math.abs(iMin));
+    scopeRescale('currentScopeScale', iAbsMax);
+  }
   var kWh = (this.pqubeData.energy/1000);
   Session.set('odometer1', kWh.toFixed(2));
   var kVAh = (this.pqubeData.VAh/1000);
