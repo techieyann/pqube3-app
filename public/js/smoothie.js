@@ -876,12 +876,17 @@
       context.translate(-(canvas.clientWidth / 2), -(canvas.clientHeight / 2));
     if (chartOptions.timestampFormatter && chartOptions.grid.millisPerLine > 0 && pqubeTime != 'Invalid Date') {
       t = (time - (time % chartOptions.grid.millisPerLine)+chartOptions.grid.millisPerLine);
-      var pqt = (pqubeTime - (pqubeTime % chartOptions.grid.millisPerLine)+chartOptions.grid.millisPerLine);
+      var secondsOffset = ((time-pqubeTime)/1000).toFixed(4);
+      secondsOffset = secondsOffset * 1000;
+      var pqubeTime = pqubeTime.getTime()+secondsOffset;
+      var pqt = (pqubeTime - (pqubeTime % chartOptions.grid.millisPerLine) +chartOptions.grid.millisPerLine);
+
       for (var i=0; i<5; i++) {
+        var offset = (chartOptions.xOffset ? (chartOptions.xOffset*chartOptions.millisPerPixel) : 0);
 	      var gx = timeToXPixel(t)+2;
         // Formats the timestamp based on user specified formatting function
         // SmoothieChart.timeFormatter function above is one such formatting option
-	      var offset = (chartOptions.xOffset ? (chartOptions.xOffset*chartOptions.millisPerPixel) : 0);
+
         var tx = new Date(pqt+offset),
             ts = chartOptions.timestampFormatter(tx),
             tsWidth = context.measureText(ts).width,
