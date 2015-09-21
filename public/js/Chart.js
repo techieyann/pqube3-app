@@ -69,7 +69,7 @@
 			scaleShowLabels: true,
 
       // Boolean - Omit x-axis labels
-      omitXLabels: true,
+      omitXLabels: false,
       
 			// Interpolated JS string - can access value
 			scaleLabel: "<%=value%>",

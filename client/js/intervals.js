@@ -165,16 +165,15 @@ var clearScopes = function () {
 var updateSpectra = function () {
   var spectraSource = Session.get('spectraSource');
   var spectraSelector = spectraList[spectraSource].dataSource;
+  var spectraArray = this.pqubeData[spectraSelector];
+  var spectraData = {
+    dataSet: spectraArray,
+    type: spectraList[spectraSource].type
+  };
   if (spectraList[spectraSource].type == 'harmonic') {
-    var spectraArray = this.pqubeData[spectraSelector];
-    var spectraData = {
-      type: 'harmonic',
-      fundamental: spectraArray.shift().toFixed(4),
-      dataSet: spectraArray
-    };
-    Session.set('spectraData', spectraData);
+    spectraData.fundamental = spectraArray.shift().toFixed(4);
   }
-  else Session.set('spectraData', {type: 'freq', dataSet: []});
+  Session.set('spectraData', spectraData);
 };
 
 var blinkNewData = function () {

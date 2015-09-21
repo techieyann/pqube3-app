@@ -50,6 +50,45 @@ var HarmonicsLabelsArray = [
   TAPi18n.__('49th')
 ];
 
+var L1E2k9kLabelsArray = [
+  TAPi18n.__('2kHz'),
+  TAPi18n.__('2.2kHz'),
+  TAPi18n.__('2.4kHz'),
+  TAPi18n.__('2.6kHz'),
+  TAPi18n.__('2.8kHz'),
+  TAPi18n.__('3kHz'),
+  TAPi18n.__('3.2kHz'),
+  TAPi18n.__('3.4kHz'),
+  TAPi18n.__('3.6kHz'),
+  TAPi18n.__('3.8kHz'),
+  TAPi18n.__('4kHz'),
+  TAPi18n.__('4.2kHz'),
+  TAPi18n.__('4.4kHz'),
+  TAPi18n.__('4.6kHz'),
+  TAPi18n.__('4.8kHz'),
+  TAPi18n.__('5kHz'),
+  TAPi18n.__('5.2kHz'),
+  TAPi18n.__('5.4kHz'),
+  TAPi18n.__('5.6kHz'),
+  TAPi18n.__('5.8kHz'),
+  TAPi18n.__('6kHz'),
+  TAPi18n.__('6.2kHz'),
+  TAPi18n.__('6.4kHz'),
+  TAPi18n.__('6.6kHz'),
+  TAPi18n.__('6.8kHz'),
+  TAPi18n.__('7kHz'),
+  TAPi18n.__('7.2kHz'),
+  TAPi18n.__('7.4kHz'),
+  TAPi18n.__('7.6kHz'),
+  TAPi18n.__('7.8kHz'),
+  TAPi18n.__('8kHz'),
+  TAPi18n.__('8.2kHz'),
+  TAPi18n.__('8.4kHz'),
+  TAPi18n.__('8.6kHz'),
+  TAPi18n.__('8.8kHz'),
+  TAPi18n.__('9kHz')
+];
+
 spectraList = {
   L1NvHarmonics: {
     labels: HarmonicsLabelsArray,
@@ -66,15 +105,17 @@ spectraList = {
     dataSource: 'iL1NHarmonics'
   },
   L1E2k9k: {
-    labels: [],
-    length: 32,
+    labels: L1E2k9kLabelsArray,
+    type: 'freq',
+    length: 36,
     dataSource: 'L1E2k9kChart'
-  },
+  }/*,
   L1E8k150k: {
     labels: [],
+    type: 'freq',
     length: 22,
     dataSource: 'L1E8k150kChart'
-  }
+  }*/
 };
 
 

@@ -11,8 +11,12 @@ Template.spectra.onRendered(function () {
         self.source = Session.get('spectraSource');
       }
       if (!self.initialized) {
+	var emptyData = [];
+	var dataLength = spectraList[self.source].length;
+	for (var i=0; i<dataLength; i++) {
+	  emptyData.push(0);
+	}
         var data = {
-          //        labels: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
           labels: spectraList[self.source].labels,
           datasets: [
             {
@@ -21,7 +25,7 @@ Template.spectra.onRendered(function () {
               //            strokeColor: "rgba(220,220,220,0.8)",
               highlightFill: "rgba(0,163,0,0.75)",
               //            highlightStroke: "rgba(220,220,220,1)",
-              data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+              data: emptyData
             }
           ]
         };
@@ -29,13 +33,12 @@ Template.spectra.onRendered(function () {
           barValueSpacing: 1,
           barShowStroke: false,
           animation: false,
-          omitXLabels: true,
+          omitXLabels: false,
           scaleShowGridLines: false,
           scaleShowVerticalLines: false,
           scaleFontColor: 'rgba(0,163,0,.75)',
           scaleGridLineColor : 'rgba(0,163,0,1)',
           scaleLineColor: 'rgba(0,163,0,1)'
-
         };
         self.barChart = new Chart(self.ctx).Bar(data, options);
         if (spectraData.type == 'harmonic') {
