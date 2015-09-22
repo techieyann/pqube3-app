@@ -11,6 +11,70 @@ Template.gauge.onCreated(function () {
 Template.gauge.onRendered(function () {
   var self = this;
   self.autorun(function () {
+    var data;
+    Tracker.nonreactive(function () {
+      data = Template.currentData();
+    });
+    var tgOpts = data.tunguskaGauge;
+    var scale = Session.get(data.prefix+'-gaugeScale');
+    if (self.gauge) {
+      var value = self.gauge.get();
+      $('#'+data.prefix+'-tunguska-gauge-lock').remove();
+      var gaugeMax, gaugeMin;
+      if (scale.anchor == 'min') {
+	gaugeMax = scale.val+scale.init;
+	gaugeMin = scale.val;
+      }
+      else if (scale.anchor == 'center') {
+	gaugeMax = scale.val+scale.init;
+	gaugeMin = scale.val-scale.init;
+      }
+      var range = gaugeMax-gaugeMin;
+      tgOpts.range.min = gaugeMin;
+      tgOpts.range.lowStop = gaugeMin-(range/20);
+      tgOpts.range.max = gaugeMax;
+      tgOpts.range.highStop = gaugeMax+(range/20);
+      tgOpts.tick.major.first = gaugeMin;
+      tgOpts.tick.major.last = gaugeMax;
+      tgOpts.tick.major.interval = range/2;
+      tgOpts.digital.callback =  function (pV) {
+        return TAPi18n.__(data.gaugeName+'Units');
+      };
+      tgOpts.tick.major.legend.callback = function (n) {
+        return  n.toFixed(data.legendSigFigs);
+      };
+      var color;
+      switch (data.prefix) {
+      case 1:
+        color = "purple";
+        break;
+      case 2:
+        color = "#D66A00";
+        break;
+      case 3:
+        color = "green";
+        break;
+      }
+
+      tgOpts.pointer = {
+        fillColor: color
+      };
+      self.gauge = new TunguskaGauge(tgOpts);
+      self.gauge.theme.pointer.dynamics = {
+        easing: 'easeOutQuint',
+        duration: 500
+      };
+      self.gauge.set(value);
+    }
+
+    if (self.smoothie) {
+      self.smoothie.options.minValue = gaugeMin;
+      self.smoothie.options.maxValue = gaugeMax;
+    }
+
+  });
+
+  self.autorun(function () {
     var data = Template.currentData();
     if (data) {
       self.canvas = document.getElementById(data.prefix+'-smoothie-canvas');
@@ -43,6 +107,24 @@ Template.gauge.onRendered(function () {
       self.sevenSeg.colorOff        = data.sevenSegment.colorOff;
       self.sevenSeg.draw();
       var tgOpts = data.tunguskaGauge;
+    var gaugeMax, gaugeMin;
+      var scale = gaugeList[data.gaugeName].scale;
+      if (scale.anchor == 'min') {
+	gaugeMax = scale.val+scale.init;
+	gaugeMin = scale.val;
+      }
+      else if (scale.anchor == 'center') {
+	gaugeMax = scale.val+scale.init;
+	gaugeMin = scale.val-scale.init;
+      }
+      var range = gaugeMax-gaugeMin;
+      tgOpts.range.min = gaugeMin;
+      tgOpts.range.lowStop = gaugeMin-(range/20);
+      tgOpts.range.max = gaugeMax;
+      tgOpts.range.highStop = gaugeMax+(range/20);
+      tgOpts.tick.major.first = gaugeMin;
+      tgOpts.tick.major.last = gaugeMax;
+      tgOpts.tick.major.interval = range/2;
       tgOpts.digital.callback =  function (pV) {
         return TAPi18n.__(data.gaugeName+'Units');
       };
@@ -62,15 +144,15 @@ Template.gauge.onRendered(function () {
         break;
       }
 
-        data.tunguskaGauge.pointer = {
+        tgOpts.pointer = {
             fillColor: color
         };
-      self.gauge = new TunguskaGauge(data.tunguskaGauge);
+      self.gauge = new TunguskaGauge(tgOpts);
       self.gauge.theme.pointer.dynamics = {
         easing: 'easeOutQuint',
         duration: 500
       };
-      self.gauge.set(data.tunguskaGauge.range.lowStop);
+      self.gauge.set(tgOpts.range.lowStop);
       var unitStr = TAPi18n.__(data.gaugeName+'Units');
       self.smoothie = new SmoothieChart({
 	rotate: true,
@@ -113,7 +195,9 @@ Template.gauge.helpers({
     var presentVal = Session.get('gauge'+this.prefix+'Value');
     if (presentVal) {
       var val = '';
-      if (presentVal.val != '') val = presentVal.val.toFixed(this.sigFigs);
+      if (presentVal.val != '') {
+	val = presentVal.val.toFixed(this.sigFigs);
+      }
       
       if (self.sevenSeg) {
         self.sevenSeg.setValue(alignToPattern(val, self.sevenSeg.pattern));
@@ -121,7 +205,42 @@ Template.gauge.helpers({
       if (self.gauge) {
         if (self.lastVal == '' && val != '') $('#'+this.prefix+'-tunguska-gauge-3, #circle-'+this.prefix).show();
         if (val == '') $('#'+this.prefix+'-tunguska-gauge-3, #circle-'+this.prefix).hide();
-        else self.gauge.set(val);
+        else {
+	  self.gauge.set(val);
+	    var gaugeRange = this.tunguskaGauge.range;
+	  if (val < gaugeRange.min || val > gaugeRange.max) {
+
+	    var scale;
+	    var that = this;
+	    Tracker.nonreactive(function () {
+	      scale = Session.get(that.prefix+'-gaugeScale');	    
+	    });
+	    if (scale.anchor == 'center') {
+
+	      var center = scale.val;
+	      var diff = (val > gaugeRange.max ? Math.abs(val-center) : Math.abs(center-val));
+	      var newInit = up125(scale.init);
+	      while (diff > newInit) {
+		newInit = up125(newInit);
+	      }
+	      scale.init = newInit;
+	      Session.set(this.prefix+'-gaugeScale', scale);	      
+	    }
+
+	    if (scale.anchor == 'min') {
+	      if (val > gaugeRange.max) {
+		var diff = Math.abs(val-scale.val);
+		var newInit = up125(scale.init);
+		while (diff > newInit) {
+		  newInit = up125(newInit);
+		}
+		scale.init = newInit;
+		Session.set(this.prefix+'-gaugeScale', scale);	      
+	      }
+	    }
+
+	  }	  
+	}
       }
       if (self.smoothieLine) {
 	      var selector = $('#'+this.prefix+'-smoothie-recorder');

@@ -164,14 +164,19 @@ var clearScopes = function () {
 
 var updateSpectra = function () {
   var spectraSource = Session.get('spectraSource');
-  var spectraSelector = spectraList[spectraSource].dataSource;
-  var spectraArray = this.pqubeData[spectraSelector];
+  var spectraSelectors = spectraList[spectraSource].dataSources;
+  var spectraArray = [];
+  for (var i=0; i<spectraSelectors.length; i++) {
+    spectraArray.push(this.pqubeData[spectraSelectors[i]]);
+  }
   var spectraData = {
     dataSet: spectraArray,
     type: spectraList[spectraSource].type
   };
   if (spectraList[spectraSource].type == 'harmonic') {
-    spectraData.fundamental = spectraArray.shift().toFixed(4);
+    spectraData.fundamental1 = spectraArray[0].shift().toFixed(4);
+    spectraData.fundamental2 = spectraArray[1].shift().toFixed(4);
+    spectraData.fundamental3 = spectraArray[2].shift().toFixed(4);
   }
   Session.set('spectraData', spectraData);
 };

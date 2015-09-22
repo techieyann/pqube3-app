@@ -95,20 +95,41 @@ spectraList = {
     type: 'harmonic',
     length: 49,
     units: 'volts',
-    dataSource: 'vL1NHarmonics'
+    dataSources: [
+      'vL1NHarmonics',
+      'vL2NHarmonics',
+      'vL3NHarmonics'
+    ],
+    colors: [
+      'red',
+      'yellow',
+      '#0066FF'
+    ]
   },
   L1NiHarmonics: {
     labels: HarmonicsLabelsArray,
     type: 'harmonic',
     length: 49,
     units: 'amps',
-    dataSource: 'iL1NHarmonics'
+    dataSources: [
+      'iL1NHarmonics',
+      'iL2NHarmonics',
+      'iL3NHarmonics'
+    ],
+    colors: [
+      'red',
+      'yellow',
+      '#0066FF'
+    ]
   },
   L1E2k9k: {
     labels: L1E2k9kLabelsArray,
     type: 'freq',
     length: 36,
-    dataSource: 'L1E2k9kChart'
+    dataSources: ['L1E2k9kChart'],
+    colors: [
+      'rgba(0,163,0,0.5)'
+    ]
   }/*,
   L1E8k150k: {
     labels: [],

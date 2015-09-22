@@ -1,7 +1,6 @@
 getGaugeSettings = function (name, meterNum) {
   var gauge = gaugeList[name];
   if (gauge) {
-    var range = gauge.max-gauge.min;
     var extendSettings = {
       gaugeName: name,
       prefix: meterNum,
@@ -14,20 +13,7 @@ getGaugeSettings = function (name, meterNum) {
         pattern: getPattern(gauge.displayDigits, gauge.sigFigs)
       },
       tunguskaGauge: {
-	id: meterNum+'-tunguska-gauge',
-	range: {
-	  min: gauge.min,
-	  lowStop: gauge.min-(range/20),
-	  max: gauge.max,
-	  highStop: gauge.max+(range/20)
-	},
-	tick: {
-	  major: {
-	    first: gauge.min,
-	    last: gauge.max,
-	    interval: range/2
-	  }
-	}
+	id: meterNum+'-tunguska-gauge'
       }
     };
     var settings = $.extend(true, 
@@ -110,8 +96,11 @@ alignToPattern = function (value, pattern) {
 gaugeList = {
   freq: {
     dataSource: 'freq',
-    min: 59.9,
-    max: 60.1,
+    scale: {
+      anchor: 'center',
+      val: 60,
+      init: .1
+    },
     sigFigs: 4,
     legendSigFigs: 2,
     displayDigits: 6,
@@ -119,8 +108,11 @@ gaugeList = {
   },
   iL1: {
     dataSource: 'iL1',
-    min: 0,
-    max: 50,
+    scale: {
+      anchor: 'min',
+      val: 0,
+      init: 50
+    },
     sigFigs: 3,
     legendSigFigs: 1,
     displayDigits: 5,
@@ -128,8 +120,11 @@ gaugeList = {
   },
   iL2: {
     dataSource: 'iL2',
-    min: 0,
-    max: 50,
+    scale: {
+      anchor: 'min',
+      val: 0,
+      init: 50
+    },
     sigFigs: 3,
     legendSigFigs: 1,
     displayDigits: 5,
@@ -137,8 +132,11 @@ gaugeList = {
   },
   iL3: {
     dataSource: 'iL3',
-    min: 0,
-    max: 50,
+    scale: {
+      anchor: 'min',
+      val: 0,
+      init: 50
+    },
     sigFigs: 3,
     legendSigFigs: 1,
     displayDigits: 5,
@@ -146,8 +144,11 @@ gaugeList = {
   },
   l1n: {
     dataSource: 'vMagL1N',
-    min: 250,
-    max: 300,
+    scale: {
+      anchor: 'center',
+      val: 275,
+      init: 20
+    },
     sigFigs: 3,
     legendSigFigs: 1,
     displayDigits: 6,
@@ -155,8 +156,11 @@ gaugeList = {
   },
   thd: {
     dataSource: 'THDL1',
-    min: 0,
-    max: 1,
+    scale: {
+      anchor: 'min',
+      val: 0,
+      init: 1
+    },
     sigFigs: 2,
     legendSigFigs: 1,
     displayDigits: 4,
@@ -164,8 +168,11 @@ gaugeList = {
   },
   watts: {
     dataSource: 'watts',
-    min: 0,
-    max: 100,
+    scale: {
+      anchor: 'min',
+      val: 0,
+      init: 100
+    },
     sigFigs: 3,
     legendSigFigs: 1,
     displayDigits: 6,
@@ -173,8 +180,11 @@ gaugeList = {
   }, 
   vars: {
     dataSource: 'VAR',
-    min: 0,
-    max: 20,
+    scale: {
+      anchor: 'min',
+      val: 0,
+      init: 20
+    },
     sigFigs: 3,
     legendSigFigs: 1,
     displayDigits: 5,
@@ -182,8 +192,11 @@ gaugeList = {
   }, 
   uaneg: {
     dataSource: 'uANeg',
-    min: 0,
-    max: 20,
+    scale: {
+      anchor: 'min',
+      val: 0,
+      init: 10
+    },
     sigFigs: 2,
     legendSigFigs: 1,
     displayDigits: 4,
@@ -191,8 +204,11 @@ gaugeList = {
   }, 
   temp: {
     dataSource: 'temp',
-    min: 0,
-    max: 50,
+    scale: {
+      anchor: 'min',
+      val: 0,
+      init: 50
+    },
     sigFigs: 2,
     legendSigFigs: 1,
     displayDigits: 5,
@@ -200,8 +216,11 @@ gaugeList = {
   }, 
   humidity: {
     dataSource: 'humidity',
-    min: 0,
-    max: 100,
+    scale: {
+      anchor: 'min',
+      val: 0,
+      init: 100
+    },
     sigFigs: 2,
     legendSigFigs: 1,
     displayDigits: 5,
@@ -209,8 +228,11 @@ gaugeList = {
   }, 
   pressure: {
     dataSource: 'pressure',
-    min: 9.5,
-    max: 10.5,
+    scale: {
+      anchor: 'center',
+      val: 10,
+      init: .5
+    },
     sigFigs: 4,
     legendSigFigs: 1,
     displayDigits: 6,
@@ -218,8 +240,11 @@ gaugeList = {
   },
   xAcc: {
     dataSource: 'xAcc',
-    min: -10,
-    max: 10,
+    scale: {
+      anchor: 'center',
+      val: 0,
+      init: 1
+    },
     sigFigs: 3,
     legendSigFigs: 1,
     displayDigits: 5,
@@ -227,8 +252,11 @@ gaugeList = {
   },
   yAcc: {
     dataSource: 'yAcc',
-    min: -10,
-    max: 10,
+    scale: {
+      anchor: 'center',
+      val: 0,
+      init: 1
+    },
     sigFigs: 3,
     legendSigFigs: 1,
     displayDigits: 5,
@@ -236,13 +264,16 @@ gaugeList = {
   },
   zAcc: {
     dataSource: 'zAcc',
-    min: -10,
-    max: 10,
+    scale: {
+      anchor: 'center',
+      val: 0,
+      init: 1
+    },
     sigFigs: 3,
     legendSigFigs: 1,
     displayDigits: 5,
     multiplier: 1
-  },
+  }/*,
   L12k9k: {
     dataSource: 'L1E2k9k',
     min: 0,
@@ -260,5 +291,5 @@ gaugeList = {
     legendSigFigs: 1,
     displayDigits: 4,
     multiplier: 1    
-  }
+  }*/
 };

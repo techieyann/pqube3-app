@@ -18,17 +18,19 @@ Template.spectra.onRendered(function () {
 	}
         var data = {
           labels: spectraList[self.source].labels,
-          datasets: [
-            {
-              //            label: "My First dataset",
-              fillColor: "rgba(0,163,0,0.5)",
-              //            strokeColor: "rgba(220,220,220,0.8)",
-              highlightFill: "rgba(0,163,0,0.75)",
-              //            highlightStroke: "rgba(220,220,220,1)",
-              data: emptyData
-            }
-          ]
+          datasets: []
         };
+	var spectraSelectors = spectraList[self.source].dataSources;
+	for (var i=0; i<spectraSelectors.length; i++) {
+	  data.datasets.push(            {
+            //            label: "My First dataset",
+            fillColor: spectraList[self.source].colors[i],
+            //            strokeColor: "rgba(220,220,220,0.8)",
+            highlightFill: "rgba(0,163,0,0.75)",
+            //            highlightStroke: "rgba(220,220,220,1)",
+            data: emptyData
+          });
+	}
         var options = {
           barValueSpacing: 1,
           barShowStroke: false,
@@ -42,15 +44,22 @@ Template.spectra.onRendered(function () {
         };
         self.barChart = new Chart(self.ctx).Bar(data, options);
         if (spectraData.type == 'harmonic') {
-          Session.set('spectraFundamental',0);
+          Session.set('spectraFundamental1',0);
+          Session.set('spectraFundamental2',0);
+          Session.set('spectraFundamental3',0);
         }
         self.initialized = true;
       }
       else {
         if (spectraData.type == 'harmonic') {
-          Session.set('spectraFundamental',spectraData.fundamental);
+          Session.set('spectraFundamental1',spectraData.fundamental1);
+          Session.set('spectraFundamental2',spectraData.fundamental2);
+          Session.set('spectraFundamental3',spectraData.fundamental3);
         }
-        updateChartData(self.barChart, spectraData.dataSet, 'bars', 0);
+	var spectraSelectors = spectraList[self.source].dataSources;
+	for (var i=0; i<spectraSelectors.length; i++) {
+          updateChartData(self.barChart, spectraData.dataSet[i], 'bars', i);
+	}
         self.barChart.update();
       }
     }
@@ -61,8 +70,14 @@ Template.spectra.helpers({
   isHarmonic: function () {
     return spectraList[Session.get('spectraSource')].type == 'harmonic';
   },
-  fundamental: function () {
-    return Session.get('spectraFundamental');
+  fundamental1: function () {
+    return Session.get('spectraFundamental1');
+  },
+  fundamental2: function () {
+    return Session.get('spectraFundamental2');
+  },
+  fundamental3: function () {
+    return Session.get('spectraFundamental3');
   },
   harmonicUnits: function () {
     return spectraList[Session.get('spectraSource')].units;

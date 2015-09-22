@@ -42,6 +42,20 @@ reqRegisters = [
     chart: true
   },
   {
+    type: 'L2vHarmonics',
+    start: 9332,
+    num: 100,
+    index: 'vL2NHarmonics',
+    chart: true
+  },
+  {
+    type: 'L3vHarmonics',
+    start: 9432,
+    num: 100,
+    index: 'vL3NHarmonics',
+    chart: true
+  },
+  {
     type: 'current',
     start: 11000,
     num: 28,
@@ -77,6 +91,20 @@ reqRegisters = [
     chart: true
   },
   {
+    type: 'L2iHarmonics',
+    start: 11326,
+    num: 100,
+    index: 'iL2NHarmonics',
+    chart: true
+  },
+  {
+    type: 'L3iHarmonics',
+    start: 11426,
+    num: 100,
+    index: 'iL3NHarmonics',
+    chart: true
+  },
+  {
     type: 'wPower',
     start: 11832,
     num: 84,
@@ -90,13 +118,13 @@ reqRegisters = [
     index: 'L1E2k9kChart',
     chart: true
   },
-  {
+  /*{
     type: 'L1E8k150K',
     start: 13238,
     num: 44,
     index: 'L1E8k150kChart',
     chart: true
-  },
+  },*/
   {
     type: 'ambient',
     start: 13822,

@@ -14,8 +14,10 @@ setSubscription = function () {
 
     if (spectraSelected) {
       var spectraSource = Session.get('spectraSource');
-      var spectraSelector = spectraList[spectraSource].dataSource;
-      subOpts[scopesSource][spectraSelector] = true;
+      var spectraSelectors = spectraList[spectraSource].dataSources;
+      for (var i=0; i<spectraSelectors.length; i++) {
+	subOpts[scopesSource][spectraSelectors[i]] = true;
+      }
     }
     else {
       for (var i=1; i<4; i++) {

@@ -11,6 +11,7 @@ Meteor.startup(function () {
     var gaugeSettings = getGaugeSettings(g.gaugeName, g.gaugeNum);
     gaugeSettings.pqubeId = 'pqube1';
     Session.set('gauge'+g.gaugeNum, gaugeSettings);
+    Session.set(g.gaugeNum+'-gaugeScale', gaugeList[g.gaugeName].scale);
   }
   Session.set('spectraSource', 'L1NvHarmonics');
   setSubscription();

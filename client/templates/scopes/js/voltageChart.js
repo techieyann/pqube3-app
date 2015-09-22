@@ -41,13 +41,13 @@ Template.voltageChart.onRendered(function () {
         datasets:[
           {label: 'L1-N Voltage',
            strokeColor: "red",
-	         data:l1Graph},
-	        {label: 'L2-N Voltage',
-	         strokeColor: "yellow",
-	         data:l2Graph},
-	        {label: 'L3-N Voltage',
-	         strokeColor: "#0066FF",
-	         data:l3Graph}
+	   data:l1Graph},
+	  {label: 'L2-N Voltage',
+	   strokeColor: "yellow",
+	   data:l2Graph},
+	  {label: 'L3-N Voltage',
+	   strokeColor: "#0066FF",
+	   data:l3Graph}
         ]
       };
       var ctx = $('#voltage-chart').get(0).getContext('2d');
