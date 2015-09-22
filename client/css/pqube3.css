@@ -32,6 +32,15 @@ select {
 .centered {
     text-align: center;
 }
+.red {
+    color: red;
+}
+.yellow {
+    color: yellow;
+}
+.blue {
+    color: #0066FF;
+}
 #bad-browser {
     position:relative;
     width: 480px;

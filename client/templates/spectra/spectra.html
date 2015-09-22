@@ -1,9 +1,9 @@
 <template name="spectra">
   {{#if isHarmonic}}
   <div id="harmonic-fundamental">
-    L1 {{_ 'fundamental'}}: {{fundamental1}} {{_ harmonicUnits}}<br>
-    L2 {{_ 'fundamental'}}: {{fundamental2}} {{_ harmonicUnits}}<br>
-    L3 {{_ 'fundamental'}}: {{fundamental3}} {{_ harmonicUnits}}<br>
+    <span class="red">L1 {{_ 'DC'}}</span>: {{DC1}} {{_ harmonicUnits}}<br>
+    <span class="yellow">L2 {{_ 'DC'}}</span>: {{DC2}} {{_ harmonicUnits}}<br>
+    <span class="blue">L3 {{_ 'DC'}}</span>: {{DC3}} {{_ harmonicUnits}}<br>
     </div>
   {{/if}}
   <canvas id="spectra-chart" width="580" height="450"></canvas>

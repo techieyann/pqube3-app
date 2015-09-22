@@ -13,7 +13,7 @@ Meteor.startup(function () {
     Session.set('gauge'+g.gaugeNum, gaugeSettings);
     Session.set(g.gaugeNum+'-gaugeScale', gaugeList[g.gaugeName].scale);
   }
-  Session.set('spectraSource', 'L1NvHarmonics');
+  Session.set('spectraSource', 'L123NvHarmonics');
   setSubscription();
   startDataInterval();
 });

@@ -174,9 +174,9 @@ var updateSpectra = function () {
     type: spectraList[spectraSource].type
   };
   if (spectraList[spectraSource].type == 'harmonic') {
-    spectraData.fundamental1 = spectraArray[0].shift().toFixed(4);
-    spectraData.fundamental2 = spectraArray[1].shift().toFixed(4);
-    spectraData.fundamental3 = spectraArray[2].shift().toFixed(4);
+    spectraData.DC1 = spectraArray[0].shift().toFixed(4);
+    spectraData.DC2 = spectraArray[1].shift().toFixed(4);
+    spectraData.DC3 = spectraArray[2].shift().toFixed(4);
   }
   Session.set('spectraData', spectraData);
 };

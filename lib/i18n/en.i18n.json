@@ -48,11 +48,11 @@
   "L18k150k": "L1-E 8kHz-150kHz Emissions",
   "L18k150kUnits": "Volts",
   "spectraSource": "Spectra Source",
-  "L1NvHarmonics": "L1-N Voltage Harmonics",
-  "L1NiHarmonics": "L1-N Current Harmonics",
-  "L1E2k9k": "L1-E 2kHz-9kHz Emissions",
+  "L123NvHarmonics": "L-N Voltage Harmonics",
+  "L123NiHarmonics": "L Current Harmonics",
+  "L123E2k9k": "L-E 2kHz-9kHz Emissions",
   "L1E8k150k": "L1-E 8kHz-150kHz Emissions",
-  "fundamental": "Fundamental",
+  "DC": "DC",
   "volts": "Volts",
   "amps": "Amps"
 }

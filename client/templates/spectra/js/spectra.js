@@ -11,11 +11,13 @@ Template.spectra.onRendered(function () {
         self.source = Session.get('spectraSource');
       }
       if (!self.initialized) {
-	var emptyData = [];
-	var dataLength = spectraList[self.source].length;
-	for (var i=0; i<dataLength; i++) {
-	  emptyData.push(0);
-	}
+	      var emptyData = [];
+        var labelsArray = [];
+	      var dataLength = spectraList[self.source].length;
+	      for (var i=0; i<dataLength; i++) {
+	        emptyData.push(0);
+	      }
+        
         var data = {
           labels: spectraList[self.source].labels,
           datasets: []
@@ -44,17 +46,17 @@ Template.spectra.onRendered(function () {
         };
         self.barChart = new Chart(self.ctx).Bar(data, options);
         if (spectraData.type == 'harmonic') {
-          Session.set('spectraFundamental1',0);
-          Session.set('spectraFundamental2',0);
-          Session.set('spectraFundamental3',0);
+          Session.set('spectraDC1',0);
+          Session.set('spectraDC2',0);
+          Session.set('spectraDC3',0);
         }
         self.initialized = true;
       }
       else {
         if (spectraData.type == 'harmonic') {
-          Session.set('spectraFundamental1',spectraData.fundamental1);
-          Session.set('spectraFundamental2',spectraData.fundamental2);
-          Session.set('spectraFundamental3',spectraData.fundamental3);
+          Session.set('spectraDC1',spectraData.DC1);
+          Session.set('spectraDC2',spectraData.DC2);
+          Session.set('spectraDC3',spectraData.DC3);
         }
 	var spectraSelectors = spectraList[self.source].dataSources;
 	for (var i=0; i<spectraSelectors.length; i++) {
@@ -70,14 +72,14 @@ Template.spectra.helpers({
   isHarmonic: function () {
     return spectraList[Session.get('spectraSource')].type == 'harmonic';
   },
-  fundamental1: function () {
-    return Session.get('spectraFundamental1');
+  DC1: function () {
+    return Session.get('spectraDC1');
   },
-  fundamental2: function () {
-    return Session.get('spectraFundamental2');
+  DC2: function () {
+    return Session.get('spectraDC2');
   },
-  fundamental3: function () {
-    return Session.get('spectraFundamental3');
+  DC3: function () {
+    return Session.get('spectraDC3');
   },
   harmonicUnits: function () {
     return spectraList[Session.get('spectraSource')].units;
