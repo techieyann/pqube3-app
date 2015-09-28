@@ -26,6 +26,7 @@ setPresentVals = function () {
       else {
         clearGauges.call(dC);
       }
+      Tracker.flush();
     }
   }
 };
@@ -174,9 +175,9 @@ var updateSpectra = function () {
     type: spectraList[spectraSource].type
   };
   if (spectraList[spectraSource].type == 'harmonic') {
-    spectraData.DC1 = spectraArray[0].shift().toFixed(4);
-    spectraData.DC2 = spectraArray[1].shift().toFixed(4);
-    spectraData.DC3 = spectraArray[2].shift().toFixed(4);
+    spectraData.DC1 = spectraArray[0].shift().toFixed(3);
+    spectraData.DC2 = spectraArray[1].shift().toFixed(3);
+    spectraData.DC3 = spectraArray[2].shift().toFixed(3);
   }
   Session.set('spectraData', spectraData);
 };
