@@ -4,15 +4,14 @@ Meteor.startup(function () {
   var modbus = Meteor.npmRequire('h5.modbus');
 
   // IP and port of the MODBUS slave, default port is 502
-  var IP1 = process.env.pqubeIP1;
-  var IP2 = process.env.pqubeIP2;
-
+  var pqube1Env = process.env.pqubeIP1;
+  var pqube2Env = process.env.pqubeIP2;
+  
   var pqubeOptions = {
     transport: {
       type: 'ip',
       connection: {
         type: 'tcp',
-        port: 502,
         autoConnect: true,
         autoReconnect: true,
         minConnectTime: 2500,
@@ -27,15 +26,18 @@ Meteor.startup(function () {
     defaultTimeout: 100
   };
   var pqubes = [];
-  if (IP1) {
+  if (pqube1Env) {
     var socket1 = new net.Socket();
+    var pqube1EnvArray = pqube1Env.split(':');
+    var IP1 = pqube1EnvArray[0];
+    var pqube1Port = (pqube1EnvArray[1] ? pqube1EnvArray[1] : 502);
     pqubes[1] = modbus.createMaster({
       transport: {
         type: 'ip',
         connection: {
           type: 'tcp',
           host: IP1,
-          port: 502,
+          port: pqube1Port,
           socket: socket1,
           autoConnect: true,
           autoReconnect: true,
@@ -55,7 +57,6 @@ Meteor.startup(function () {
     });
     var pqube1Sync = Meteor.wrapAsync(pqubes[1].once, pqubes[1]);
     pqube1Sync('connected', function () {
-      console.log('connected to pqube1');
       for (var i=0; i<reqRegisters.length; i++) {
           initRequest(reqRegisters[i], 1);
       }
@@ -63,15 +64,18 @@ Meteor.startup(function () {
   }
 
 
-  if (IP2) {
+  if (pqube2Env) {
     var socket2 = new net.Socket();
+    var pqube2EnvArray = pqube2Env.split(':');
+    var IP2 = pqube2EnvArray[0];
+    var pqube2Port = (pqube2EnvArray[1] ? pqube2EnvArray[1] : 502);
     pqubes[2] = modbus.createMaster({
       transport: {
         type: 'ip',
         connection: {
           type: 'tcp',
           host: IP2,
-          port: 502,
+          port: pqube2Port,
           socket: socket2,
           autoConnect: true,
           autoReconnect: true,
