@@ -30,7 +30,8 @@ Meteor.startup(function () {
     var socket1 = new net.Socket();
     var pqube1EnvArray = pqube1Env.split(':');
     var IP1 = pqube1EnvArray[0];
-    var pqube1Port = (pqube1EnvArray[1] ? pqube1EnvArray[1] : 502);
+    console.log(pqube1EnvArray);
+    var pqube1Port = (pqube1EnvArray[1] ? parseInt(pqube1EnvArray[1]) : 502);
     pqubes[1] = modbus.createMaster({
       transport: {
         type: 'ip',
@@ -53,10 +54,11 @@ Meteor.startup(function () {
       defaultTimeout: 100
     });
     pqubes[1].on('error', function (err) {
-      console.log(err.message);
+      console.log('pqube 1 '+err.message);
     });
     var pqube1Sync = Meteor.wrapAsync(pqubes[1].once, pqubes[1]);
     pqube1Sync('connected', function () {
+      console.log('connected to pqube1');
       for (var i=0; i<reqRegisters.length; i++) {
           initRequest(reqRegisters[i], 1);
       }
@@ -68,7 +70,8 @@ Meteor.startup(function () {
     var socket2 = new net.Socket();
     var pqube2EnvArray = pqube2Env.split(':');
     var IP2 = pqube2EnvArray[0];
-    var pqube2Port = (pqube2EnvArray[1] ? pqube2EnvArray[1] : 502);
+    var pqube2Port = (pqube2EnvArray[1] ? parseInt(pqube2EnvArray[1]) : 502);
+    console.log(pqube2EnvArray);
     pqubes[2] = modbus.createMaster({
       transport: {
         type: 'ip',
@@ -92,6 +95,7 @@ Meteor.startup(function () {
     });
     var pqube2Sync = Meteor.wrapAsync(pqubes[2].once, pqubes[2]);
     pqube2Sync('connected', function () {
+      console.log('connected to pqube2');
       for (var i=0; i<reqRegisters.length; i++) {
         initRequest(reqRegisters[i], 2);
       }
@@ -100,7 +104,7 @@ Meteor.startup(function () {
 
   var procRegisters = function (registers, reqRegister, pqube) {
     var decoded = decodeRegisters(registers, reqRegister);
-    console.log(decoded);
+//    console.log(decoded);
     if (decoded) PQubeData.upsert({_id: 'pqube'+pqube}, {$set: decoded});
   };
   
