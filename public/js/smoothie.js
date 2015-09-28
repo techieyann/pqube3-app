@@ -533,9 +533,9 @@
 	presentScale = scaleDown;
       }
       meterScale.init = presentScale;
-      console.log(chartOptions.meter);
+/*      console.log(chartOptions.meter);
       console.log(chartDelta);
-      console.log(meterScale);
+      console.log(meterScale);*/
       Session.set(chartOptions.meter+'-gaugeScale', meterScale);
     }
     // Scale the chartMaxValue to add padding at the top if required
