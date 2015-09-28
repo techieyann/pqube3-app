@@ -10,7 +10,7 @@ getGaugeSettings = function (name, meterNum) {
       legendSigFigs: gauge.legendSigFigs,
       multiplier: gauge.multiplier,
       sevenSegment: {
-        pattern: getPattern(gauge.displayDigits, gauge.sigFigs)
+        pattern: getPattern(gauge.sigFigs)
       },
       tunguskaGauge: {
 	id: meterNum+'-tunguska-gauge'
@@ -65,7 +65,8 @@ var gaugeDefaults = {
   }
 };
 
-getPattern = function (numDigits, numSigFigs) {
+getPattern = function (numSigFigs) {
+  var numDigits = 6;
   var pattern = '';
   for (var i=0;i<numDigits-numSigFigs; i++) {
     pattern = pattern + '#';
@@ -103,7 +104,6 @@ gaugeList = {
     },
     sigFigs: 4,
     legendSigFigs: 2,
-    displayDigits: 6,
     multiplier: 1
   },
   iL1: {
@@ -115,7 +115,6 @@ gaugeList = {
     },
     sigFigs: 3,
     legendSigFigs: 1,
-    displayDigits: 5,
     multiplier: 1
   },
   iL2: {
@@ -127,7 +126,6 @@ gaugeList = {
     },
     sigFigs: 3,
     legendSigFigs: 1,
-    displayDigits: 5,
     multiplier: 1
   },
   iL3: {
@@ -139,7 +137,6 @@ gaugeList = {
     },
     sigFigs: 3,
     legendSigFigs: 1,
-    displayDigits: 5,
     multiplier: 1
   },
   l1n: {
@@ -151,7 +148,6 @@ gaugeList = {
     },
     sigFigs: 3,
     legendSigFigs: 1,
-    displayDigits: 6,
     multiplier: 1
   },
   thd: {
@@ -163,7 +159,6 @@ gaugeList = {
     },
     sigFigs: 2,
     legendSigFigs: 1,
-    displayDigits: 4,
     multiplier: 1
   },
   watts: {
@@ -175,7 +170,6 @@ gaugeList = {
     },
     sigFigs: 3,
     legendSigFigs: 1,
-    displayDigits: 6,
     multiplier: (1/1000)
   }, 
   vars: {
@@ -187,7 +181,6 @@ gaugeList = {
     },
     sigFigs: 3,
     legendSigFigs: 1,
-    displayDigits: 5,
     multiplier: (1/1000)
   }, 
   uaneg: {
@@ -199,7 +192,6 @@ gaugeList = {
     },
     sigFigs: 2,
     legendSigFigs: 1,
-    displayDigits: 4,
     multiplier: 1
   }, 
   temp: {
@@ -211,7 +203,6 @@ gaugeList = {
     },
     sigFigs: 2,
     legendSigFigs: 1,
-    displayDigits: 5,
     multiplier: 1
   }, 
   humidity: {
@@ -223,7 +214,6 @@ gaugeList = {
     },
     sigFigs: 2,
     legendSigFigs: 1,
-    displayDigits: 5,
     multiplier: 1
   }, 
   pressure: {
@@ -235,7 +225,6 @@ gaugeList = {
     },
     sigFigs: 4,
     legendSigFigs: 1,
-    displayDigits: 6,
     multiplier: (1/100)
   },
   xAcc: {
@@ -247,7 +236,6 @@ gaugeList = {
     },
     sigFigs: 3,
     legendSigFigs: 1,
-    displayDigits: 5,
     multiplier: 1
   },
   yAcc: {
@@ -259,7 +247,6 @@ gaugeList = {
     },
     sigFigs: 3,
     legendSigFigs: 1,
-    displayDigits: 5,
     multiplier: 1
   },
   zAcc: {
@@ -271,7 +258,6 @@ gaugeList = {
     },
     sigFigs: 3,
     legendSigFigs: 1,
-    displayDigits: 5,
     multiplier: 1
   }/*,
   L12k9k: {
@@ -280,7 +266,6 @@ gaugeList = {
     max: 1,
     sigFigs: 3,
     legendSigFigs: 1,
-    displayDigits: 4,
     multiplier: 1    
   },
   L18k150k: {
@@ -289,7 +274,6 @@ gaugeList = {
     max: 1,
     sigFigs: 3,
     legendSigFigs: 1,
-    displayDigits: 4,
     multiplier: 1    
   }*/
 };
