@@ -496,22 +496,48 @@
 
   SmoothieChart.prototype.updateValueRange = function() {
     // Calculate the current scale of the chart, from all time series.
+
     var chartOptions = this.options,
         chartMaxValue = Number.NaN,
         chartMinValue = Number.NaN;
-
+    var meterScale;
+    Tracker.nonreactive(function () {
+        meterScale = Session.get(chartOptions.meter+'-gaugeScale');
+    });
+    var presentScale = meterScale.init,
+        anchor = meterScale.anchor;
+    
     for (var d = 0; d < this.seriesSet.length; d++) {
       // TODO(ndunn): We could calculate / track these values as they stream in.
       var timeSeries = this.seriesSet[d].timeSeries;
       if (!isNaN(timeSeries.maxValue)) {
         chartMaxValue = !isNaN(chartMaxValue) ? Math.max(chartMaxValue, timeSeries.maxValue) : timeSeries.maxValue;
       }
-
       if (!isNaN(timeSeries.minValue)) {
         chartMinValue = !isNaN(chartMinValue) ? Math.min(chartMinValue, timeSeries.minValue) : timeSeries.minValue;
       }
     }
-
+    if (chartMinValue || chartMaxValue) {
+      var chartDelta;
+      if (anchor == 'min') {
+	chartDelta = Math.abs(chartMaxValue - meterScale.val);
+      }
+      if (anchor == 'center') {
+	var chartUpDelta = (chartMaxValue ? Math.abs(chartMaxValue-meterScale.val) : 0);
+	var chartDownDelta = (chartMinValue ? Math.abs(meterScale.val-chartMinValue) : 0);
+	chartDelta = Math.max(chartUpDelta, chartDownDelta);
+      }
+      var scaleDown = down125(presentScale);
+      while (scaleDown > chartDelta) {
+	scaleDown = down125(scaleDown);
+	presentScale = scaleDown;
+      }
+      meterScale.init = presentScale;
+      console.log(chartOptions.meter);
+      console.log(chartDelta);
+      console.log(meterScale);
+      Session.set(chartOptions.meter+'-gaugeScale', meterScale);
+    }
     // Scale the chartMaxValue to add padding at the top if required
     if (chartOptions.maxValue != null) {
       chartMaxValue = chartOptions.maxValue;
@@ -541,7 +567,6 @@
       this.currentValueRange += chartOptions.scaleSmoothing * valueRangeDiff;
       this.currentVisMinValue += chartOptions.scaleSmoothing * minValueDiff;
     }
-
     this.valueRange = { min: chartMinValue, max: chartMaxValue };
   };
 
