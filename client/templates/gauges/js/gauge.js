@@ -28,6 +28,8 @@ Template.gauge.onRendered(function () {
 	gaugeMax = scale.val+scale.init;
 	gaugeMin = scale.val-scale.init;
       }
+      console.log(gaugeMax);
+      console.log(gaugeMin);
       var range = gaugeMax-gaugeMin;
       tgOpts.range.min = gaugeMin;
       tgOpts.range.lowStop = gaugeMin-(range/20);
@@ -87,8 +89,11 @@ Template.gauge.onRendered(function () {
 	    self.canvas.width = self.smoothieWidth;
 	    self.canvas.height = self.smoothieHeight;
 	    self.smoothie.stop();
+	    self.smoothie.removeTimeseries(self.smoothieLine);
+	    self.smoothieLine.clear();
+	    self.smoothieLine.resetBounds();
 	    delete self.smoothie;
-	    self.smoothieLine = null;
+	    delete self.smoothieLine;
 	    Meteor.clearTimeout(self.recorderTimeout);
 	  }
 
@@ -110,6 +115,7 @@ Template.gauge.onRendered(function () {
 	var tgOpts = data.tunguskaGauge;
 	var gaugeMax, gaugeMin;
 	var scale = gaugeList[data.gaugeName].scale;
+      Session.set(data.prefix+'-gaugeScale', scale);
 	if (scale.anchor == 'min') {
 	  gaugeMax = scale.val+scale.init;
 	  gaugeMin = scale.val;
@@ -209,9 +215,11 @@ Template.gauge.helpers({
         if (val == '') $('#'+this.prefix+'-tunguska-gauge-3, #circle-'+this.prefix).hide();
         else {
 	  self.gauge.set(val);
-	    var gaugeRange = this.tunguskaGauge.range;
-	  if (val < gaugeRange.min || val > gaugeRange.max) {
 
+	    var gaugeRange = this.tunguskaGauge.range;
+
+	  if (val < gaugeRange.min || val > gaugeRange.max) {
+	    console.log(val);
 	    var scale;
 	    var that = this;
 	    Tracker.nonreactive(function () {
@@ -221,7 +229,7 @@ Template.gauge.helpers({
 
 	      var center = scale.val;
 	      var diff = (val > gaugeRange.max ? Math.abs(val-center) : Math.abs(center-val));
-	      var newInit = up125(scale.init);
+	      var newInit = up125(gaugeRange.max-scale.val);
 	      while (diff > newInit) {
 		newInit = up125(newInit);
 	      }
@@ -232,11 +240,12 @@ Template.gauge.helpers({
 	    if (scale.anchor == 'min') {
 	      if (val > gaugeRange.max) {
 		var diff = Math.abs(val-scale.val);
-		var newInit = up125(scale.init);
+		var newInit = up125(gaugeRange.max);
 		while (diff > newInit) {
 		  newInit = up125(newInit);
 		}
 		scale.init = newInit;
+		console.log(newInit);
 		Session.set(this.prefix+'-gaugeScale', scale);	      
 	      }
 	    }

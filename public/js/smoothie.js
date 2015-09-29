@@ -501,20 +501,33 @@
         chartMaxValue = Number.NaN,
         chartMinValue = Number.NaN;
     var meterScale;
-//    Tracker.nonreactive(function () {
+    Tracker.nonreactive(function () {
         meterScale = Session.get(chartOptions.meter+'-gaugeScale');
-//    });
+    });
     var presentScale = meterScale.init,
         anchor = meterScale.anchor;
     
     for (var d = 0; d < this.seriesSet.length; d++) {
       // TODO(ndunn): We could calculate / track these values as they stream in.
-      var timeSeries = this.seriesSet[d].timeSeries;
-      if (!isNaN(timeSeries.maxValue)) {
-        chartMaxValue = !isNaN(chartMaxValue) ? Math.max(chartMaxValue, timeSeries.maxValue) : timeSeries.maxValue;
-      }
-      if (!isNaN(timeSeries.minValue)) {
-        chartMinValue = !isNaN(chartMinValue) ? Math.min(chartMinValue, timeSeries.minValue) : timeSeries.minValue;
+      var timeSeries = this.seriesSet[d].timeSeries.data;
+      if (timeSeries.length) {
+	var timeSeriesMaxValue = timeSeries[0][1];
+	var timeSeriesMinValue = timeSeries[0][1];
+	for (var i=1; i<timeSeries.length; i++) {
+	  if (timeSeriesMaxValue < timeSeries[i][1]) timeSeriesMaxValue = timeSeries[i][1];
+	  if (timeSeriesMinValue > timeSeries[i][1]) timeSeriesMinValue = timeSeries[i][1];
+	}
+	if (isNaN(chartMaxValue)) chartMaxValue = timeSeriesMaxValue;
+	else if (timeSeriesMaxValue > chartMaxValue) chartMaxValue = timeSeriesMaxValue;
+	if (isNaN(chartMinValue)) chartMinValue = timeSeriesMinValue;
+	else if (timeSeriesMinValue < chartMinValue) chartMinValue = timeSeriesMinValue;
+	/*
+	  if (!isNaN(timeSeries.maxValue)) {
+          chartMaxValue = !isNaN(chartMaxValue) ? Math.max(chartMaxValue, timeSeries.maxValue) : timeSeries.maxValue;
+	  }
+	  if (!isNaN(timeSeries.minValue)) {
+          chartMinValue = !isNaN(chartMinValue) ? Math.min(chartMinValue, timeSeries.minValue) : timeSeries.minValue;
+	  }*/
       }
     }
     if (chartMinValue || chartMaxValue) {
@@ -528,33 +541,46 @@
 	var chartDownDelta = (chartMinValue && !isNaN(chartMinValue) ? Math.abs(meterScale.val-chartMinValue) : 0);
 	chartDelta = Math.max(chartUpDelta, chartDownDelta);
       }
+
       if (chartDelta) {
 	var scaleDown = down125(presentScale);
-/*	if (scaleDown > chartDelta) {
-
+	var scalingDown = false;
+	if (scaleDown > chartDelta) {
+	  scalingDown = true;
+	  console.log(chartMaxValue);
+	  console.log(chartMinValue);
 	  console.log(chartOptions.meter);
 	  console.log(scaleDown);
 	  console.log(chartDelta);
-	}*/
+	}
 	while (scaleDown > chartDelta) {
 	  presentScale = scaleDown;
 	  scaleDown = down125(scaleDown);
 	}
-
+	if (scalingDown)
+	  console.log(presentScale);
 	meterScale.init = presentScale;
+
 	Session.set(chartOptions.meter+'-gaugeScale', meterScale);
+	Tracker.flush();
+	if (scalingDown) console.log(Session.get(chartOptions.meter+'-gaugeScale'));
+
       }
     }
     // Scale the chartMaxValue to add padding at the top if required
     if (chartOptions.maxValue != null) {
-      chartMaxValue = chartOptions.maxValue;
+      chartMaxValue = meterScale.val + meterScale.init;
+
+//      chartMaxValue = chartOptions.maxValue;
     } else {
       chartMaxValue *= chartOptions.maxValueScale;
     }
 
     // Set the minimum if we've specified one
     if (chartOptions.minValue != null) {
-      chartMinValue = chartOptions.minValue;
+      if (anchor == 'min') chartMinValue = meterScale.val;
+      else if (anchor == 'center') chartMinValue = meterScale.val - meterScale.init;
+      else chartMinValue = chartOptions.minValue;
     } else {
       chartMinValue -= Math.abs(chartMinValue * chartOptions.minValueScale - chartMinValue);
     }

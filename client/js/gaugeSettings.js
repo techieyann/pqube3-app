@@ -111,7 +111,7 @@ gaugeList = {
     scale: {
       anchor: 'min',
       val: 0,
-      init: 50
+      init: 1
     },
     sigFigs: 3,
     legendSigFigs: 1,
@@ -122,7 +122,7 @@ gaugeList = {
     scale: {
       anchor: 'min',
       val: 0,
-      init: 50
+      init: 1
     },
     sigFigs: 3,
     legendSigFigs: 1,
@@ -133,7 +133,7 @@ gaugeList = {
     scale: {
       anchor: 'min',
       val: 0,
-      init: 50
+      init: 1
     },
     sigFigs: 3,
     legendSigFigs: 1,
@@ -144,7 +144,7 @@ gaugeList = {
     scale: {
       anchor: 'center',
       val: 280,
-      init: 20
+      init: 1
     },
     sigFigs: 3,
     legendSigFigs: 1,
@@ -166,7 +166,7 @@ gaugeList = {
     scale: {
       anchor: 'min',
       val: 0,
-      init: 100
+      init: 1
     },
     sigFigs: 3,
     legendSigFigs: 1,
@@ -177,7 +177,7 @@ gaugeList = {
     scale: {
       anchor: 'min',
       val: 0,
-      init: 20
+      init: 1
     },
     sigFigs: 3,
     legendSigFigs: 1,
@@ -188,7 +188,7 @@ gaugeList = {
     scale: {
       anchor: 'min',
       val: 0,
-      init: 10
+      init: 1
     },
     sigFigs: 2,
     legendSigFigs: 1,
@@ -199,7 +199,7 @@ gaugeList = {
     scale: {
       anchor: 'min',
       val: 0,
-      init: 50
+      init: 1
     },
     sigFigs: 2,
     legendSigFigs: 1,
@@ -210,7 +210,7 @@ gaugeList = {
     scale: {
       anchor: 'min',
       val: 0,
-      init: 100
+      init: 1
     },
     sigFigs: 2,
     legendSigFigs: 1,

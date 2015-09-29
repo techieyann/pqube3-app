@@ -48,7 +48,8 @@ Template.gaugeSelectors.events({
     var pqube = Session.get('gauge'+e.target.dataset.meter).pqubeId;
     var gaugeSettings = getGaugeSettings(e.target.value, parseInt(e.target.dataset.meter,10));
     gaugeSettings.pqubeId = pqube;
-    Session.set('gauge'+e.target.dataset.meter, gaugeSettings);
     Session.set(e.target.dataset.meter+'-gaugeScale', gaugeList[e.target.value].scale);
+    Session.set('gauge'+e.target.dataset.meter, gaugeSettings);
+
   }
 });
