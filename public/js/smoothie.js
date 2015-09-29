@@ -518,29 +518,32 @@
       }
     }
     if (chartMinValue || chartMaxValue) {
-      var chartDelta;
+      var chartDelta = 0;
       if (anchor == 'min') {
-	chartDelta = Math.abs(chartMaxValue - meterScale.val);
+	if (chartMaxValue)
+	  chartDelta = Math.abs(chartMaxValue - meterScale.val);
       }
       if (anchor == 'center') {
 	var chartUpDelta = (chartMaxValue ? Math.abs(chartMaxValue-meterScale.val) : 0);
 	var chartDownDelta = (chartMinValue ? Math.abs(meterScale.val-chartMinValue) : 0);
 	chartDelta = Math.max(chartUpDelta, chartDownDelta);
       }
-      var scaleDown = down125(presentScale);
-/*      if (scaleDown > chartDelta) {
+      if (chartDelta) {
+	var scaleDown = down125(presentScale);
+	if (scaleDown > chartDelta) {
 
-	console.log(chartOptions.meter);
-	console.log(scaleDown);
-	console.log(chartDelta);
-	console.log(meterScale);
-      }*/
-      while (scaleDown > chartDelta) {
-	presentScale = scaleDown;
-	scaleDown = down125(scaleDown);
+	  console.log(chartOptions.meter);
+	  console.log(scaleDown);
+	  console.log(chartDelta);
+	  console.log(meterScale);
+	}
+	while (scaleDown > chartDelta) {
+	  presentScale = scaleDown;
+	  scaleDown = down125(scaleDown);
+	}
+	meterScale.init = presentScale;
+	Session.set(chartOptions.meter+'-gaugeScale', meterScale);
       }
-      meterScale.init = presentScale;
-      Session.set(chartOptions.meter+'-gaugeScale', meterScale);
     }
     // Scale the chartMaxValue to add padding at the top if required
     if (chartOptions.maxValue != null) {
