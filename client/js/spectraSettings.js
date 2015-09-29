@@ -1,4 +1,5 @@
 var HarmonicsLabelsArray = [
+  TAPi18n.__('DC'),
   TAPi18n.__('Fund'),
   TAPi18n.__('2'),
   TAPi18n.__('3'),
@@ -94,7 +95,10 @@ spectraList = {
     labels: HarmonicsLabelsArray,
     type: 'harmonic',
     length: 49,
-    units: 'volts',
+    units: {
+      y: 'volts',
+      x: 'harmonic'
+    },
     dataSources: [
       'vL1NHarmonics',
       'vL2NHarmonics',
@@ -110,7 +114,10 @@ spectraList = {
     labels: HarmonicsLabelsArray,
     type: 'harmonic',
     length: 49,
-    units: 'amps',
+    units: {
+      y: 'amps',
+      x: 'harmonic'
+    },
     dataSources: [
       'iL1Harmonics',
       'iL2Harmonics',
@@ -126,6 +133,10 @@ spectraList = {
     labels: L1E2k9kLabelsArray,
     type: 'freq',
     length: 36,
+    units: {
+      y: 'volts',
+      x: 'kHz'
+    },
     dataSources: [
       'L1E2k9kChart',
       'L2E2k9kChart',

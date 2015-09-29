@@ -167,17 +167,32 @@ var updateSpectra = function () {
   var spectraSource = Session.get('spectraSource');
   var spectraSelectors = spectraList[spectraSource].dataSources;
   var spectraArray = [];
+  var max = 0;
+  var type = spectraList[spectraSource].type;
   for (var i=0; i<spectraSelectors.length; i++) {
-    spectraArray.push(this.pqubeData[spectraSelectors[i]]);
+    var maxArray;
+    if (type == 'harmonic')
+      maxArray = this.pqubeData[spectraSelectors[i]].slice(1);
+    else
+      maxArray = this.pqubeData[spectraSelectors[i]];
+    var thisMax = Math.max.apply(null, maxArray);
+    max = Math.max(max, thisMax);
+    if (type == 'harmonic') 
+      spectraArray.push([].concat.apply([],[[0],this.pqubeData[spectraSelectors[i]]]));
+    else
+      spectraArray.push(this.pqubeData[spectraSelectors[i]]);
   }
+  
+//  console.log(up125(max));
   var spectraData = {
     dataSet: spectraArray,
-    type: spectraList[spectraSource].type
+    type: spectraList[spectraSource].type,
+    scale: up125(max)
   };
-  if (spectraList[spectraSource].type == 'harmonic') {
-    spectraData.DC1 = spectraArray[0].shift().toFixed(3);
-    spectraData.DC2 = spectraArray[1].shift().toFixed(3);
-    spectraData.DC3 = spectraArray[2].shift().toFixed(3);
+  if (type == 'harmonic') {
+    spectraData.fund1 = spectraArray[0][1].toFixed(3);
+    spectraData.fund2 = spectraArray[1][1].toFixed(3);
+    spectraData.fund3 = spectraArray[2][1].toFixed(3);
   }
   Session.set('spectraData', spectraData);
 };

@@ -333,7 +333,23 @@ text-align:center;
     background-color: #1A301C;
     border: solid 1px black;
     padding:5px;
-    margin-top:15px;
+    padding-left:50px;
+    padding-bottom:20px;
+    position:absolute;
+    left:25px;
+    top: 100px;
+}
+#y-axis-units {
+    position:absolute;
+    top: 310px;
+    left: 35px;
+}
+#x-axis-units {
+    position:absolute;
+    top:530px;
+}
+.spectra-units {
+    color:rgba(0,163,0,.75);
 }
 #gauges {
     position:absolute;
