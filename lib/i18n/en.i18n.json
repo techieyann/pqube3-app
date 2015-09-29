@@ -53,6 +53,9 @@
   "L123E2k9k": "L-E 2kHz-9kHz Emissions",
   "L1E8k150k": "L1-E 8kHz-150kHz Emissions",
   "DC": "DC",
+  "fund": "fund",
+  "fundamental": "Fundamental",
   "volts": "Volts",
-  "amps": "Amps"
+  "amps": "Amps",
+  "harmonic": "Harmonic"
 }
