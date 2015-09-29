@@ -222,7 +222,7 @@ Template.gauge.helpers({
 	}
 	else {
 	  self.smoothieLine.append(presentVal.time, val);
-	  updateScale(this.prefix, self.smoothieLine.getMin(), self.smoothieLine.getMax());
+	  updateScale(this.prefix, self.smoothieLine.getMin(), self.smoothieLine.getMax(), data.legendSigFigs);
 	  var percent = (val - this.tunguskaGauge.range.min) / (this.tunguskaGauge.range.max-this.tunguskaGauge.range.min);
           if (percent < 0) percent = 0;
           if (percent > 1) percent = 1;
@@ -247,7 +247,7 @@ Template.gauge.helpers({
   }
 });
 
-var updateScale = function (meterPrefix, min, max) {
+var updateScale = function (meterPrefix, min, max, labelSigFigs) {
   var data = {m:meterPrefix, min: min, max: max};
   console.log(data);
   if (!isNaN(min) && !isNaN(max)) {
@@ -276,7 +276,7 @@ var updateScale = function (meterPrefix, min, max) {
     }
     var newInit = scale.init;
     var downInit = down125(scale.init);
-    while (diff < downInit) {
+    while (diff < downInit && downInit.toFixed(labelSigFigs) != 0) {
       newInit = downInit;
       downInit = down125(downInit);
     }
