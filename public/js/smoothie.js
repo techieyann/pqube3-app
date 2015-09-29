@@ -207,7 +207,8 @@
     }
 
     this.maxValue = isNaN(this.maxValue) ? value : Math.max(this.maxValue, value);
-    this.minValue = isNaN(this.minValue) ? value : Math.min(this.minValue, value);
+    if (value != null)
+      this.minValue = isNaN(this.minValue) ? value : Math.min(this.minValue, value);
   };
 
   TimeSeries.prototype.dropOldData = function(oldestValidTime, maxDataSetLength) {

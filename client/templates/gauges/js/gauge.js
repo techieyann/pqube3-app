@@ -250,7 +250,7 @@ Template.gauge.helpers({
 var updateScale = function (meterPrefix, min, max) {
   var data = {m:meterPrefix, min: min, max: max};
   console.log(data);
-  if (min && !isNaN(min) && max && !isNaN(max)) {
+  if (!isNaN(min) && !isNaN(max)) {
     var scale;
     Tracker.nonreactive(function () {
       scale = Session.get(meterPrefix+'-gaugeScale');
