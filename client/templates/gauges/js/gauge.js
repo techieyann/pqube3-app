@@ -28,8 +28,6 @@ Template.gauge.onRendered(function () {
 	gaugeMax = scale.val+scale.init;
 	gaugeMin = scale.val-scale.init;
       }
-      console.log(gaugeMax);
-      console.log(gaugeMin);
       var range = gaugeMax-gaugeMin;
       tgOpts.range.min = gaugeMin;
       tgOpts.range.lowStop = gaugeMin-(range/20);
