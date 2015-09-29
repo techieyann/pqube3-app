@@ -2,6 +2,8 @@ Template.spectra.onRendered(function () {
   var self = this;
   self.initialized = false;
   self.ctx = $('#spectra-chart').get(0).getContext('2d');
+  self.width = 530;
+  self.height = 430;
   self.source = Session.get('spectraSource');
   self.scale = 10;
   self.autorun(function () {
@@ -61,6 +63,8 @@ Template.spectra.onRendered(function () {
           scaleGridLineColor : 'rgba(0,163,0,1)',
           scaleLineColor: 'rgba(0,163,0,1)'
         };
+	self.ctx.canvas.width = self.width;
+	self.ctx.canvas.height = self.height;
         self.barChart = new Chart(self.ctx).Bar(data, options);
         if (spectraData.type == 'harmonic') {
           Session.set('spectraFund1',0);
