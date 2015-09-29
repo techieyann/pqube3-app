@@ -143,7 +143,7 @@ gaugeList = {
     dataSource: 'vMagL1N',
     scale: {
       anchor: 'center',
-      val: 275,
+      val: 280,
       init: 20
     },
     sigFigs: 3,
