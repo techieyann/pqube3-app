@@ -528,14 +528,17 @@
 	chartDelta = Math.max(chartUpDelta, chartDownDelta);
       }
       var scaleDown = down125(presentScale);
+/*      if (scaleDown > chartDelta) {
+
+      console.log(chartOptions.meter);
+      console.log(chartDelta);
+      console.log(meterScale);
+      }*/
       while (scaleDown > chartDelta) {
-	scaleDown = down125(scaleDown);
 	presentScale = scaleDown;
+	scaleDown = down125(scaleDown);
       }
       meterScale.init = presentScale;
-/*      console.log(chartOptions.meter);
-      console.log(chartDelta);
-      console.log(meterScale);*/
       Session.set(chartOptions.meter+'-gaugeScale', meterScale);
     }
     // Scale the chartMaxValue to add padding at the top if required
