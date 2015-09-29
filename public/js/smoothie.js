@@ -528,12 +528,12 @@
 	chartDelta = Math.max(chartUpDelta, chartDownDelta);
       }
       var scaleDown = down125(presentScale);
-/*      if (scaleDown > chartDelta) {
+      if (scaleDown > chartDelta) {
 
       console.log(chartOptions.meter);
       console.log(chartDelta);
       console.log(meterScale);
-      }*/
+      }
       while (scaleDown > chartDelta) {
 	presentScale = scaleDown;
 	scaleDown = down125(scaleDown);
