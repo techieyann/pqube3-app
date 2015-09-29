@@ -309,6 +309,9 @@ select {
 #selector-switch {
     width:50px;
 }
+.clickable {
+    cursor: pointer;
+}
 #view-selector span {
     position:relative;
     top:-15px;
@@ -347,6 +350,7 @@ text-align:center;
 #x-axis-units {
     position:absolute;
     top:530px;
+    left: 320px;
 }
 .spectra-units {
     color:rgba(0,163,0,.75);
