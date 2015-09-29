@@ -248,6 +248,8 @@ Template.gauge.helpers({
 });
 
 var updateScale = function (meterPrefix, min, max) {
+  var data = {m:meterPrefix, min: min, max: max};
+  console.log(data);
   if (!isNaN(min) && !isNaN(max)) {
     var scale;
     Tracker.nonreactive(function () {
@@ -261,6 +263,7 @@ var updateScale = function (meterPrefix, min, max) {
       var center = scale.val;
       diff = Math.max(Math.abs(max-center),Math.abs(center-min));
     }
+    console.log({diff: diff, scale: scale.init});
     if (diff > scale.init) {
       var upInit = up125(scale.init);
       while (diff > upInit) {

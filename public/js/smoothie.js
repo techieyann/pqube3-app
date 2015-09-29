@@ -656,7 +656,7 @@
     if (chartOptions.grid.millisPerLine > 0) {
       context.beginPath();
       for (var t = time - (time % chartOptions.grid.millisPerLine);
-           t >= oldestValidTime;
+           t >= oldestValidTime - (chartOptions.xOffset * chartOptions.grid.millisPerLine);
            t -= chartOptions.grid.millisPerLine) {
         var gx = timeToXPixel(t);
         if (chartOptions.grid.sharpLines) {
@@ -729,7 +729,7 @@
       var pqubeTime = new Date(Session.get(chartOptions.pqubeId+'Timestamp'));
       if (pqubeTime != 'Invalid Date') {
 	for (var t = time - (time % chartOptions.grid.millisPerLine);
-             t >= oldestValidTime;
+             t >= oldestValidTime-(chartOptions.xOffset*chartOptions.grid.millisPerLine);
              t -= chartOptions.grid.millisPerLine) {
 	  var gx = timeToXPixel(t)+2;
           // Formats the timestamp based on user specified formatting function
