@@ -215,60 +215,26 @@ Template.gauge.helpers({
         if (val == '') $('#'+this.prefix+'-tunguska-gauge-3, #circle-'+this.prefix).hide();
         else {
 	  self.gauge.set(val);
-
-	    var gaugeRange = this.tunguskaGauge.range;
-
-	  if (val < gaugeRange.min || val > gaugeRange.max) {
-	    console.log(val);
-	    var scale;
-	    var that = this;
-	    Tracker.nonreactive(function () {
-	      scale = Session.get(that.prefix+'-gaugeScale');	    
-	    });
-	    if (scale.anchor == 'center') {
-
-	      var center = scale.val;
-	      var diff = (val > gaugeRange.max ? Math.abs(val-center) : Math.abs(center-val));
-	      var newInit = up125(gaugeRange.max-scale.val);
-	      while (diff > newInit) {
-		newInit = up125(newInit);
-	      }
-	      scale.init = newInit;
-	      Session.set(this.prefix+'-gaugeScale', scale);	      
-	    }
-
-	    if (scale.anchor == 'min') {
-	      if (val > gaugeRange.max) {
-		var diff = Math.abs(val-scale.val);
-		var newInit = up125(gaugeRange.max);
-		while (diff > newInit) {
-		  newInit = up125(newInit);
-		}
-		scale.init = newInit;
-		console.log(newInit);
-		Session.set(this.prefix+'-gaugeScale', scale);	      
-	      }
-	    }
-
-	  }	  
 	}
       }
       if (self.smoothieLine) {
-	      var selector = $('#'+this.prefix+'-smoothie-recorder');
+	var selector = $('#'+this.prefix+'-smoothie-recorder');
         if (val == '') {
           self.smoothieLine.append(presentVal.time, null);
-	      }
-	      else {
-	        self.smoothieLine.append(presentVal.time, val);
-	        var percent = (val - this.tunguskaGauge.range.min) / (this.tunguskaGauge.range.max-this.tunguskaGauge.range.min);
+	}
+	else {
+	  self.smoothieLine.append(presentVal.time, val);
+	  updateScale(this.prefix, self.smoothieLine.getMin(), self.smoothieLine.getMax());
+	  var percent = (val - this.tunguskaGauge.range.min) / (this.tunguskaGauge.range.max-this.tunguskaGauge.range.min);
           if (percent < 0) percent = 0;
           if (percent > 1) percent = 1;
-	        var scaled = percent * (self.smoothieRecorder.max-self.smoothieRecorder.min);
-	        var pos = Math.round(scaled + self.smoothieRecorder.min);
-//          	  self.recorderTimeout = Meteor.setTimeout(function () {
-	        selector.css('left', pos);
-//          	  },1000);
+	  var scaled = percent * (self.smoothieRecorder.max-self.smoothieRecorder.min);
+	  var pos = Math.round(scaled + self.smoothieRecorder.min);
+	  //          	  self.recorderTimeout = Meteor.setTimeout(function () {
+	  selector.css('left', pos);
+	  //          	  },1000);
         }
+	self.smoothie.updateValueRange();
       }
       self.lastVal = presentVal.val;
     }
@@ -282,3 +248,38 @@ Template.gauge.helpers({
     return self.smoothieHeight;
   }
 });
+
+var updateScale = function (meterPrefix, min, max) {
+  if (!isNaN(min) && !isNaN(max)) {
+    var scale;
+    Tracker.nonreactive(function () {
+      scale = Session.get(meterPrefix+'-gaugeScale');
+    });
+    var diff;
+    if (scale.anchor == 'min') {
+      diff = Math.abs(max-scale.val);
+    }
+    if (scale.anchor == 'center') {
+      var center = scale.val;
+      diff = Math.max(Math.abs(max-center),Math.abs(center-min));
+    }
+    if (diff > scale.init) {
+      var upInit = up125(scale.init);
+      while (diff > upInit) {
+	upInit = up125(upInit);
+      }
+      scale.init = upInit;
+      Session.set(meterPrefix+'-gaugeScale', scale);	      
+      return;
+    }
+    var newInit = scale.init;
+    var downInit = down125(scale.init);
+    while (diff < downInit) {
+      newInit = downInit;
+      downInit = down125(downInit);
+    }
+    scale.init = newInit;
+    Session.set(meterPrefix+'-gaugeScale', scale);	      
+    return;
+  }
+};
