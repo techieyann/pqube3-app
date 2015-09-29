@@ -276,8 +276,10 @@ var updateScale = function (meterPrefix, min, max) {
       newInit = downInit;
       downInit = down125(downInit);
     }
-    scale.init = newInit;
-    Session.set(meterPrefix+'-gaugeScale', scale);	      
+    if (scale.init != newInit) {
+      scale.init = newInit;
+      Session.set(meterPrefix+'-gaugeScale', scale);	      
+    }
     return;
   }
 };

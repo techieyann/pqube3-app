@@ -594,7 +594,7 @@
     }
     var dimensions = { top: 5, left: 5, width: conWidth-10, height: conHeight-10 },
         // Calculate the threshold time for the oldest data points.
-        oldestValidTime = time - (dimensions.width * chartOptions.millisPerPixel),
+        oldestValidTime = time - ((dimensions.width-chartOptions.xOffset) * chartOptions.millisPerPixel),
         valueToYPixel = function(value) {
           if (chartOptions.minValue && chartOptions.maxValue) {
 	          var offset = value - chartOptions.minValue;
