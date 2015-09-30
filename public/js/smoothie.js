@@ -143,23 +143,23 @@
    * This causes the graph to scale itself in the y-axis.
    */
   TimeSeries.prototype.resetBounds = function() {
+    this.maxValue = Number.NaN;
+    this.minValue = Number.NaN;
     if (this.data.length) {
       // Walk through all data points, finding the min/max value
-      this.maxValue = this.data[0][1];
-      this.minValue = this.data[0][1];
-      for (var i = 1; i < this.data.length; i++) {
+      for (var i = 0; i < this.data.length; i++) {
         var value = this.data[i][1];
-        if (value > this.maxValue) {
-          this.maxValue = value;
-        }
-        if (value < this.minValue) {
-          this.minValue = value;
+        if (value != null) {
+          if (isNaN(this.maxValue)) this.maxValue = value;
+          else if (value > (this.maxValue)) {
+            this.maxValue = value;
+          }
+          if (isNaN(this.minValue)) this.minValue = value;
+          else if (value < this.minValue) {
+            this.minValue = value;
+          }
         }
       }
-    } else {
-      // No data exists, so set min/max to NaN
-      this.maxValue = Number.NaN;
-      this.minValue = Number.NaN;
     }
   };
 
@@ -205,10 +205,10 @@
       // Add to the end of the array
       this.data.push([timestamp, value]);
     }
-
-    this.maxValue = isNaN(this.maxValue) ? value : Math.max(this.maxValue, value);
-    if (value != null)
+    if (value != null) {
+      this.maxValue = isNaN(this.maxValue) ? value : Math.max(this.maxValue, value);
       this.minValue = isNaN(this.minValue) ? value : Math.min(this.minValue, value);
+    }
   };
 
   TimeSeries.prototype.dropOldData = function(oldestValidTime, maxDataSetLength) {
