@@ -215,7 +215,7 @@ Template.gauge.helpers({
 	  self.gauge.set(val);
 	}
       }
-      if (self.smoothieLine) {
+      if (self.smoothieLine && !presentVal.strike) {
 	var selector = $('#'+this.prefix+'-smoothie-recorder');
         if (val == '') {
           self.smoothieLine.append(presentVal.time, null);

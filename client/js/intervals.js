@@ -5,6 +5,8 @@ startDataInterval = function () {
 };
 function pad2(number) { return (number < 10 ? '0' : '') + number; }
 
+var strikeFlag;
+
 setPresentVals = function () {
   var dC = {
     now:new Date().getTime()
@@ -14,6 +16,7 @@ setPresentVals = function () {
     dC.pqubeData = PQubeData.findOne(dC.pqubeId);
     dC.scopesFlag = Session.equals('scopesSource', dC.pqubeId);
     if (dC.pqubeData) {
+      strikeFlag = false;
       if(newVals.call(dC)) {
         if (dC.scopesFlag) {
           blinkNewData.call(dC);
@@ -21,7 +24,7 @@ setPresentVals = function () {
           if (Session.get('spectraSelected'))
             updateSpectra.call(dC);
         }
-	      updateGauges.call(dC);
+	updateGauges.call(dC);
       }
       else {
         clearGauges.call(dC);
@@ -46,10 +49,12 @@ var newVals = function () {
   Session.set(this.pqubeId+'Timestamp', timeStamp);
   var pqTimeStamp = new Date (timeStamp);
   var pqubeStatus = Session.get(this.pqubeId+'Status');
+  var numStrikes = Meteor.settings.public.numStrikes;
   if (pqubeStatus) {
     if (+pqubeStatus.lastNew == +pqTimeStamp) {
       if (pqubeStatus.strikesLeft != 0) {
-        pqubeStatus.strikesLeft--;
+        if (pqubeStatus.strikesLeft-- < numStrikes - 2)
+          strikeFlag = true;
         Session.set(this.pqubeId+'Status', pqubeStatus);
         return true;
       }
@@ -59,7 +64,7 @@ var newVals = function () {
   if (resetStatusFlag) {
     pqubeStatus = {
       lastNew: pqTimeStamp,
-      strikesLeft: Meteor.settings.public.numStrikes
+      strikesLeft: numStrikes
     };
     Session.set(this.pqubeId+'Status', pqubeStatus);
     return true;
@@ -74,7 +79,12 @@ var updateGauges = function () {
       if (gaugeSettings.pqubeId == this.pqubeId) {
         var presentVal = (this.pqubeData[gaugeSettings.dataSource]*gaugeSettings.multiplier);
         if (isNaN(presentVal)) presentVal = '';
-        Session.set('gauge'+i+'Value', {time: this.now, val: presentVal});
+        var gaugeValue = {
+          time: this.now, 
+          val: presentVal,
+          strike: strikeFlag
+        };
+        Session.set('gauge'+i+'Value', gaugeValue);
       }
     }
   }
