@@ -890,8 +890,8 @@
       context.translate(-(canvas.clientWidth / 2), -(canvas.clientHeight / 2));
     if (chartOptions.timestampFormatter && chartOptions.grid.millisPerLine > 0 && pqubeTime != 'Invalid Date') {
       t = (time - (time % chartOptions.grid.millisPerLine)+chartOptions.grid.millisPerLine);
-      var secondsOffset = ((time-pqubeTime)/1000).toFixed(4);
-      secondsOffset = secondsOffset * 1000;
+      var secondsOffset = ((time-pqubeTime)/10000).toFixed(1);
+      secondsOffset = secondsOffset * 10;
       var pqubeTime = pqubeTime.getTime()+secondsOffset;
       var pqt = (pqubeTime - (pqubeTime % chartOptions.grid.millisPerLine) +chartOptions.grid.millisPerLine);
 
