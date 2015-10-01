@@ -2,10 +2,10 @@
   "newData": "Nouvelles données",
   "lastReset": "Date de remise à zéro",
   "site": "Location...",
-  "pqube1": "Connexion réseau PSL",
+  "pqube1": "Bâtiment PSL",
   "pqube2": "LBNL Bâtiment 90",
-  "meters": "Voltmètres",
-  "spectra": "Domaine fréquentiel",
+  "meters": "Mesures",
+  "spectra": "Spectre fréquentiel",
   "channel": "Canal...",
   "freq": "Fréquence",
   "freqUnits": "Hz",
@@ -24,5 +24,12 @@
   "humidity": "Humidité",
   "humidityUnits": "%RH",
   "pressure": "Pression barométrique",
-  "pressureUnits": "hPa"
+  "pressureUnits": "hPa",
+  "iL1": "Courant L1",
+  "iL1Units": "Amps",
+  "iL2": "Courant L2g",
+  "iL2Units": "Amps",
+  "iL3": "Courant L3",
+  "iL3Units": "Amps"
 }
+
