@@ -4,6 +4,8 @@
   "site": "Location...",
   "pqube1": "Connexion réseau PSL",
   "pqube2": "LBNL Bâtiment 90",
+  "meters": "Voltmètres",
+  "spectra": "Domaine fréquentiel",
   "channel": "Canal...",
   "freq": "Fréquence",
   "freqUnits": "Hz",
