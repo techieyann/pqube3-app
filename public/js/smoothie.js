@@ -597,6 +597,7 @@
         // Calculate the threshold time for the oldest data points.
         oldestValidTime = time - ((dimensions.width-chartOptions.xOffset) * chartOptions.millisPerPixel),
         valueToYPixel = function(value) {
+          if (value == null) return null;
           if (chartOptions.minValue && chartOptions.maxValue) {
 	          var offset = value - chartOptions.minValue;
 	          var range = chartOptions.maxValue - chartOptions.minValue;
@@ -611,6 +612,7 @@
           }
     }.bind(this),
     timeToXPixel = function(t) {
+      if (t == null) return null;
       if(chartOptions.scrollBackwards) {
         return Math.round((time - t) / chartOptions.millisPerPixel)+dimensions.left;
       }
@@ -823,10 +825,17 @@
               // Importantly, A and P are at the same y coordinate, as are B and Q. This is
               // so adjacent curves appear to flow as one.
               //
-              context.bezierCurveTo( // startPoint (A) is implicit from last iteration of loop
-                Math.round((lastX + x) / 2), lastY, // controlPoint1 (P)
-                Math.round((lastX + x)) / 2, y, // controlPoint2 (Q)
-                x, y); // endPoint (B)
+              if (lastY != null) {
+                  if (y != null) {
+                    context.bezierCurveTo( // startPoint (A) is implicit from last iteration of loop
+                      Math.round((lastX + x) / 2), lastY, // controlPoint1 (P)
+                      Math.round((lastX + x)) / 2, y, // controlPoint2 (Q)
+                      x, y); // endPoint (B)
+                  }
+              }
+              else {
+                context.moveTo(x,y);
+              }
               break;
             }
             case "step": {

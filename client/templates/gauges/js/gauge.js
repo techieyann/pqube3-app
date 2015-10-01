@@ -164,7 +164,7 @@ Template.gauge.onRendered(function () {
 	  scrollBackwards: true,
 	  maxValue: tgOpts.range.max,
 	  minValue: tgOpts.range.min,
-	  interpolation: 'line',
+	  interpolation: 'bezier',
 	  millisPerPixel: 500,
 	  xOffset: 30,
 	  labels: {
@@ -222,15 +222,16 @@ Template.gauge.helpers({
 	}
 	else {
 	  self.smoothieLine.append(presentVal.time, val);
-	  updateScale(this.prefix, self.smoothieLine.getMin(), self.smoothieLine.getMax(), data.legendSigFigs);
-	  var percent = (val - this.tunguskaGauge.range.min) / (this.tunguskaGauge.range.max-this.tunguskaGauge.range.min);
-          if (percent < 0) percent = 0;
-          if (percent > 1) percent = 1;
-	  var scaled = percent * (self.smoothieRecorder.max-self.smoothieRecorder.min);
-	  var pos = Math.round(scaled + self.smoothieRecorder.min);
-	  //          	  self.recorderTimeout = Meteor.setTimeout(function () {
-	  selector.css('left', pos);
-	  //          	  },1000);
+          if (!updateScale(this.prefix, self.smoothieLine.getMin(), self.smoothieLine.getMax(), data.legendSigFigs)) {
+	    var percent = (val - this.tunguskaGauge.range.min) / (this.tunguskaGauge.range.max-this.tunguskaGauge.range.min);
+            if (percent < 0) percent = 0;
+            if (percent > 1) percent = 1;
+	    var scaled = percent * (self.smoothieRecorder.max-self.smoothieRecorder.min);
+	    var pos = Math.round(scaled + self.smoothieRecorder.min);
+	    //          	  self.recorderTimeout = Meteor.setTimeout(function () {
+	    selector.css('left', pos);
+	    //          	  },1000);
+          }
         }
 	self.smoothie.updateValueRange();
       }
@@ -272,7 +273,7 @@ var updateScale = function (meterPrefix, min, max, labelSigFigs) {
       }
       scale.init = upInit;
       Session.set(meterPrefix+'-gaugeScale', scale);	      
-      return;
+      return true;
     }
     var newInit = scale.init;
     var downInit = down125(scale.init);
@@ -283,7 +284,8 @@ var updateScale = function (meterPrefix, min, max, labelSigFigs) {
     if (scale.init != newInit) {
       scale.init = newInit;
       Session.set(meterPrefix+'-gaugeScale', scale);	      
+      return true;
     }
-    return;
+    return false;
   }
 };
