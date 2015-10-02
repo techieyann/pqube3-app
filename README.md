@@ -23,11 +23,15 @@ meteor
 ctl-c
 ```
 
-Set your PQube IP(s) as environment vars: 
+Set your PQube IP(s) and optional port (defaults to 502) as environment vars: 
 ```
-export pqubeIP1=xxx.xxx.xxx.xxx
-export pqubeIP2=yyy.yyy.yyy.yyy
+export pqubeIP1='xxx.xxx.xxx.xxx:port'
+export pqubeIP2='yyy.yyy.yyy.yyy:port'
 ```
 (only the first is mandatory)
 
-Assuming your PQube(s) is accessible at port 502, you can now run your very PQube reporting web app!
+Run meteor with the settings file:
+```
+meteor --settings settings.json
+```
+
