@@ -1,6 +1,6 @@
 var HarmonicsLabelsArray = [
   TAPi18n.__('DC'),
-  TAPi18n.__('Fund'),
+  TAPi18n.__('fund'),
   TAPi18n.__('2'),
   TAPi18n.__('3'),
   TAPi18n.__('4'),

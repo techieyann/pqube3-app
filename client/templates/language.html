@@ -1,9 +1,8 @@
 <template name="language">
   <select id="language-select">
-		<option disabled>{{_ "language"}}</option>
-    <option value="en" {{currentLanguage "en"}}>{{_ "english"}}</option>
-    <option value="fr" {{currentLanguage "fr"}}>{{_ "french"}}</option>
-    <option value="jp" {{currentLanguage "jp"}}>{{_ "japanese"}}</option>
-    <option value="pl" {{currentLanguage "pl"}}>{{_ "polish"}}</option>
+    <option disabled>{{_ "language"}}</option>
+    {{#each language}}
+    <option value="{{acronym}}" {{currentLanguage}}>{{_ fullName}}</option>
+    {{/each}}
   </select>
 </template>
