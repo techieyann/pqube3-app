@@ -37,7 +37,7 @@
   "xAccUnits":"m/s²",
   "yAcc":"Y向加速度",
   "yAccUnits":"m/s²",
-  "zAcc":"Z Acceleration",
+  "zAcc":"Z向加速度",
   "zAccUnits":"m/s²",
   "L12k9k": "L1-E 2千-9千赫兹辐射",
   "L12k9kUnits": "伏",
