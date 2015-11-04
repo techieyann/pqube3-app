@@ -5,7 +5,14 @@ Template.registerHelper('browserSupported', function () {
 });
 
 Template.registerHelper('spectraSelected', function () {
-  return Session.get('spectraSelected');
+  return FlowRouter.getRouteName() == 'spectra';
+});
+
+Template.registerHelper('atDisabled', function () {
+  return AccountsTemplates.disabled();
+});
+Template.registerHelper('atClass', function () {
+  return (AccountsTemplates.disabled() ? 'disabled':'active');
 });
 
 Template.registerHelper('pqube', function () {

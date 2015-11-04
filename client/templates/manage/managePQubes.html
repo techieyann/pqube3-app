@@ -1,0 +1,10 @@
+<template name="managePQubes">
+  <div id="manage">
+    {{> newPQube}}
+    <div id="pqube-list">
+      {{#each pqube}}
+      {{> pqubeStatus}}
+      {{/each}}
+    </div>
+  </div>
+</template>

@@ -9,31 +9,4 @@
 </head>
 
 <body>
-  {{#if browserSupported}}
-  <div id="container">
-    <div id="header">
-      {{> meta}}			
-      <a href="http://www.powersensorsltd.com" id="logo" target="_blank"><img alt="Power Sensors Ltd." src="/images/header.png">{{> title}}</a>      
-      {{> newData}}
-    </div>
-    <div id="scopes">
-      {{> scopes}}
-    </div>
-    {{> viewSelector}}
-    {{#if spectraSelected}}
-    <div id="spectra">
-      {{> spectraSelector}}
-      {{> spectra}}
-    </div>
-    {{else}}
-    <div id="gauges">
-      {{> gaugeSelectors}}
-      {{> gauges}}
-    </div>
-    {{/if}}
-  </div>
-  {{> footer}}
-  {{else}}
-  {{> unsupportedBrowser}}
-  {{/if}} 
 </body>

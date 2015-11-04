@@ -1,18 +1,18 @@
 Template.viewSelector.helpers({
   switchSide: function () {
-    return (Session.equals('spectraSelected', true)? 'right':'left');
+    return (FlowRouter.getRouteName() == 'spectra' ? 'right':'left');
   }
 });
 
 Template.viewSelector.events({
   'click #gauge-select': function () {
-    Session.set('spectraSelected', false);
+    FlowRouter.go('/meters');
   },
   'click #spectra-select': function () {
-    Session.set('spectraSelected', true);
+    FlowRouter.go('/spectra');
   },
   'click #selector-switch': function () {
-    var presentSelection = Session.get('spectraSelected');
-    Session.set('spectraSelected', !presentSelection);
+    var route = (FlowRouter.getRouteName() == 'spectra' ? '/meters':'/spectra');
+    FlowRouter.go(route);
   }
 });
