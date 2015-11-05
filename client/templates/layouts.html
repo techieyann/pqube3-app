@@ -1,0 +1,54 @@
+<template name="dataLayout">
+  {{#if browserSupported}}
+  <div id="container">
+    <div id="header">
+      {{> meta}}			
+      <a href="http://www.powersensorsltd.com" id="logo" target="_blank"><img alt="Power Sensors Ltd." src="/images/header.png">{{> title}}</a>      
+      {{> newData}}
+    </div>
+    <div id="scopes">
+      {{> scopes}}
+    </div>
+    {{> viewSelector}}
+    {{> Template.dynamic template=bottom}}
+  </div>
+  {{> footer}}
+  {{else}}
+  {{> unsupportedBrowser}}
+  {{/if}} 
+</template>
+
+<template name="loginLayout">
+  {{#if atDisabled}}
+  <p>Please wait...</p>
+  {{/if}}
+  <div class="">
+    {{> Template.dynamic template=main}}
+  </div>
+</template>
+
+<template name="manageLayout">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">
+	Home
+      </a>
+      <div class="btn-group pull-right">
+      <a id="nav-new-pqube" href="/manage#new-pqube-well" type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-plus"></span> New PQube</a>
+      <a href="/logout" type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    {{> Template.dynamic template=main}}
+  </div>
+  {{> footer}}
+  <div id="modal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      {{> Template.dynamic template=modal}}
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</template>

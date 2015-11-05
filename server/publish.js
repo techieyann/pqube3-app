@@ -8,3 +8,16 @@ Meteor.publish('pqube2Data', function (fieldsOpts) {
 Meteor.publish('pqubeData', function () {
   return PQubeData.find();
 });
+
+Meteor.publish('pqubes', function () {
+  var findOpts = {
+    fields: {
+      'ip': 0,
+      'port': 0
+    }
+  };
+  if (this.userId) {
+    findOpts = {};
+  }
+  return PQubes.find({}, findOpts);
+});

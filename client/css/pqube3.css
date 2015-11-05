@@ -20,6 +20,9 @@ a:link {
 a:visited {
     color: #ccc;
 }
+a.btn {
+    color:initial;
+}
 select {
     background-color: #40434b;
     border-color: #222;

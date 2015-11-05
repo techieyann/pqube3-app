@@ -6,6 +6,8 @@ Meteor.startup(function () {
   Session.set('spectraSelected', false);
   Session.set('voltageScopeScale', 100);
   Session.set('currentScopeScale', 10);
+  Session.set('newPQubeFormError', null);
+  Session.set('editPQubeFormError', null);
   for (var i=0; i<defaultGauges.length; i++) {
     var g = defaultGauges[i];
     var gaugeSettings = getGaugeSettings(g.gaugeName, g.gaugeNum);
@@ -15,8 +17,32 @@ Meteor.startup(function () {
   }
   Session.set('spectraSource', 'L123NvHarmonics');
   setSubscription();
+  Meteor.subscribe('pqubes');
   startDataInterval();
 });
+
+Languages = [
+  {
+    acronym: 'en',
+    fullName: 'english'
+  },
+  {
+    acronym: 'cn',
+    fullName: 'chinese'
+  },
+  {
+    acronym: 'fr',
+    fullName: 'french'
+  },
+  {
+    acronym: 'jp',
+    fullName: 'japanese'
+  },
+  {
+    acronym: 'pl',
+    fullName: 'polish'
+  }
+];
 
 var defaultGauges = [
   {

@@ -16,12 +16,9 @@ Template.registerHelper('atClass', function () {
 });
 
 Template.registerHelper('pqube', function () {
-  return [
-    {
-      id: 'pqube1'
-    },
-    {
-      id: 'pqube2'
-    }
-  ];
+  return PQubes.find().fetch();
+});
+
+Template.registerHelper('language', function () {
+return Languages;
 });

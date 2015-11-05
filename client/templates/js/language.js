@@ -12,31 +12,7 @@ Template.language.events({
 Template.language.helpers({
   currentLanguage: function () {
     return (this.acronym == TAPi18n.getLanguage() ? 'selected' : '');
-  },
-  language: function () {
-    return languages;
   }
 });
 
-var languages = [
-  {
-    acronym: 'en',
-    fullName: 'english'
-  },
-  {
-    acronym: 'cn',
-    fullName: 'chinese'
-  },
-  {
-    acronym: 'fr',
-    fullName: 'french'
-  },
-  {
-    acronym: 'jp',
-    fullName: 'japanese'
-  },
-  {
-    acronym: 'pl',
-    fullName: 'polish'
-  }
-];
+
