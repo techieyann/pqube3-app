@@ -22,3 +22,7 @@ Template.registerHelper('pqube', function () {
 Template.registerHelper('language', function () {
 return Languages;
 });
+
+Template.registerHelper('pqubesReady', function () {
+  return PQubes.find().count();
+});

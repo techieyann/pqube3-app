@@ -8,12 +8,16 @@ Template.newPQube.events({
   'submit #new-pqube-form, click #submit-new-pqube-form': function (e) {
     Session.set('newPQubeFormError', null);
     e.preventDefault();
+    var defaultFlag = false;
+    if (!PQubes.findOne())
+      defaultFlag = true;
     var newPQubeData = {
       _id: Random.id(),
       name: $('#new-pqube-name').val(),
       language: $('#new-pqube-language').val(),
       ip: $('#new-pqube-ip').val(),
-      port: $('#new-pqube-port').val()
+      port: $('#new-pqube-port').val(),
+      defaultPQube: defaultFlag
     };
     if (!newPQubeData.name) {
       Session.set('newPQubeFormError', 'Name is a required field');

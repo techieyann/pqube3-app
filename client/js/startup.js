@@ -1,21 +1,30 @@
 
 Meteor.startup(function () {
-  Meteor.subscribe('pqubes');
+
+  Meteor.subscribe('pqubes', function () {
+    var defaultPQube = PQubes.findOne({defaultPQube: true});
+    if (defaultPQube) {
+      var id = defaultPQube._id;
+      Session.set('scopesSource', id);    
+      for (var i=0; i<defaultGauges.length; i++) {
+	var g = defaultGauges[i];
+	var gaugeSettings = getGaugeSettings(g.gaugeName, g.gaugeNum);
+	gaugeSettings.pqubeId = id;
+	Session.set('gauge'+g.gaugeNum, gaugeSettings);
+	Session.set(g.gaugeNum+'-gaugeScale', gaugeList[g.gaugeName].scale);
+      }
+    }
+  });
+
   if (BrowserDetect.browser == 'Safari')
     $('select').css('color', 'black');
-  Session.set('scopesSource', 'pqube1');
-  Session.set('spectraSelected', false);
+
+//  Session.set('spectraSelected', false);
   Session.set('voltageScopeScale', 100);
   Session.set('currentScopeScale', 10);
   Session.set('newPQubeFormError', null);
   Session.set('editPQubeFormError', null);
-  for (var i=0; i<defaultGauges.length; i++) {
-    var g = defaultGauges[i];
-    var gaugeSettings = getGaugeSettings(g.gaugeName, g.gaugeNum);
-    gaugeSettings.pqubeId = 'pqube1';
-    Session.set('gauge'+g.gaugeNum, gaugeSettings);
-    Session.set(g.gaugeNum+'-gaugeScale', gaugeList[g.gaugeName].scale);
-  }
+
   Session.set('spectraSource', 'L123NvHarmonics');
   setSubscription();
 

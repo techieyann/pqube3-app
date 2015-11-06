@@ -15,68 +15,67 @@ Template.gauge.onRendered(function () {
     Tracker.nonreactive(function () {
       data = Template.currentData();
     });
-    var tgOpts = data.tunguskaGauge;
-    var scale = Session.get(data.prefix+'-gaugeScale');
-    if (self.gauge) {
-      var value = self.gauge.get();
-      var gaugeMax, gaugeMin;
-      if (scale.anchor == 'min') {
-	gaugeMax = scale.val+scale.init;
-	gaugeMin = scale.val;
-      }
-      else if (scale.anchor == 'center') {
-	gaugeMax = scale.val+scale.init;
-	gaugeMin = scale.val-scale.init;
-      }
-      var range = gaugeMax-gaugeMin;
-      tgOpts.range.min = gaugeMin;
-      tgOpts.range.lowStop = gaugeMin-(range/20);
-      tgOpts.range.max = gaugeMax;
-      tgOpts.range.highStop = gaugeMax+(range/20);
-      tgOpts.tick.major.first = gaugeMin;
-      tgOpts.tick.major.last = gaugeMax;
-      tgOpts.tick.major.interval = range/2;
-      tgOpts.digital.callback =  function (pV) {
-        return TAPi18n.__(data.gaugeName+'Units');
-      };
-      tgOpts.tick.major.legend.callback = function (n) {
-        return  n.toFixed(data.legendSigFigs);
-      };
-      var color;
-      switch (data.prefix) {
-      case 1:
-        color = "purple";
-        break;
-      case 2:
-        color = "#D66A00";
-        break;
-      case 3:
-        color = "green";
-        break;
+
+      var tgOpts = data.tunguskaGauge;
+      var scale = Session.get(data.prefix+'-gaugeScale');
+      if (self.gauge) {
+	var value = self.gauge.get();
+	var gaugeMax, gaugeMin;
+	if (scale.anchor == 'min') {
+	  gaugeMax = scale.val+scale.init;
+	  gaugeMin = scale.val;
+	}
+	else if (scale.anchor == 'center') {
+	  gaugeMax = scale.val+scale.init;
+	  gaugeMin = scale.val-scale.init;
+	}
+	var range = gaugeMax-gaugeMin;
+	tgOpts.range.min = gaugeMin;
+	tgOpts.range.lowStop = gaugeMin-(range/20);
+	tgOpts.range.max = gaugeMax;
+	tgOpts.range.highStop = gaugeMax+(range/20);
+	tgOpts.tick.major.first = gaugeMin;
+	tgOpts.tick.major.last = gaugeMax;
+	tgOpts.tick.major.interval = range/2;
+	tgOpts.digital.callback =  function (pV) {
+          return TAPi18n.__(data.gaugeName+'Units');
+	};
+	tgOpts.tick.major.legend.callback = function (n) {
+          return  n.toFixed(data.legendSigFigs);
+	};
+	var color;
+	switch (data.prefix) {
+	case 1:
+          color = "purple";
+          break;
+	case 2:
+          color = "#D66A00";
+          break;
+	case 3:
+          color = "green";
+          break;
+	}
+
+	tgOpts.pointer = {
+          fillColor: color
+	};
+	$('#'+data.prefix+'-tunguska-gauge-lock').remove();
+	self.gauge = new TunguskaGauge(tgOpts);
+	self.gauge.theme.pointer.dynamics = {
+          easing: 'easeOutQuint',
+          duration: 500
+	};
+	self.gauge.set(value);
       }
 
-      tgOpts.pointer = {
-        fillColor: color
-      };
-      $('#'+data.prefix+'-tunguska-gauge-lock').remove();
-      self.gauge = new TunguskaGauge(tgOpts);
-      self.gauge.theme.pointer.dynamics = {
-        easing: 'easeOutQuint',
-        duration: 500
-      };
-      self.gauge.set(value);
-    }
-
-    if (self.smoothie) {
-      self.smoothie.options.minValue = gaugeMin;
-      self.smoothie.options.maxValue = gaugeMax;
-    }
-
+      if (self.smoothie) {
+	self.smoothie.options.minValue = gaugeMin;
+	self.smoothie.options.maxValue = gaugeMax;
+      }
   });
 
   self.autorun(function () {
     var data = Template.currentData();
-
     if (data) {
 	self.canvas = document.getElementById(data.prefix+'-smoothie-canvas');
 	try {
@@ -248,42 +247,44 @@ Template.gauge.helpers({
   }
 });
 
+
 var updateScale = function (meterPrefix, min, max, labelSigFigs) {
-  var data = {m:meterPrefix, min: min, max: max};
   if (!isNaN(min) && !isNaN(max)) {
     var scale;
     Tracker.nonreactive(function () {
       scale = Session.get(meterPrefix+'-gaugeScale');
     });
-    var diff;
-    if (scale.anchor == 'min') {
-      diff = Math.abs(max-scale.val);
-    }
-    if (scale.anchor == 'center') {
-      var center = scale.val;
-	diff = Math.max(Math.abs(max-center),Math.abs(center-min));
-      
-    }
-    if (diff > scale.init) {
-      var upInit = up125(scale.init);
-      while (diff > upInit) {
-	upInit = up125(upInit);
+    if (scale) {
+      var diff;
+      if (scale.anchor == 'min') {
+	diff = Math.abs(max-scale.val);
       }
-      scale.init = upInit;
-      Session.set(meterPrefix+'-gaugeScale', scale);	      
-      return true;
+      if (scale.anchor == 'center') {
+	var center = scale.val;
+	diff = Math.max(Math.abs(max-center),Math.abs(center-min));
+	
+      }
+      if (diff > scale.init) {
+	var upInit = up125(scale.init);
+	while (diff > upInit) {
+	  upInit = up125(upInit);
+	}
+	scale.init = upInit;
+	Session.set(meterPrefix+'-gaugeScale', scale);	      
+	return true;
+      }
+      var newInit = scale.init;
+      var downInit = down125(scale.init);
+      while (diff < downInit && downInit.toFixed(labelSigFigs) != 0) {
+	newInit = downInit;
+	downInit = down125(downInit);
+      }
+      if (scale.init != newInit) {
+	scale.init = newInit;
+	Session.set(meterPrefix+'-gaugeScale', scale);	      
+	return true;
+      }
     }
-    var newInit = scale.init;
-    var downInit = down125(scale.init);
-    while (diff < downInit && downInit.toFixed(labelSigFigs) != 0) {
-      newInit = downInit;
-      downInit = down125(downInit);
-    }
-    if (scale.init != newInit) {
-      scale.init = newInit;
-      Session.set(meterPrefix+'-gaugeScale', scale);	      
-      return true;
-    }
-    return false;
   }
+  return false;
 };

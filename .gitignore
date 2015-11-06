@@ -2,3 +2,5 @@
 /mup.json
 /packages/npm-container/
 /packages/odometeor/.versions
+/client/templates/gauges/js/meters.js
+/client/templates/js/dataLayout.js

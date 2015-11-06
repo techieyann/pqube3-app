@@ -11,10 +11,18 @@ Template.pqubeStatus.helpers({
       return lang.acronym == language;
     })[0].fullName;
     return fullName;
+  },
+  defaultable: function () {
+    return !this.defaultPQube && this.status == 'connected';
   }
 });
 
 Template.pqubeStatus.events({
+  'click .make-pqube-default': function (e) {
+    e.preventDefault();
+    $(e.target).addClass('disabled');
+    Meteor.call('defaultizePQube', this._id);
+  },
   'click .disconnect-pqube': function (e) {
     e.preventDefault();
     $(e.target).addClass('disabled');

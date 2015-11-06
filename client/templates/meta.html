@@ -3,12 +3,14 @@
     <div id="languages">
       {{> language}}
     </div>
+
     <select id="scope-site-source" class="site-source">
       <option disabled>{{_ "site"}}</option>
       {{#each pqube}}
-      <option value="{{id}}" {{siteSelected id}}>{{_ id}}</option>
+      <option value="{{_id}}" {{siteSelected _id}}>{{_ name}}</option>
       {{/each}}
     </select>
-    <span id="pqube-time">{{_ 'localTime'}} {{pqubeTime id}}</span>
+
+    <span id="pqube-time">{{_ 'localTime'}} {{pqubeTime _id}}</span>
   </div>
 </template>

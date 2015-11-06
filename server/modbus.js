@@ -18,6 +18,7 @@ observePQubes = function () {
     removed: function (id) {
       cancelRequests(id);
       delete pqubeConnections[id];
+      PQubeData.remove(id);
     }
   });
 };

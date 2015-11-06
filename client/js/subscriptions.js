@@ -1,35 +1,44 @@
 setSubscription = function () {
   Tracker.autorun(function () {
-    var subOpts = {
-      pqube1: pqubeTime,
-      pqube2: pqubeTime
-    };
-    var spectraSelected = Session.get('spectraSelected');
     var scopesSource = Session.get('scopesSource');
-    subOpts[scopesSource] = $.extend(true, 
-			                               {}, 
-			                               pqubeTime,
-                                     scopesDataSources);
+    var spectraSelected = Session.get('spectraSelected');
+    var spectraSource = Session.get('spectraSource');
 
-
-    if (spectraSelected) {
-      var spectraSource = Session.get('spectraSource');
-      var spectraSelectors = spectraList[spectraSource].dataSources;
-      for (var i=0; i<spectraSelectors.length; i++) {
-	subOpts[scopesSource][spectraSelectors[i]] = true;
+    var pqubes = PQubes.find();
+    var subOpts = {};
+    pqubes.forEach(function (pqube) {
+      var pqubeOpts;
+      if (scopesSource == pqube._id) {
+	var spectraSelectors = {};
+	if (spectraSelected) {
+	  var dataSources = spectraList[spectraSource].dataSources;
+	  for (var i=0; i<dataSources.length; i++) {
+	    spectraSelectors[dataSources[i]] = true;
+	  }
+	}
+	pqubeOpts = $.extend(true, 
+			     {}, 
+			     pqubeTime,
+                             scopesDataSources,
+			     spectraSelectors);
       }
-    }
-    else {
+      else pqubeOpts = pqubeTime;
+      subOpts[pqube._id] = pqubeOpts;
+    });
+    if (!spectraSelected) {
       for (var i=1; i<4; i++) {
-        var gauge = Session.get('gauge'+i);
-        if (gauge) {
-          var source = gauge.dataSource;
-          subOpts[gauge.pqubeId][source] = true;
-        }
+	var gauge = Session.get('gauge'+i);
+	if (gauge) {
+	  if (subOpts[gauge.pqubeId]) {
+            var source = gauge.dataSource;
+            subOpts[gauge.pqubeId][source] = true;
+	  }
+	}
       }
     }
-    Meteor.subscribe('pqube1Data', subOpts.pqube1);
-    Meteor.subscribe('pqube2Data', subOpts.pqube2);
+    pqubes.forEach(function (pqube) {
+      Meteor.subscribe('pqubeData', pqube._id, subOpts[pqube._id]);
+    });
   });
 };
 var pqubeTime =  {

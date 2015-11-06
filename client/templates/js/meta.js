@@ -37,8 +37,16 @@ Template.meta.events({
   }
 });
 Template.meta.helpers({
+  scopesSource: function () {
+    return Session.get('scopesSource');
+  },
   siteSelected: function (id) {
-    return (Session.equals('scopesSource', id) ? 'selected':'');
+    var source = Session.get('scopesSource');
+    if (source) {
+      if (source == id) 
+	return 'selected';
+    }
+    return '';
   },
   pqubeTime: function () {
     return Session.get(Session.get('scopesSource')+'Time');

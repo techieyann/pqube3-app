@@ -79,7 +79,7 @@ select {
 #title {
     position:absolute;
     left:115px;
-    bottom:20px;
+    bottom:15px;
     font-size:25px;
 }
 #scope-site-source{
@@ -280,6 +280,7 @@ select {
     top: 150px;
     width:260px;
     height: 170px;
+    font-size: 16px;
 }
 #odometer1 {
     position:absolute;
@@ -317,7 +318,6 @@ select {
 }
 #view-selector span {
     position:relative;
-    top:-15px;
 }
 #site-selectors {
     position:absolute;
@@ -352,7 +352,7 @@ text-align:center;
 }
 #x-axis-units {
     position:absolute;
-    top:530px;
+    top:540px;
     left: 320px;
 }
 .spectra-units {

@@ -2,8 +2,8 @@ Template.spectra.onRendered(function () {
   var self = this;
   self.initialized = false;
   self.ctx = $('#spectra-chart').get(0).getContext('2d');
-  self.width = 530;
-  self.height = 430;
+  self.width = 585;
+  self.height = 470;
   self.source = Session.get('spectraSource');
   self.scale = 10;
   self.autorun(function () {

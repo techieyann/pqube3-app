@@ -5,8 +5,8 @@ Meteor.publish('pqube2Data', function (fieldsOpts) {
   return PQubeData.find({_id: 'pqube2'}, {fields: fieldsOpts});
 });
 
-Meteor.publish('pqubeData', function () {
-  return PQubeData.find();
+Meteor.publish('pqubeData', function (pqube, fieldsOpts) {
+  return PQubeData.find({_id: pqube}, {fields: fieldsOpts});  
 });
 
 Meteor.publish('pqubes', function () {

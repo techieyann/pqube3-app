@@ -4,7 +4,7 @@
     <select data-meter="{{gaugeNum}}" class="site-source">
       <option disabled>{{_ "site"}}</option>
       {{#each pqube}}
-      <option value="{{id}}" {{siteSelected ../gaugeNum id}}>{{_ id}}</option>
+      <option value="{{_id}}" {{siteSelected ../gaugeNum _id}}>{{_ name}}</option>
       {{/each}}
     </select>
     {{/each}}

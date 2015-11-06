@@ -11,7 +11,7 @@
       <span class="col-sm-6 col-xs-12">
 	<h3>{{name}}</h3>
 	<h4>{{ip}}:{{port}}</h4>
-	<div>Default: {{_ defaultLanguage}}</div>
+	<div>Language: {{_ defaultLanguage}}</div>
       </span>
       <span class="col-sm-6 col-xs-12">
 	<h4>Status:
@@ -20,7 +20,15 @@
 	  {{else}}
 	  <span class="glyphicon glyphicon-remove-sign text-danger"></span>
 	  {{/if}}
+	  {{#if defaultPQube}}
+	  <span>(Default)</span>
+	  {{else}}
+	  {{#if defaultable}}
+	  <a href="#" type="button" class="make-pqube-default btn btn-default">Make Default</a>
+	  {{/if}}
+	  {{/if}}
 	</h4>
+
 	<span class="btn-group " role="group">
 	  {{#if connected}}
 	  <a href="#" type="button" class="disconnect-pqube btn btn-default"><span class="glyphicon glyphicon-remove-sign"></span> Disconnect</a>

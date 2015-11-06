@@ -11,63 +11,70 @@ setPresentVals = function () {
   var dC = {
     now:new Date().getTime()
   };
-  for (var i=1; i<3; i++) {
-    dC.pqubeId = 'pqube'+i;
-    dC.pqubeData = PQubeData.findOne(dC.pqubeId);
+  var pqubeData = PQubeData.find();
+  pqubeData.forEach(function (pqube) {
+    dC.pqubeId = pqube._id;
+    dC.pqubeData = pqube;
     dC.scopesFlag = Session.equals('scopesSource', dC.pqubeId);
-    if (dC.pqubeData) {
-      strikeFlag = false;
-      if(newVals.call(dC)) {
-        if (dC.scopesFlag) {
-          blinkNewData.call(dC);
-          updateScopes.call(dC);
-          if (Session.get('spectraSelected'))
-            updateSpectra.call(dC);
-        }
-	updateGauges.call(dC);
+    strikeFlag = false;
+    if(newVals.call(dC)) {
+      if (dC.scopesFlag) {
+        blinkNewData.call(dC);
+        updateScopes.call(dC);
+        if (Session.get('spectraSelected'))
+          updateSpectra.call(dC);
       }
-      else {
-        clearGauges.call(dC);
-      }
-      Tracker.flush();
+      updateGauges.call(dC);
     }
-  }
+    else {
+      clearGauges.call(dC);
+    }
+    Tracker.flush();
+});
+
+
+
 };
 
 var newVals = function () {
-  var resetStatusFlag = false;
-  var pqDate = this.pqubeData.pqYear+'-'+pad2(this.pqubeData.pqMonth)+'-'+pad2(this.pqubeData.pqDay);
-  var pqTime = this.pqubeData.pqHour+':'+pad2(this.pqubeData.pqMinute)+':'+pad2(this.pqubeData.pqSecond);
-  var pqubeId = this.pqubeData._id;
-  var timeStamp = pqDate+' '+pqTime;
+  var pqube = PQubes.findOne(this.pqubeId);
+  if (pqube) {
+    if (pqube.status == 'connected') {
+      var resetStatusFlag = false;
+      var pqDate = this.pqubeData.pqYear+'-'+pad2(this.pqubeData.pqMonth)+'-'+pad2(this.pqubeData.pqDay);
+      var pqTime = this.pqubeData.pqHour+':'+pad2(this.pqubeData.pqMinute)+':'+pad2(this.pqubeData.pqSecond);
+      var pqubeId = this.pqubeData._id;
+      var timeStamp = pqDate+' '+pqTime;
 
-  Session.set(this.pqubeId+'Time', timeStamp);
-  if (BrowserDetect.browser != "Chrome") {
-    timeStamp = pqDate+'T'+pqTime;
-  }
+      Session.set(this.pqubeId+'Time', timeStamp);
+      if (BrowserDetect.browser != "Chrome") {
+	timeStamp = pqDate+'T'+pqTime;
+      }
 
-  Session.set(this.pqubeId+'Timestamp', timeStamp);
-  var pqTimeStamp = new Date (timeStamp);
-  var pqubeStatus = Session.get(this.pqubeId+'Status');
-  var numStrikes = Meteor.settings.public.numStrikes;
-  if (pqubeStatus) {
-    if (+pqubeStatus.lastNew == +pqTimeStamp) {
-      if (pqubeStatus.strikesLeft != 0) {
-        if (pqubeStatus.strikesLeft-- < numStrikes - 2)
-          strikeFlag = true;
-        Session.set(this.pqubeId+'Status', pqubeStatus);
-        return true;
+      Session.set(this.pqubeId+'Timestamp', timeStamp);
+      var pqTimeStamp = new Date (timeStamp);
+      var pqubeStatus = Session.get(this.pqubeId+'Status');
+      var numStrikes = Meteor.settings.public.numStrikes;
+      if (pqubeStatus) {
+	if (+pqubeStatus.lastNew == +pqTimeStamp) {
+	  if (pqubeStatus.strikesLeft != 0) {
+            if (pqubeStatus.strikesLeft-- < numStrikes - 2)
+              strikeFlag = true;
+            Session.set(this.pqubeId+'Status', pqubeStatus);
+            return true;
+	  }
+	}
+	else resetStatusFlag = true;
+      } else resetStatusFlag = true;
+      if (resetStatusFlag) {
+	pqubeStatus = {
+	  lastNew: pqTimeStamp,
+	  strikesLeft: numStrikes
+	};
+	Session.set(this.pqubeId+'Status', pqubeStatus);
+	return true;
       }
     }
-    else resetStatusFlag = true;
-  } else resetStatusFlag = true;
-  if (resetStatusFlag) {
-    pqubeStatus = {
-      lastNew: pqTimeStamp,
-      strikesLeft: numStrikes
-    };
-    Session.set(this.pqubeId+'Status', pqubeStatus);
-    return true;
   }
   return false;
 };
