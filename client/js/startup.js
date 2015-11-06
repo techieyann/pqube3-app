@@ -19,7 +19,6 @@ Meteor.startup(function () {
   if (BrowserDetect.browser == 'Safari')
     $('select').css('color', 'black');
 
-//  Session.set('spectraSelected', false);
   Session.set('voltageScopeScale', 100);
   Session.set('currentScopeScale', 10);
   Session.set('newPQubeFormError', null);

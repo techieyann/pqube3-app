@@ -6,7 +6,8 @@ observePQubes = function () {
   var pqubes = PQubes.find();
   pqubes.observe({
     added: function (pqube) {
-      connectToPQube(pqube);
+      if (pqube.ip && pqube.port)
+        connectToPQube(pqube);
     },
     changed: function (pqube, oldPQube) {
       if (pqube.ip != oldPQube.ip || pqube.port != oldPQube.port) {
