@@ -44,3 +44,4 @@ accounts-password
 twbs:bootstrap
 useraccounts:bootstrap
 fortawesome:fontawesome
+reactive-var

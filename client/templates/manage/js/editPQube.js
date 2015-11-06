@@ -1,29 +1,48 @@
+Template.editPQube.onCreated(function () {
+  var self = this;
+  self.pqube = new ReactiveVar();
+  self.autorun(function () {
+    var id = FlowRouter.current().params.pqubeId;
+    var pqube = PQubes.findOne(id);
+    self.pqube.set(pqube);
+  });
+});
 
 Template.editPQube.helpers({
   editPQubeError: function () {
     return Session.get('editPQubeFormError');
   },
   name: function () {
-    return Session.get('editPQube').name;
+    var pqube = Template.instance().pqube.get();
+    if (pqube)
+      return pqube.name;
   },
   defaultLangauge: function () {
-    return Session.get('editPQube').language;
+    var pqube = Template.instance().pqube.get();
+    if (pqube)
+      return pqube.language;
   },
   ip: function () {
-    return Session.get('editPQube').ip;
+    var pqube = Template.instance().pqube.get();
+    if (pqube)
+    return pqube.ip;
   },
   port: function () {
-    return Session.get('editPQube').port;
+    var pqube = Template.instance().pqube.get();
+    if (pqube)
+    return pqube.port;
   },
   selectedLanguage: function () {
-    return (Session.get('editPQube').language == this.acronym ? 'selected':'');
+    var pqube = Template.instance().pqube.get();
+    if (pqube)
+      return (pqube.language == this.acronym ? 'selected':'');
   }
 });
 
 Template.editPQube.events({
   'submit #edit-pqube-form, click #edit-pqube': function (e) {
     Session.set('editPQubeFormError', null);
-    var id = Session.get('editPQube')._id;
+    var id = FlowRouter.current().params.pqubeId;
     e.preventDefault();
     var editPQubeData = {
       name: $('#edit-pqube-name').val(),

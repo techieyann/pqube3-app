@@ -1,25 +1,38 @@
 <template name="pqubeStatus">
   <div class="well">
-    <div class="row">
-    <span class="col-sm-6 col-xs-12 text-center">
-      <h3>{{name}}</h3>
-      <h4>{{ip}}:{{port}}</h4>
-      <div>Default: {{_ defaultLanguage}}</div>
-    </span>
-  <span class="col-sm-6 col-xs-12 text-center">
-    <h4>Connection: <span class="glyphicon glyphicon-{{#if connected}}ok-sign{{else}}remove-sign{{/if}}"></span></h4>
-    <span class="btn-group " role="group">
-      {{#if connected}}
-      <a href="#" class="disconnect-pqube btn btn-default"><span class="glyphicon glyphicon-remove-sign"></span> Disconnect</a>
-      {{else}}
-      <a href="#" class="connect-pqube btn btn-default"><span class="glyphicon glyphicon-ok-sign"></span> Connect</a>
-      {{/if}}
-      <a href="#" type="button" class="edit-pqube btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
-      <a href="#" type="button" class="delete-pqube btn btn-default"><span class="glyphicon glyphicon-trash"></span> Delete</a>
-    </span>
-  </span>
-  
+    {{#if unverified}}
+    <div class="alert alert-warning text-center">
+      <p>Attempting to verify a PQube at {{ip}}:{{port}}</p>
+      <p>Please confirm that the network allows it to be accessed publicly, and that the information is correct</p>
 
-</div>
-</div>
+    </div>
+    {{/if}}
+    <div class="row text-center">
+      <span class="col-sm-6 col-xs-12">
+	<h3>{{name}}</h3>
+	<h4>{{ip}}:{{port}}</h4>
+	<div>Default: {{_ defaultLanguage}}</div>
+      </span>
+      <span class="col-sm-6 col-xs-12">
+	<h4>Status:
+	  {{#if connected}}
+	  <span class="glyphicon glyphicon-ok-sign text-success"></span>
+	  {{else}}
+	  <span class="glyphicon glyphicon-remove-sign text-danger"></span>
+	  {{/if}}
+	</h4>
+	<span class="btn-group " role="group">
+	  {{#if connected}}
+	  <a href="#" type="button" class="disconnect-pqube btn btn-default"><span class="glyphicon glyphicon-remove-sign"></span> Disconnect</a>
+	  {{else}}
+	  {{#unless unverified}}
+	  <a href="#" type="button" class="connect-pqube btn btn-default"><span class="glyphicon glyphicon-ok-sign"></span> Reconnect</a>
+	  {{/unless}}
+	  {{/if}}
+	  <a href="/manage/edit/{{_id}}" type="button" class="edit-pqube btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+	  <a href="/manage/delete/{{_id}}" type="button" class="delete-pqube btn btn-default"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+	</span>
+      </span>
+    </div>
+  </div>
 </template>

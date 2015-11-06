@@ -1,26 +1,35 @@
+Template.confirmDeletePQube.onCreated(function () {
+  var self = this;
+  self.pqube = new ReactiveVar();
+  self.autorun(function () {
+    var id = FlowRouter.current().params.pqubeId;
+    var pqube = PQubes.findOne(id);
+    self.pqube.set(pqube);
+  });
+});
+
 Template.confirmDeletePQube.helpers({
   name: function () {
-    return Session.get('deletePQube').name;
+    var pqube = Template.instance().pqube.get();
+    if (pqube)
+      return pqube.name;
   },
   ip: function () {
-    var pqube = Session.get('deletePQube');
-    if (pqube) {
+    var pqube = Template.instance().pqube.get();
+    if (pqube)
       return pqube.ip+':'+pqube.port;
-    }
   }
 });
 
 Template.confirmDeletePQube.events({
   'click #delete-pqube': function (e) {
     e.preventDefault();
-    var id = Session.get('deletePQube')._id;
-    if (id) {
-      Meteor.call('removePQube', id, function (err, result) {
-	if (err) console.log(err);
-	else {
-	  $('#modal').modal('hide');
-	}
-      });
-    }
+    var id = FlowRouter.current().params.pqubeId;
+    Meteor.call('removePQube', id, function (err, result) {
+      if (err) console.log(err);
+      else {
+	$('#modal').modal('hide');
+      }
+    });
   }
 });

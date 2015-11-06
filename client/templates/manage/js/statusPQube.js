@@ -1,4 +1,10 @@
 Template.pqubeStatus.helpers({
+  connected: function () {
+    return this.status == 'connected';
+  },
+  unverified: function () {
+    return this.status == 'unverified';
+  },
   defaultLanguage: function () {
     var language = this.language;
     var fullName = Languages.filter(function (lang) {
@@ -9,22 +15,14 @@ Template.pqubeStatus.helpers({
 });
 
 Template.pqubeStatus.events({
-  'click .edit-pqube': function (e) {
+  'click .disconnect-pqube': function (e) {
     e.preventDefault();
-    Session.set('editPQube', this);
-    BlazeLayout.render('manageLayout', {
-      main: 'managePQubes',
-      modal: 'editPQube'
-    });
-    $('#modal').modal('show');    
+    $(e.target).addClass('disabled');
+    Meteor.call('disconnectPQube', this._id);
   },
-  'click .delete-pqube': function (e) {
+  'click .connect-pqube': function (e) {
     e.preventDefault();
-    Session.set('deletePQube', this);
-    BlazeLayout.render('manageLayout', {
-      main: 'managePQubes',
-      modal: 'confirmDeletePQube'
-    });
-    $('#modal').modal('show');
+    $(e.target).addClass('disabled');
+    Meteor.call('reconnectPQube', this._id);
   }
 });

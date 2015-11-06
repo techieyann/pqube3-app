@@ -1,2 +1,4 @@
 .emacs_backups
 /mup.json
+/packages/npm-container/
+/packages/odometeor/.versions

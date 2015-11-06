@@ -1,5 +1,6 @@
 
 Meteor.startup(function () {
+  Meteor.subscribe('pqubes');
   if (BrowserDetect.browser == 'Safari')
     $('select').css('color', 'black');
   Session.set('scopesSource', 'pqube1');
@@ -17,7 +18,7 @@ Meteor.startup(function () {
   }
   Session.set('spectraSource', 'L123NvHarmonics');
   setSubscription();
-  Meteor.subscribe('pqubes');
+
   startDataInterval();
 });
 
