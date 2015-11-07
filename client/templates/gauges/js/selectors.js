@@ -41,15 +41,18 @@ Template.gaugeSelectors.events({
   'change .site-source': function (e) {
     var gaugeSettings = Session.get('gauge'+e.target.dataset.meter);
     gaugeSettings.pqubeId = e.target.value;
-    Session.set('gauge'+e.target.dataset.meter, gaugeSettings);
+    var prefix = e.target.dataset.meter;
+    Session.set('gauge'+prefix+'Value', null);
+    Session.set('gauge'+prefix, gaugeSettings);
     $('#'+e.target.dataset.meter+'-recorder-head').css('left', null);
   },
   'change .meter-source': function (e) {
-    var pqube = Session.get('gauge'+e.target.dataset.meter).pqubeId;
+    var gaugeNum = e.target.dataset.meter;
+    var pqube = Session.get('gauge'+gaugeNum).pqubeId;
     var gaugeSettings = getGaugeSettings(e.target.value, parseInt(e.target.dataset.meter,10));
     gaugeSettings.pqubeId = pqube;
-    Session.set(e.target.dataset.meter+'-gaugeScale', gaugeList[e.target.value].scale);
-    Session.set('gauge'+e.target.dataset.meter, gaugeSettings);
 
+    Session.set('gauge'+gaugeNum+'Value', null);
+    Session.set('gauge'+gaugeNum, gaugeSettings);
   }
 });

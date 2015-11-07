@@ -23,7 +23,6 @@ setDefaults = function () {
       var gaugeSettings = getGaugeSettings(g.gaugeName, g.gaugeNum);
       gaugeSettings.pqubeId = id;
       Session.set('gauge'+g.gaugeNum, gaugeSettings);
-      Session.set(g.gaugeNum+'-gaugeScale', gaugeList[g.gaugeName].scale);
     }
   }
 };
