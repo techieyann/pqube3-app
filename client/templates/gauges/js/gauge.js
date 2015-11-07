@@ -67,9 +67,9 @@ Template.gauge.onRendered(function () {
 	  self.canvas.height = self.smoothieHeight;
 	  self.smoothie.removeTimeseries(self.smoothieLine);
 	  self.smoothie.stop();
+          self.smoothieLine.clear();
 	  delete self.smoothie;
 	  delete self.smoothieLine;
-	  Meteor.clearTimeout(self.recorderTimeout);
 	}
       }
       catch(err) {}
