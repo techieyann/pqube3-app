@@ -7,7 +7,7 @@ startDataInterval = function () {
 
 stopDataInterval = function () {
   if (dataInterval) {
-    Meteor.stopInterval(dataInterval);
+    Meteor.clearInterval(dataInterval);
     dataInterval = null;
   }
 };
