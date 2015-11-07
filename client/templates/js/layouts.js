@@ -1,5 +1,5 @@
 Template.manageLayout.onCreated(function () {
-  self.subscribe('pqubesManage');
+  this.subscribe('pqubesManage');
 });
 
 Template.manageLayout.onRendered(function () {
