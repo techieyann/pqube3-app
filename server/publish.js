@@ -10,14 +10,12 @@ Meteor.publish('pqubeData', function (pqube, fieldsOpts) {
 });
 
 Meteor.publish('pqubes', function () {
-  var findOpts = {
-    fields: {
-      'ip': 0,
-      'port': 0
-    }
-  };
+  return PQubes.find({status: 'connected'},{fields: {'ip': 0,'port': 0}});
+});
+
+Meteor.publish('pqubesManage', function () {
   if (this.userId) {
-    findOpts = {};
+    return PQubes.find();
   }
-  return PQubes.find({}, findOpts);
+  return [];
 });

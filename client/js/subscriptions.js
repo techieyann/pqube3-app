@@ -1,4 +1,4 @@
-setSubscription = function () {
+watchDataSubscriptions = function () {
   Tracker.autorun(function () {
     var scopesSource = Session.get('scopesSource');
     var spectraSelected = Session.get('spectraSelected');
@@ -19,7 +19,7 @@ setSubscription = function () {
 	pqubeOpts = $.extend(true, 
 			     {}, 
 			     pqubeTime,
-                             scopesDataSources,
+			     scopesDataSources,
 			     spectraSelectors);
       }
       else pqubeOpts = pqubeTime;
@@ -30,8 +30,8 @@ setSubscription = function () {
 	var gauge = Session.get('gauge'+i);
 	if (gauge) {
 	  if (subOpts[gauge.pqubeId]) {
-            var source = gauge.dataSource;
-            subOpts[gauge.pqubeId][source] = true;
+	    var source = gauge.dataSource;
+	    subOpts[gauge.pqubeId][source] = true;
 	  }
 	}
       }
@@ -41,6 +41,7 @@ setSubscription = function () {
     });
   });
 };
+
 var pqubeTime =  {
   pqYear: true,
   pqMonth: true,

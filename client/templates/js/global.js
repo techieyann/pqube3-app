@@ -1,7 +1,5 @@
-Template.registerHelper('browserSupported', function () {
-  if (BrowserDetect.browser == "Explorer" && BrowserDetect.version < 9)
-    return false;
-  return true;
+Template.registerHelper('browserUnsupported', function () {
+  return (BrowserDetect.browser == "Explorer" && BrowserDetect.version < 9);
 });
 
 Template.registerHelper('spectraSelected', function () {

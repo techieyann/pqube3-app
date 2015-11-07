@@ -1,12 +1,11 @@
 Template.language.events({
   'change #language-select': function (e) {
     var lang = $(e.target).val();
-    TAPi18n.setLanguage(lang)
-      .done(function () {
-      })
-      .fail(function (err) {
-        console.log(err);
-      });
+    LocalStore.set('language', lang);
+    var name = Languages.filter(function (language) {
+      return language.acronym == lang;
+    })[0].fullName;
+    sAlert.info('Language preference set to: '+  TAPi18n.__(name));
   }
 });
 Template.language.helpers({

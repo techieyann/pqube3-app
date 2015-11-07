@@ -1,13 +1,21 @@
+var dataInterval;
 startDataInterval = function () {
-  Meteor.setInterval(function () {
+  dataInterval = Meteor.setInterval(function () {
     Tracker.nonreactive(setPresentVals);
   },500);
+};
+
+stopDataInterval = function () {
+  if (dataInterval) {
+    Meteor.stopInterval(dataInterval);
+    dataInterval = null;
+  }
 };
 function pad2(number) { return (number < 10 ? '0' : '') + number; }
 
 var strikeFlag;
 
-setPresentVals = function () {
+var setPresentVals = function () {
   var dC = {
     now:new Date().getTime()
   };

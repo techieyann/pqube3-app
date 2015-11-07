@@ -45,3 +45,6 @@ twbs:bootstrap
 useraccounts:bootstrap
 fortawesome:fontawesome
 reactive-var
+juliancwirko:s-alert
+juliancwirko:s-alert-stackslide
+frozeman:storage

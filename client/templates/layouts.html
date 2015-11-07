@@ -1,21 +1,38 @@
 <template name="dataLayout">
-  {{#if browserSupported}}
-  <div id="container">
-    <div id="header">
-      {{> meta}}			
-      <a href="http://www.powersensorsltd.com" id="logo" target="_blank"><img alt="Power Sensors Ltd." src="/images/header.png">{{> title}}</a>      
-      {{> newData}}
-    </div>
-    <div id="scopes">
-      {{> scopes}}
-    </div>
-    {{> viewSelector}}
-    {{> Template.dynamic template=bottom}}
-  </div>
-  {{> footer}}
-  {{else}}
+  {{#if browserUnsupported}}
   {{> unsupportedBrowser}}
-  {{/if}} 
+  {{else}}
+
+    {{#unless pqube}}
+  {{#if Template.subscriptionsReady}}
+    <div id="no-pqubes">
+      No PQubes are available at the present. We are sorry for the inconvenience.
+    </div>
+    {{else}}
+  
+    <div id="loading-pqubes">
+      Loading PQube subscription, thank you for your patience.
+    </div>
+    {{/if}}
+   {{else}}
+
+    <div id="container">
+
+      <div id="header">
+	{{> meta}}			
+	<a href="http://www.powersensorsltd.com" id="logo" target="_blank"><img alt="Power Sensors Ltd." src="/images/header.png">{{> title}}</a>      
+	{{> newData}}
+      </div>
+      <div id="scopes">
+	{{> scopes}}
+      </div>
+      {{> viewSelector}}
+      {{> Template.dynamic template=bottom}}
+
+    </div>
+    {{/unless}}
+    {{> footer}}
+  {{/if}}
 </template>
 
 <template name="loginLayout">
