@@ -36,7 +36,7 @@ var connectToPQube = function (pqube) {
         socket: socket,
         autoConnect: true,
         autoReconnect: true,
-        minConnectTime: 2500,
+        minConnectTime: 5000,
         maxReconnectTime: 360000
       }
     },
@@ -53,9 +53,14 @@ var connectToPQube = function (pqube) {
     console.log(pqube.name+'(error): '+err.message);
   });
   async('connected', function () {
-    console.log('connected to a pqube');
-    PQubes.update({_id: pqube._id}, {$set: {status: 'connected'}});
-    initRequests(pqube._id);
+    console.log('connected to pqube '+pqube.name);
+    if (pqube.status == 'unverified') {
+      verifyPQube(pqube._id);
+    }
+    else {
+      PQubes.update({_id: pqube._id}, {$set: {status: 'connected'}});
+      initRequests(pqube._id);
+    }
   });
   async('disconnected', function () {
     if (PQubes.find({_id: pqube._id}).status != 'unverified')
@@ -71,7 +76,8 @@ var connectToPQube = function (pqube) {
 
 initRequests = function (id) {
   for (var i=0; i<reqRegisters.length; i++) {
-    initRequest(reqRegisters[i], id);
+    if (reqRegisters[i].type != 'verification') 
+      initRequest(reqRegisters[i], id);
   }
 };
 cancelRequests = function (id) {
@@ -108,4 +114,41 @@ var initRequest = function (reqRegister, pqube) {
     console.log('pqube '+pqube+': '+reqRegister.type+' timeout');
   });
   pqubeConnections[pqube].reqs.push(pqubeReq);
+};
+
+var verifyPQube = function (pqube) {
+  var now = new Date();
+  var year = now.getFullYear();
+  var req = {
+    type: 'year',
+    start: 11910,
+    num: 2,
+    fields: 'verification',
+    chart: false
+  };
+  var requestComplete = Meteor.bindEnvironment(
+    function (err, response) {
+      if(!err && response.values) {
+        var decoded = decodeRegisters(response.values, req);
+        if (decoded) {
+          if (decoded.year == year) {
+            PQubes.update(pqube, {$set: {status: 'connected'}});
+            initRequests(pqube);
+          }
+        }
+      }
+      if (err) console.log(err);
+    }
+  );
+  var pqubeReq = pqubeConnections[pqube].master.readInputRegisters(req.start, req.num, {
+    maxRetries: 1,
+    timeout: 500,
+    interval: -1,
+    onComplete: requestComplete
+  });
+  pqubeReq.on('error', function (err) {
+    console.log('pqube verification error: '+err);
+  });  
+
+
 };

@@ -4,7 +4,6 @@ var decoderRing = new DecoderRing();
 decodeRegisters = function (registers, reqRegister) {
   var chartDataFlag = reqRegister.chart;
   var chartDataIndex;
-  var type = reqRegister.type;
   var buffOpts = {
     bigEndian: true
   };
@@ -23,15 +22,4 @@ decodeRegisters = function (registers, reqRegister) {
     return chartData;
   }
   return data;
-};
-
-
-
-var registersToOctets = function (registers) {
-  var octets = [];
-  for (var i=0;i<registers.length;i++) {
-    octets.push(registers[i]>>8);
-    octets.push(registers[i]>>0 & 0xff);
-  }
-  return octets;
 };

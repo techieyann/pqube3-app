@@ -1,4 +1,7 @@
 buffArrays = {
+  verification: [
+    {name: 'year', start:0, type:'float'}
+  ],
   freqArray: [
     {name: 'freq', start:0, type:'float'}
   ],

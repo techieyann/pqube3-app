@@ -17,10 +17,6 @@ Template.manageLayout.events({
   }
 });
 
-Template.dataLayout.onDestroyed(function () {
-  stopDataInterval();
-});
-
 Template.dataLayout.onCreated(function () {
   var self = this;
   self.autorun(function () {

@@ -1,5 +1,12 @@
 reqRegisters = [
   {
+    type: 'verification',
+    start: 11902,
+    num: 2,
+    fields: 'verification',
+    chart: false
+  },
+  {
     type: 'THD',
     start: 7194,
     num: 2,
