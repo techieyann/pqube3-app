@@ -1,5 +1,5 @@
 Template.manageLayout.onCreated(function () {
-  Meteor.subscribe('pqubesManage');
+  self.subscribe('pqubesManage');
 });
 
 Template.manageLayout.onRendered(function () {
@@ -34,7 +34,7 @@ Template.dataLayout.onCreated(function () {
 	});
     }
   });
-  Meteor.subscribe('pqubes', function () {
+  self.subscribe('pqubes', function () {
     if (PQubes.find().count()) {
       setDefaults();
       watchDataSubscriptions();

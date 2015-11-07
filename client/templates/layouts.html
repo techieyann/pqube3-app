@@ -9,10 +9,10 @@
       No PQubes are available at the present. We are sorry for the inconvenience.
     </div>
     {{else}}
-  
     <div id="loading-pqubes">
-      Loading PQube subscription, thank you for your patience.
+      Loading PQubes, thank you for your patience.
     </div>
+
     {{/if}}
    {{else}}
 
@@ -58,7 +58,13 @@
     </div>
   </nav>
   <div class="container">
+    {{#unless Template.subscriptionsReady}}
+    <div id="loading-pqubes">
+      Loading PQubes, thank you for your patience.
+    </div>
+    {{else}}
     {{> Template.dynamic template=main}}
+    {{/unless}}
   </div>
   {{> footer}}
   <div id="modal" class="modal fade">
