@@ -1,12 +1,7 @@
 observePQubes = function () {
   PQubes.find().observeChanges({
     added: function (id, fields) {
-      if (PQubes.find({status: 'connected'}).count() == 1) {
-	Meteor.call('defaultizePQube', id, function () {
-	  setDefaults();
-	});
-      }
-      sAlert.success('New PQube at '+fields.name);
+      sAlert.success('Connected to PQube at '+fields.name);
     },
     removed: function (id) {
       if (PQubes.find().count()) {
