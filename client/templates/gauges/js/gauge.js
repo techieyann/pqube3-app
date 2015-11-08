@@ -1,7 +1,6 @@
 Template.gauge.onCreated(function () {
-//why have data applied as a session var?
-//just apply number and access session var..
   var self = this;
+  self.initialized = false;
   self.smoothieWidth = 130;
   self.smoothieHeight = 210;
   self.smoothieRecorder = {
@@ -58,21 +57,18 @@ Template.gauge.onRendered(function () {
     if (data) {
       self.canvas = null;
       self.canvas = document.getElementById(data.prefix+'-smoothie-canvas');
-      try {
-        self.sevenSeg = null;
-	self.gauge.set(data.tunguskaGauge.range.lowStop);
+      if (self.initialized) {
+	self.canvas.width = self.smoothieWidth;
+	self.canvas.height = self.smoothieHeight;
+	self.smoothie.stop();
+        self.smoothieLine.clear();
+	self.smoothie.removeTimeSeries(self.smoothieLine);
+	delete self.smoothie;
+	delete self.smoothieLine;
         $('#'+data.prefix+'-tunguska-gauge-lock').remove();
-	if(self.smoothie) {
-	  self.canvas.width = self.smoothieWidth;
-	  self.canvas.height = self.smoothieHeight;
-	  self.smoothie.removeTimeseries(self.smoothieLine);
-	  self.smoothie.stop();
-          self.smoothieLine.clear();
-	  delete self.smoothie;
-	  delete self.smoothieLine;
-	}
       }
-      catch(err) {}
+
+
       self.sevenSeg = new SegmentDisplay(data.prefix+'-display');
       self.sevenSeg.pattern         = data.sevenSegment.pattern;
       self.sevenSeg.displayAngle    = 12;
@@ -168,6 +164,7 @@ Template.gauge.onRendered(function () {
       self.smoothieLine = new TimeSeries();
       self.smoothie.addTimeSeries(self.smoothieLine, {lineWidth:2, strokeStyle:color});
       $('#'+self.prefix+'-smoothie-recorder').css('left', null);
+      self.initialized = true;
     }
   });
   self.autorun(function () {
