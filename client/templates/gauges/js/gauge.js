@@ -7,13 +7,12 @@ Template.gauge.onCreated(function () {
     min: 31,
     max: 150
   };
-  self.scale = new ReactiveVar();
-  self.updateScale = function (min, max, labelSigFigs) {
-  if (!isNaN(min) && !isNaN(max)) {
-    
-    var scale;
-      Tracker.nonreactive(function () {scale = self.scale.get();});
 
+  self.updateScale = function (min, max, labelSigFigs) {
+    var scale;
+    Tracker.nonreactive(function () {scale = Session.get(self.data+'-gaugeScale');});
+    if (scale && !isNaN(min) && !isNaN(max)) {
+     
       var diff;
       if (scale.anchor == 'min') {
 	diff = Math.abs(max-scale.val);
@@ -30,7 +29,7 @@ Template.gauge.onCreated(function () {
 	}
 	scale.init = upInit;
         
-        self.scale.set(scale);
+        Session.set(self.data+'-gaugeScale', scale);
 	return true;
       }
       var newInit = scale.init;
@@ -41,7 +40,7 @@ Template.gauge.onCreated(function () {
       }
       if (scale.init != newInit) {
 	scale.init = newInit;
-        self.scale.set(scale);
+        Session.set(self.data+'-gaugeScale', scale);
 	return true;
       }
   }
@@ -85,7 +84,7 @@ Template.gauge.onRendered(function () {
       var tgOpts = data.tunguskaGauge;
       var gaugeMax, gaugeMin;
       var scale = gaugeList[data.gaugeName].scale;
-      self.scale.set(scale);
+      Session.set(self.data+'-gaugeScale',scale);
       if (scale.anchor == 'min') {
 	gaugeMax = scale.val+scale.init;
 	gaugeMin = scale.val;
@@ -157,7 +156,7 @@ Template.gauge.onRendered(function () {
 	},
 	timestampFormatter:SmoothieChart.timeFormatter,
 	pqubeId: data.pqubeId,
-	meter: data.prefix
+	meter: self.data
 
       });
       self.smoothie.streamTo(self.canvas);
@@ -171,9 +170,8 @@ Template.gauge.onRendered(function () {
     var data;
     Tracker.nonreactive(function () {data= Session.get('gauge'+self.data);});
 
-    var scale = self.scale.get();
+    var scale = Session.get(self.data+'-gaugeScale');
     if (scale) {
-      Session.set(self.data+'-gaugeScale', scale);
       var tgOpts = data.tunguskaGauge;
 
       if (self.gauge) {

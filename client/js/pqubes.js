@@ -1,7 +1,7 @@
 observePQubes = function () {
   PQubes.find().observeChanges({
     added: function (id, fields) {
-      sAlert.success('Connected to PQube at '+fields.name);
+      sAlert.success('Connected to PQube3 at '+fields.name);
     },
     removed: function (id) {
       if (PQubes.find().count()) {
@@ -34,7 +34,7 @@ observePQubes = function () {
 	  displayChangeFlag = true;
 	}
 	if (displayChangeFlag)
-	  sAlert.warning('PQube has become unnavailable, view changed where appropriate.');
+	  sAlert.warning('PQube3 has become unnavailable, view changed where appropriate.');
       }
     }
   });

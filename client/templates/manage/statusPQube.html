@@ -2,7 +2,7 @@
   <div class="well">
     {{#if unverified}}
     <div class="alert alert-warning text-center">
-      <p>Attempting to verify a PQube at {{ip}}:{{port}}</p>
+      <p>Attempting to verify a PQube3 at {{ip}}:{{port}}</p>
       <p>Please confirm that the network allows it to be accessed publicly, and that the information is correct</p>
 
     </div>
@@ -30,12 +30,6 @@
 	</h4>
 
 	<span class="btn-group " role="group">
-	  {{#unless connected}}
-
-	  {{#unless unverified}}
-	  <a href="#" type="button" class="connect-pqube btn btn-default"><span class="glyphicon glyphicon-ok-sign"></span> Reconnect</a>
-	  {{/unless}}
-	  {{/unless}}
 	  <a href="/manage/edit/{{_id}}" type="button" class="edit-pqube btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
 	  <a href="/manage/delete/{{_id}}" type="button" class="delete-pqube btn btn-default"><span class="glyphicon glyphicon-trash"></span> Delete</a>
 	</span>
