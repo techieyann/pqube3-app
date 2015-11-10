@@ -22,6 +22,22 @@ observePQubes = function () {
       PQubeData.remove(id);
     }
   });
+  Meteor.setInterval(function () {
+    var now = new Date();
+    var dcIds = [];
+    for (var id in pqubeConnections) {
+      if (now - pqubeConnections.lastDataReceivedAt > 10000) {
+	dcIds.push(id);
+      }
+    }
+    for (var i=0; i<dcIds.length; i++) {
+      cancelRequests(id);
+      PQubes.update({_id: id, status: {$ne: 'unverified'}}, {$set: {status: 'disconnected'}});      
+      delete pqubeConnections[id];	
+      connectToPQube(id);      
+    }
+  }, 10000);
+
 };
 
 var connectToPQube = function (pqube) {  
@@ -37,41 +53,39 @@ var connectToPQube = function (pqube) {
         autoConnect: true,
         autoReconnect: true,
         minConnectTime: 5000,
-        maxReconnectTime: 360000
+        maxReconnectTime: 5000
       }
     },
     suppressTransactionErrors: false,
     retryOnException: false,
     maxConcurrentRequests: 25,
     defaultUnit: 0,
-    defaultMaxRetries: 3,
-    defaultTimeout: 100
+    defaultMaxRetries: 0,
+    defaultTimeout: 500
   });
   var async = Meteor.wrapAsync(master.on, master);
   var reqs = [];
+  pqubeConnections[pqube._id] = {
+    master: master,
+    async: async,
+    connectInterval: Meteor.setInterval(function () {
+      master.transport.connection.connect();
+    },60000),
+    reqs: []
+  };
   master.on('error', function (err) {
     console.log(pqube.name+'(error): '+err.message);
   });
   async('connected', function () {
     console.log('connected to pqube '+pqube.name);
-    if (pqube.status == 'unverified') {
-      verifyPQube(pqube._id);
-    }
-    else {
-      PQubes.update({_id: pqube._id}, {$set: {status: 'connected'}});
-      initRequests(pqube._id);
-    }
+    verifyPQube(pqube._id);
+    PQubes.update({_id: pqube._id}, {$set: {status: 'connected'}});
+    initRequests(pqube._id);
   });
   async('disconnected', function () {
-    if (PQubes.find({_id: pqube._id}).status != 'unverified')
-      PQubes.update({_id: pqube._id}, {$set: {status: 'disconnected'}});
     cancelRequests(pqube._id);
+    PQubes.update({_id: pqube._id, status: {$ne: 'unverified'}}, {$set: {status: 'disconnected'}});
   });    
-  pqubeConnections[pqube._id] = {
-    master: master,
-    async: async,
-    reqs: []
-  };
 };
 
 initRequests = function (id) {
@@ -92,8 +106,11 @@ cancelRequests = function (id) {
 
 var procRegisters = function (registers, reqRegister, pqube) {
   var decoded = decodeRegisters(registers, reqRegister);
-  //    console.log(decoded);
-  if (decoded) PQubeData.upsert(pqube, {$set: decoded});
+
+  if (decoded) {
+    pqubeConnections[pqube].lastDataReceivedAt = new Date();
+    PQubeData.upsert(pqube, {$set: decoded});
+  }
 };
 
 var initRequest = function (reqRegister, pqube) {
@@ -101,17 +118,16 @@ var initRequest = function (reqRegister, pqube) {
   var requestComplete = Meteor.bindEnvironment(
     function (err, response) {
       if(!err && response.values) procRegisters(response.values, reqRegister, pqube);
-      if (err) console.log(err);
     }
   );
   var pqubeReq = pqubeConnections[pqube].master.readInputRegisters(reqRegister.start, reqRegister.num, {
     maxRetries: 0,
-    timeout: 500,
+    timeout: 450,
     interval: 500,
     onComplete: requestComplete
   });
   pqubeReq.on('error', function (err) {
-    console.log('pqube '+pqube+': '+reqRegister.type+' timeout');
+    console.log(pqube+':'+reqRegister.type+' error: '+err);
   });
   pqubeConnections[pqube].reqs.push(pqubeReq);
 };
@@ -132,6 +148,7 @@ var verifyPQube = function (pqube) {
         var decoded = decodeRegisters(response.values, req);
         if (decoded) {
           if (decoded.year == year) {
+	    Meteor.clearInterval(pqubeConnections[pqube].connectInterval);
             PQubes.update(pqube, {$set: {status: 'connected'}});
             initRequests(pqube);
           }
@@ -149,6 +166,4 @@ var verifyPQube = function (pqube) {
   pqubeReq.on('error', function (err) {
     console.log('pqube verification error: '+err);
   });  
-
-
 };

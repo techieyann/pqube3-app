@@ -14,5 +14,8 @@ Template.spectraSelector.helpers({
 Template.spectraSelector.events({
   'change #spectra-source': function (e) {
     Session.set('spectraSource', e.target.value);
+    var spectraData = Session.get('spectraData');
+    spectraData.strikesLeft = 0;
+    Session.set('spectraData', spectraData);
   }
 });

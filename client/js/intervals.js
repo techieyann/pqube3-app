@@ -190,6 +190,12 @@ var clearScopes = function () {
 
 var updateSpectra = function () {
   var spectraSource = Session.get('spectraSource');
+  var oldSpectraData = Session.get('spectraData');
+  var spectraScale, scaleStrikesLeft;
+  if (oldSpectraData) {
+    spectraScale = oldSpectraData.scale;
+    scaleStrikesLeft = oldSpectraData.strikesLeft;
+  }
   var spectraSelectors = spectraList[spectraSource].dataSources;
   var spectraArray = [];
   var max = 0;
@@ -207,13 +213,23 @@ var updateSpectra = function () {
     else
       spectraArray.push(this.pqubeData[spectraSelectors[i]]);
   }
-  
-//  console.log(up125(max));
+  var newScale = up125(max);
   var spectraData = {
     dataSet: spectraArray,
-    type: spectraList[spectraSource].type,
-    scale: up125(max)
+    type: spectraList[spectraSource].type
   };
+  var rescaleFlag = true;
+  if (oldSpectraData) {
+    if (scaleStrikesLeft && newScale < spectraScale) {
+      rescaleFlag = false;
+      spectraData.scale = spectraScale;
+      spectraData.strikesLeft = --scaleStrikesLeft;
+    }
+  }
+  if (rescaleFlag) {
+    spectraData.scale = newScale;
+    spectraData.strikesLeft = Meteor.settings.public.spectraStrikes;
+  }
   if (type == 'harmonic') {
     spectraData.fund1 = spectraArray[0][1].toFixed(3);
     spectraData.fund2 = spectraArray[1][1].toFixed(3);

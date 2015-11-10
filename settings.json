@@ -1,5 +1,6 @@
 {
   "public": {
-    "numStrikes": 2
+    "numStrikes": 2,
+    "spectraStrikes": 8
   }
 }
