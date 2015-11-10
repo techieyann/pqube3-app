@@ -79,8 +79,6 @@ var connectToPQube = function (pqube) {
   async('connected', function () {
     console.log('connected to pqube '+pqube.name);
     verifyPQube(pqube._id);
-    PQubes.update({_id: pqube._id}, {$set: {status: 'connected'}});
-    initRequests(pqube._id);
   });
   async('disconnected', function () {
     cancelRequests(pqube._id);
