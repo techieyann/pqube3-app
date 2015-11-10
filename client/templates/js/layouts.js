@@ -9,14 +9,6 @@ Template.manageLayout.onRendered(function () {
   });
 });
 
-Template.manageLayout.events({
-  'click #nav-new-pqube': function (e) {
-    Meteor.setTimeout(function () {
-      $('#new-pqube-name').focus();
-    }, 400);
-  }
-});
-
 Template.dataLayout.onDestroyed(function () {
   stopDataInterval();
 });
