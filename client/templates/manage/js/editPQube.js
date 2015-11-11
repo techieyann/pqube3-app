@@ -36,7 +36,6 @@ Template.editPQube.helpers({
 
 Template.editPQube.events({
   'submit #edit-pqube-form, click #edit-pqube': function (e) {
-    console.log(e);
     Session.set('editPQubeFormError', null);
     var id = FlowRouter.current().params.pqubeId;
     e.preventDefault();
