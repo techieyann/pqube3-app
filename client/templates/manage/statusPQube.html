@@ -2,8 +2,8 @@
   <div class="well">
     {{#if unverified}}
     <div class="alert alert-warning text-center">
-      <p>Attempting to verify a PQube3 at {{ip}}:{{port}}</p>
-      <p>Please confirm that the network allows it to be accessed publicly, and that the information is correct</p>
+      <p>{{_ "verifyAttempt"}} {{ip}}:{{port}}</p>
+      <p>{{_ "verifyHelp"}}</p>
 
     </div>
     {{/if}}
@@ -13,24 +13,24 @@
 	<h4>{{ip}}:{{port}}</h4>
       </span>
       <span class="col-sm-6 col-xs-12">
-	<h4>Status:
+	<h4>{{_ "status"}}:
 	  {{#if connected}}
 	  <span class="glyphicon glyphicon-ok-sign text-success"></span>
 	  {{else}}
 	  <span class="glyphicon glyphicon-remove-sign text-danger"></span>
 	  {{/if}}
 	  {{#if defaultPQube}}
-	  <span>(Default)</span>
+	  <span>({{_ "default"}})</span>
 	  {{else}}
 	  {{#if defaultable}}
-	  <a href="#" type="button" class="make-pqube-default btn btn-default">Make Default</a>
+	  <a href="#" type="button" class="make-pqube-default btn btn-default">{{_ "makeDefault"}}</a>
 	  {{/if}}
 	  {{/if}}
 	</h4>
 
 	<span class="btn-group " role="group">
-	  <a href="/manage/edit/{{_id}}" type="button" class="edit-pqube btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
-	  <a href="/manage/delete/{{_id}}" type="button" class="delete-pqube btn btn-default"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+	  <a href="/manage/edit/{{_id}}" type="button" class="edit-pqube btn btn-default"><span class="glyphicon glyphicon-pencil"></span> {{_ "edit"}}</a>
+	  <a href="/manage/delete/{{_id}}" type="button" class="delete-pqube btn btn-default"><span class="glyphicon glyphicon-trash"></span> {{_ "delete"}}</a>
 	</span>
       </span>
     </div>

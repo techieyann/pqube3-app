@@ -1,1 +1,1 @@
-BlazeLayout.setRoot('body');
+

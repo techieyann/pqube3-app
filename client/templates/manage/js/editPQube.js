@@ -36,6 +36,7 @@ Template.editPQube.helpers({
 
 Template.editPQube.events({
   'submit #edit-pqube-form, click #edit-pqube': function (e) {
+    console.log(e);
     Session.set('editPQubeFormError', null);
     var id = FlowRouter.current().params.pqubeId;
     e.preventDefault();
@@ -45,19 +46,19 @@ Template.editPQube.events({
       port: $('#edit-pqube-port').val()
     };
     if (!editPQubeData.name) {
-      Session.set('editPQubeFormError', 'Name is a required field');
+      Session.set('editPQubeFormError', TAPi18n.__('errNameRequired'));
       $('#edit-pqube-name').focus();
       return;
     }
     if (!editPQubeData.ip) {
-      Session.set('editPQubeFormError', 'IP is a required field');
+      Session.set('editPQubeFormError', TAPi18n.__('errIPRequired'));
       $('#edit-pqube-ip').focus();
       return;
     }    
     if (!editPQubeData.port) editPQubeData.port = 502;
     var ipRegEx = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
     if (!ipRegEx.test(editPQubeData.ip)) {
-      Session.set('editPQubeFormError', 'Bad IP address formatting');
+      Session.set('editPQubeFormError', TAPi18n.__('errBadIP'));
       $('#edit-pqube-ip').val('').focus();
       return;
     }

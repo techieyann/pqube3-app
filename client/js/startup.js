@@ -1,4 +1,6 @@
 Meteor.startup(function () {
+  BlazeLayout.setRoot('body');
+
   if (BrowserDetect.browser == 'Safari')
     $('select').css('color', 'black');
   Session.set('voltageScopeScale', 100);

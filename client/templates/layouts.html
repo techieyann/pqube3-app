@@ -6,13 +6,12 @@
     {{#unless pqube}}
   {{#if Template.subscriptionsReady}}
     <div id="no-pqubes">
-      No PQube3s are available at the present. We are sorry for the inconvenience.
+      {{_ "noPQubes"}}
     </div>
     {{else}}
     <div id="loading-pqubes">
-      Loading PQube3s, thank you for your patience.
+      {{_ "loadingPQubes"}}
     </div>
-
     {{/if}}
    {{else}}
 
@@ -20,7 +19,7 @@
 
       <div id="header">
 	{{> meta}}			
-	<a href="http://www.powersensorsltd.com" id="logo" target="_blank"><img alt="Power Sensors Ltd." src="/images/header.png">{{> title}}</a>      
+	<a href="http://www.powersensorsltd.com" id="logo" target="_blank"><img alt="Power Sensors Ltd." src="/images/header.png">{{> title}}</a>
 	{{> newData}}
       </div>
       <div id="scopes">
@@ -28,7 +27,6 @@
       </div>
       {{> viewSelector}}
       {{> Template.dynamic template=bottom}}
-
     </div>
     {{/unless}}
     {{> footer}}
@@ -37,7 +35,7 @@
 
 <template name="loginLayout">
   {{#if atDisabled}}
-  <p>Please wait...</p>
+  <p>{{_ "plsWait"}}</p>
   {{/if}}
   <div class="">
     {{> Template.dynamic template=main}}
@@ -48,11 +46,11 @@
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand" href="/">
-	Home
+	{{_ "home"}}
       </a>
       <div class="btn-group pull-right">
-      <a id="nav-new-pqube" href="/manage/new" type="button" class="btn btn-primary navbar-btn"><span class="glyphicon glyphicon-plus"></span> New PQube</a>
-      <a href="/logout" type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+      <a id="nav-new-pqube" href="/manage/new" type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-plus"></span> {{_ "newPQube"}}</a>
+      <a href="/logout" type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-log-out"></span> {{_ "logout"}}</a>
 
       </div>
     </div>
@@ -60,7 +58,7 @@
   <div class="container">
     {{#unless Template.subscriptionsReady}}
     <div id="loading-pqubes">
-      Loading PQubes, thank you for your patience.
+      {{_ "loadingPQubes"}}
     </div>
     {{else}}
     {{> Template.dynamic template=main}}

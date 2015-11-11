@@ -19,19 +19,19 @@ Template.newPQube.events({
       defaultPQube: defaultFlag
     };
     if (!newPQubeData.name) {
-      Session.set('newPQubeFormError', 'Name is a required field');
+      Session.set('newPQubeFormError', TAPi18n.__('errNameRequired'));
       $('#new-pqube-name').focus();
       return;
     }
     if (!newPQubeData.ip) {
-      Session.set('newPQubeFormError', 'IP is a required field');
+      Session.set('newPQubeFormError', TAPi18n.__('errIPRequired'));
       $('#new-pqube-ip').focus();
       return;
     }    
     if (!newPQubeData.port) newPQubeData.port = 502;
     var ipRegEx = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
     if (!ipRegEx.test(newPQubeData.ip)) {
-      Session.set('newPQubeFormError', 'Bad IP address formatting');
+      Session.set('newPQubeFormError', TAPi18n.__('errBadIP'));
       $('#new-pqube-ip').val('').focus();
       return;
     }
@@ -41,7 +41,7 @@ Template.newPQube.events({
 	$('#new-pqube-'+err.error).focus();
 	return;
       }
-      $('#new-pqube-name, #new-pqube-ip, #new-pqube-port').val('');
+      $('#modal').modal('hide');
     });
   }
 });

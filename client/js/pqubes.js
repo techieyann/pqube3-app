@@ -1,9 +1,10 @@
 observePQubes = function () {
   PQubes.find().observeChanges({
     added: function (id, fields) {
-      sAlert.success('Connected to PQube3 at '+fields.name);
+      sAlert.success(TAPi18n.__('alertConnected')+' '+fields.name);
     },
     removed: function (id) {
+      var displayChangeFlag = false;
       if (PQubes.find().count()) {
 	var defaultPQube = PQubes.findOne({defaultPQube: true});
 	var switchToId = (defaultPQube ? defaultPQube._id : PQubes.findOne()._id);
@@ -12,7 +13,7 @@ observePQubes = function () {
 	var gauge1 = Session.get('gauge1');
 	var gauge2 = Session.get('gauge2');
 	var gauge3 = Session.get('gauge3');
-	var displayChangeFlag = false;
+
 
 	if (id == scope) {
 	  Session.set('scopesSource', switchToId);
@@ -34,7 +35,10 @@ observePQubes = function () {
 	  displayChangeFlag = true;
 	}
 	if (displayChangeFlag)
-	  sAlert.warning('PQube3 has become unnavailable, view changed where appropriate.');
+	  sAlert.warning(TAPi18n.__('alertDCViewChange'));
+      }
+      if (!displayChangeFlag) {
+	  sAlert.warning(TAPi18n.__('alertDisconnected'));	
       }
     }
   });
