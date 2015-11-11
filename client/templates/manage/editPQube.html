@@ -18,14 +18,6 @@
 	<label for="edit-pqube-name">Name</label>
 	<input type="text" class="form-control" id="edit-pqube-name"  placeholder="Name" value="{{name}}" required>
       </div>
-      <div class="form-group">
-	<label for="edit-pqube-language">Language</label>
-        <select id="edit-pqube-language" class="form-control">
-	  {{#each language}}
-	  <option value="{{acronym}}" {{selectedLanguage}}>{{_ fullName}}</option>
-	  {{/each}}
-	</select>
-      </div>
       <br><br>
       <div class="form-group">
 	<label for="edit-pqube-ip">IP Address</label>

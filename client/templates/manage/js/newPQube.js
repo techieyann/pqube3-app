@@ -14,7 +14,6 @@ Template.newPQube.events({
     var newPQubeData = {
       _id: Random.id(),
       name: $('#new-pqube-name').val(),
-      language: $('#new-pqube-language').val(),
       ip: $('#new-pqube-ip').val(),
       port: $('#new-pqube-port').val(),
       defaultPQube: defaultFlag

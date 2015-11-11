@@ -17,11 +17,6 @@ Template.editPQube.helpers({
     if (pqube)
       return pqube.name;
   },
-  defaultLangauge: function () {
-    var pqube = Template.instance().pqube.get();
-    if (pqube)
-      return pqube.language;
-  },
   ip: function () {
     var pqube = Template.instance().pqube.get();
     if (pqube)
@@ -46,7 +41,6 @@ Template.editPQube.events({
     e.preventDefault();
     var editPQubeData = {
       name: $('#edit-pqube-name').val(),
-      language: $('#edit-pqube-language').val(),
       ip: $('#edit-pqube-ip').val(),
       port: $('#edit-pqube-port').val()
     };
