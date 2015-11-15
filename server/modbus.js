@@ -26,7 +26,7 @@ observePQubes = function () {
     var now = new Date();
     var dcIds = [];
     for (var id in pqubeConnections) {
-      if (now - pqubeConnections.lastDataReceivedAt > 10000) {
+      if (now - pqubeConnections[id].lastDataReceivedAt > 10000) {
 	dcIds.push(id);
       }
     }
