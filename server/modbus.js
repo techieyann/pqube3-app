@@ -31,10 +31,11 @@ observePQubes = function () {
       }
     }
     for (var i=0; i<dcIds.length; i++) {
-      cancelRequests(id);
-      PQubes.update({_id: id, status: {$ne: 'unverified'}}, {$set: {status: 'disconnected'}});      
-      delete pqubeConnections[id];	
-      connectToPQube(id);      
+      var dcId = dcIds[i];
+      cancelRequests(dcId);
+      PQubes.update({_id: dcId, status: {$ne: 'unverified'}}, {$set: {status: 'disconnected'}});
+      delete pqubeConnections[dcId];	
+      connectToPQube(dcId);      
     }
   }, 10000);
 
@@ -120,7 +121,7 @@ var initRequest = function (reqRegister, pqube) {
   );
   var pqubeReq = pqubeConnections[pqube].master.readInputRegisters(reqRegister.start, reqRegister.num, {
     maxRetries: 0,
-    timeout: 450,
+    timeout: 500,
     interval: 500,
     onComplete: requestComplete
   });
