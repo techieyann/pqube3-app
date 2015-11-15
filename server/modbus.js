@@ -27,15 +27,18 @@ observePQubes = function () {
     var dcIds = [];
     for (var id in pqubeConnections) {
       if (now - pqubeConnections[id].lastDataReceivedAt > 10000) {
-	dcIds.push(id);
+        var pqube = PQubes.findOne(id);
+        if (pqube.status == 'connected') {
+          Meteor.setTimeout(function () {
+            cancelRequests(id);
+            PQubes.update({_id: id}, {$set: {status: 'disconnected'}});
+            delete pqubeConnections[dcId];
+          }, 0);
+        }
+        Meteor.setTimeout(function () {
+          connectToPQube(id);      
+        }, 0);
       }
-    }
-    for (var i=0; i<dcIds.length; i++) {
-      var dcId = dcIds[i];
-      cancelRequests(dcId);
-      PQubes.update({_id: dcId, status: {$ne: 'unverified'}}, {$set: {status: 'disconnected'}});
-      delete pqubeConnections[dcId];	
-      connectToPQube(dcId);      
     }
   }, 10000);
 
@@ -72,7 +75,8 @@ var connectToPQube = function (pqube) {
     connectInterval: Meteor.setInterval(function () {
       master.transport.connection.connect();
     },60000),
-    reqs: []
+    reqs: [],
+    lastDataReceivedAt: new Date()
   };
   master.on('error', function (err) {
     console.log(pqube.name+'(error): '+err.message);
