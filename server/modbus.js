@@ -33,11 +33,9 @@ observePQubes = function () {
             cancelRequests(id);
             PQubes.update({_id: id}, {$set: {status: 'disconnected'}});
             delete pqubeConnections[dcId];
+            connectToPQube(id);      
           }, 0);
         }
-        Meteor.setTimeout(function () {
-          connectToPQube(id);      
-        }, 0);
       }
     }
   }, 10000);
@@ -69,12 +67,13 @@ var connectToPQube = function (pqube) {
   });
   var async = Meteor.wrapAsync(master.on, master);
   var reqs = [];
+  var intervalId = Meteor.setInterval(function () {
+    master.transport.connection.connect();
+  }, 30000);
   pqubeConnections[pqube._id] = {
     master: master,
     async: async,
-    connectInterval: Meteor.setInterval(function () {
-      master.transport.connection.connect();
-    },60000),
+    connectInterval: intervalId, 
     reqs: [],
     lastDataReceivedAt: new Date()
   };
@@ -88,7 +87,7 @@ var connectToPQube = function (pqube) {
   async('disconnected', function () {
     cancelRequests(pqube._id);
     PQubes.update({_id: pqube._id, status: {$ne: 'unverified'}}, {$set: {status: 'disconnected'}});
-  });    
+  }); 
 };
 
 initRequests = function (id) {
