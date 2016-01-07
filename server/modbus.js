@@ -11,9 +11,9 @@ observePQubes = function () {
     },
     changed: function (pqube, oldPQube) {
       if (pqube.ip != oldPQube.ip || pqube.port != oldPQube.port) {
-	cancelRequests(oldPQube._id);
-	delete pqubeConnections[oldPQube._id];	
-	connectToPQube(pqube);
+	      cancelRequests(oldPQube._id);
+	      delete pqubeConnections[oldPQube._id];	
+	      connectToPQube(pqube);
       }
     },
     removed: function (id) {
@@ -33,7 +33,7 @@ observePQubes = function () {
             cancelRequests(id);
             PQubes.update({_id: id}, {$set: {status: 'disconnected'}});
             delete pqubeConnections[dcId];
-            connectToPQube(id);      
+            connectToPQube(pqube);      
           }, 0);
         }
       }
