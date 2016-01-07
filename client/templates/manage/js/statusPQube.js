@@ -15,6 +15,17 @@ Template.pqubeStatus.helpers({
     })[0].fullName;
     return fullName;
   },
+  statusIcon: function () {
+    if (this.status == 'connected')
+      return 'ok-sign text-success';
+    if (this.status == 'disconnected')
+      return 'remove-sign text-danger';
+    if (this.status == 'unknown')
+      return 'question-sign text-warning';
+    if (this.status == 'unverified')
+      return 'exclamation-sign text-danger';
+    return '';
+  },
   defaultable: function () {
     return !this.defaultPQube && this.status == 'connected';
   }
