@@ -37,9 +37,9 @@ Template.newPQube.events({
     }
     Meteor.call('addNewPQube', newPQubeData, function (err, result) {
       if (err) {
-	Session.set('newPQubeFormError', err.reason);
-	$('#new-pqube-'+err.error).focus();
-	return;
+	      Session.set('newPQubeFormError', err.reason);
+	      $('#new-pqube-'+err.error).focus();
+	      return;
       }
       $('#modal').modal('hide');
     });
