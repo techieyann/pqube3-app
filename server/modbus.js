@@ -31,7 +31,7 @@ observePQubes = function () {
         if (pqube.status == 'connected') {
           Meteor.setTimeout(function () {
             cancelRequests(id);
-            PQubes.update({_id: id}, {$set: {status: 'disconnected'}});
+            PQubes.update({_id: id, status: {$nin: ['unknown','unverified']}}, {$set: {status: 'disconnected'}});
             delete pqubeConnections[dcId];
             connectToPQube(pqube);      
           }, 0);
