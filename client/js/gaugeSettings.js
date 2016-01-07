@@ -13,13 +13,13 @@ getGaugeSettings = function (name, meterNum) {
         pattern: getPattern(gauge.sigFigs)
       },
       tunguskaGauge: {
-	id: meterNum+'-tunguska-gauge'
+	      id: meterNum+'-tunguska-gauge'
       }
     };
     var settings = $.extend(true, 
-			    {}, 
-			    gaugeDefaults, 
-			    extendSettings);
+			                      {}, 
+			                      gaugeDefaults, 
+			                      extendSettings);
 
     return settings;
   }
@@ -49,17 +49,17 @@ var gaugeDefaults = {
     },
     tick: {
       minor: {
-	alpha: 0
+	      alpha: 0
       },
       major: {
-	lineWidth: 0,
-	startAt: 1,
-	endAt: 1,
-	legend: {
-	  color: '#555',
-	  font: '14px sans serif',
-	  radius: .60
-	}
+	      lineWidth: 0,
+	      startAt: 1,
+	      endAt: 1,
+	      legend: {
+	        color: '#555',
+	        font: '14px sans serif',
+	        radius: .60
+	      }
       }
     }
   }
