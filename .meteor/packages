@@ -22,7 +22,6 @@ awatson1978:browser-detection
 
 
 
-npm-container
 kadira:flow-router
 useraccounts:core
 useraccounts:flow-routing
@@ -48,3 +47,6 @@ reactive-var
 juliancwirko:s-alert
 juliancwirko:s-alert-stackslide
 frozeman:storage
+
+
+npm-container

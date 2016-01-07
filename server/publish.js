@@ -1,10 +1,3 @@
-Meteor.publish('pqube1Data', function (fieldsOpts) {
-  return PQubeData.find({_id: 'pqube1'}, {fields: fieldsOpts});
-});
-Meteor.publish('pqube2Data', function (fieldsOpts) {
-  return PQubeData.find({_id: 'pqube2'}, {fields: fieldsOpts});
-});
-
 Meteor.publish('pqubeData', function (pqube, fieldsOpts) {
   return PQubeData.find({_id: pqube}, {fields: fieldsOpts});  
 });
@@ -18,4 +11,8 @@ Meteor.publish('pqubesManage', function () {
     return PQubes.find();
   }
   return [];
+});
+
+Meteor.publish('meters', function () {
+  return Meters.find();
 });

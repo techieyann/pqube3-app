@@ -82,6 +82,7 @@
   "add":"Add",
   "edit":"Edit",
   "save":"Save",
+  "manageMeters": "Manage meters for",
   "errNameRequired":"Name is a required field",
   "errIPRequired":"IP is a required field",
   "errBadIP": "Bad IP address formatting",
@@ -98,6 +99,7 @@
   "titleAdd":"Add new PQube3",
   "titleDelete": "Delete PQube3?",
   "titleEdit":"Edit PQube3...",
+  "titleMeters":"Manage PQube3 Meters",
   "alertConnected": "Connected to PQube3 at",
   "alertDisconnected":"Disconnected from PQube3",
   "alertDCViewChange": "PQube3 has become unnavailable, view changed where appropriate"

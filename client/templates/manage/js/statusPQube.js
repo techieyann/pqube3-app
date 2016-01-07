@@ -23,7 +23,7 @@ Template.pqubeStatus.helpers({
     if (this.status == 'unknown')
       return 'question-sign text-warning';
     if (this.status == 'unverified')
-      return 'exclamation-sign text-danger';
+      return 'ban-circle text-danger';
     return '';
   },
   defaultable: function () {

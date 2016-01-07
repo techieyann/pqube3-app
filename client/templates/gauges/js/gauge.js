@@ -84,14 +84,23 @@ Template.gauge.onRendered(function () {
       var tgOpts = data.tunguskaGauge;
       var gaugeMax, gaugeMin;
       var scale = gaugeList[data.gaugeName].scale;
+      //hack for quick 50/60 hz switch
+      if (data.gaugeName == 'freq') {
+        var meters = Meters.findOne(data.pqubeId);
+        if (meters) {
+          if (meters.frequency) {
+            scale.val = meters.frequency;
+          }
+        }
+      }
       Session.set(self.data+'-gaugeScale',scale);
       if (scale.anchor == 'min') {
-	gaugeMax = scale.val+scale.init;
-	gaugeMin = scale.val;
+	      gaugeMax = scale.val+scale.init;
+	      gaugeMin = scale.val;
       }
       else if (scale.anchor == 'center') {
-	gaugeMax = scale.val+scale.init;
-	gaugeMin = scale.val-scale.init;
+	      gaugeMax = scale.val+scale.init;
+	      gaugeMin = scale.val-scale.init;
       }
       var range = gaugeMax-gaugeMin;
       tgOpts.range.min = gaugeMin;

@@ -1,0 +1,42 @@
+<template name="metersPQube">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">{{_ "manageMeters"}} {{name}}:</h4>
+  </div>
+  <form name="manage-meters-pqube-form" class="form-horizontal centered">
+    <div class="modal-body text-center">
+      {{#if metersPQubeError}}
+      <div class="alert alert-danger alert-dismissable">
+	      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	        <span aria-hidden="true">&times;</span>
+	      </button>
+	      {{metersPQubeError}}
+      </div>
+      {{/if}}
+      <div class="form-group">
+        <label for="freqRadios">Frequency:</label>  
+        <div class="radio">
+          <label>
+            <input type="radio" name="freqRadios" id="freq60" value="60" {{frequencyChecked 60}}>
+            60 Hz
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="freqRadios" id="freq50" value="50" {{frequencyChecked 50}}>
+            50 Hz
+          </label>
+        </div>
+      </div>
+      
+      <br>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">{{_ "cancel"}}</button>
+      <button id="meters-pqube" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-save"></span> {{_ "save"}}</button>
+    </div>
+  </form>
+  
+
+</template>
