@@ -7,25 +7,25 @@
     <div class="modal-body text-center">
       {{#if editPQubeError}}
       <div class="alert alert-danger alert-dismissable">
-	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-	  <span aria-hidden="true">&times;</span>
-	</button>
-	{{editPQubeError}}
+	      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	        <span aria-hidden="true">&times;</span>
+	      </button>
+	      {{editPQubeError}}
       </div>
       {{/if}}
 
       <div class="form-group">
-	<label for="edit-pqube-name">{{_ "name"}}</label>
-	<input type="text" class="form-control" id="edit-pqube-name"  placeholder="{{_ 'name'}}" value="{{name}}" required>
+	      <label for="edit-pqube-name">{{_ "name"}}</label>
+	      <input type="text" class="form-control" id="edit-pqube-name"  placeholder="{{_ 'name'}}" value="{{name}}" required>
       </div>
       <br><br>
       <div class="form-group">
-	<label for="edit-pqube-ip">{{_ "ipAddress"}}</label>
-	<input type="text" class="form-control" id="edit-pqube-ip"  placeholder="xxx.xxx.xxx.xxx" maxlength="15" size="15" value="{{ip}}" required>
+	      <label for="edit-pqube-hostname">{{_ "hostname"}}</label>
+	      <input type="text" class="form-control" id="edit-pqube-hostname"  placeholder="IP or URL" value="{{host}}" required>
       </div>
       <div class="form-group">
-	<label for="edit-pqube-port">{{_ "port"}}</label>
-	<input type="text" class="form-control" id="edit-pqube-port"  placeholder="502" maxlength="6" size="6" value="{{port}}">
+	      <label for="edit-pqube-port">{{_ "port"}}</label>
+	      <input type="text" class="form-control" id="edit-pqube-port"  placeholder="502" maxlength="6" size="6" value="{{port}}">
       </div>
       <br>
 

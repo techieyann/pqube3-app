@@ -8,6 +8,9 @@ Template.pqubeStatus.helpers({
   unverified: function () {
     return this.status == 'unverified';
   },
+  verified: function () {
+    return (this.status != 'unverified' && this.status != 'unknown');
+  },
   defaultLanguage: function () {
     var language = this.language;
     var fullName = Languages.filter(function (lang) {

@@ -22,9 +22,8 @@ Template.metersPQube.helpers({
     if (meters) {
       if (meters.frequency)
         return (meters.frequency == freq ? 'checked' : '');
-      else
-        return (freq == 60 ? 'checked':'');
     }
+    return (freq == 60 ? 'checked':'');
   },
   metersPQubeFormError: function () {
     return Session.get('metersPQubeFormError');

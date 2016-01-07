@@ -17,10 +17,10 @@ Template.editPQube.helpers({
     if (pqube)
       return pqube.name;
   },
-  ip: function () {
+  host: function () {
     var pqube = Template.instance().pqube.get();
     if (pqube)
-    return pqube.ip;
+    return pqube.host;
   },
   port: function () {
     var pqube = Template.instance().pqube.get();
@@ -41,7 +41,7 @@ Template.editPQube.events({
     e.preventDefault();
     var editPQubeData = {
       name: $('#edit-pqube-name').val(),
-      ip: $('#edit-pqube-ip').val(),
+      host: $('#edit-pqube-hostname').val().toLowerCase(),
       port: $('#edit-pqube-port').val()
     };
     if (!editPQubeData.name) {
@@ -49,23 +49,23 @@ Template.editPQube.events({
       $('#edit-pqube-name').focus();
       return;
     }
-    if (!editPQubeData.ip) {
-      Session.set('editPQubeFormError', TAPi18n.__('errIPRequired'));
-      $('#edit-pqube-ip').focus();
+    if (!editPQubeData.host) {
+      Session.set('editPQubeFormError', TAPi18n.__('errHostRequired'));
+      $('#edit-pqube-hostname').focus();
       return;
     }    
-    if (!editPQubeData.port) editPQubeData.port = 502;
+/*    if (!editPQubeData.port) editPQubeData.port = 502;
     var ipRegEx = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
     if (!ipRegEx.test(editPQubeData.ip)) {
-      Session.set('editPQubeFormError', TAPi18n.__('errBadIP'));
-      $('#edit-pqube-ip').val('').focus();
-      return;
-    }
+    Session.set('editPQubeFormError', TAPi18n.__('errBadIP'));
+    $('#edit-pqube-ip').val('').focus();
+    return;
+    }*/
     Meteor.call('editPQube', id, editPQubeData, function (err, result) {
       if (err) {
-	Session.set('editPQubeFormError', err.reason);
-	$('#edit-pqube-'+err.error).focus();
-	return;
+	      Session.set('editPQubeFormError', err.reason);
+	      $('#edit-pqube-'+err.error).focus();
+	      return;
       }
       $('#modal').modal('hide');
     });

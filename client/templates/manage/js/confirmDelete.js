@@ -14,10 +14,10 @@ Template.confirmDeletePQube.helpers({
     if (pqube)
       return pqube.name;
   },
-  ip: function () {
+  host: function () {
     var pqube = Template.instance().pqube.get();
     if (pqube)
-      return pqube.ip+':'+pqube.port;
+      return pqube.host+':'+pqube.port;
   }
 });
 

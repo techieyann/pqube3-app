@@ -6,11 +6,11 @@ observePQubes = function () {
   var pqubes = PQubes.find();
   pqubes.observe({
     added: function (pqube) {
-      if (pqube.ip && pqube.port)
+      if (pqube.host && pqube.port)
         connectToPQube(pqube);
     },
     changed: function (pqube, oldPQube) {
-      if (pqube.ip != oldPQube.ip || pqube.port != oldPQube.port) {
+      if (pqube.host != oldPQube.host || pqube.port != oldPQube.port) {
 	      cancelRequests(oldPQube._id);
 	      delete pqubeConnections[oldPQube._id];	
 	      connectToPQube(pqube);
@@ -28,13 +28,18 @@ observePQubes = function () {
     for (var id in pqubeConnections) {
       if (now - pqubeConnections[id].lastDataReceivedAt > 10000) {
         var pqube = PQubes.findOne(id);
-        if (pqube.status == 'connected') {
-          Meteor.setTimeout(function () {
-            cancelRequests(id);
-            PQubes.update({_id: id, status: {$nin: ['unknown','unverified']}}, {$set: {status: 'disconnected'}});
-            delete pqubeConnections[dcId];
-            connectToPQube(pqube);      
-          }, 0);
+        if (pqube) {
+          if (pqube.status == 'connected') {
+            Meteor.setTimeout(function () {
+              cancelRequests(id);
+              PQubes.update({_id: id, status: {$nin: ['unknown','unverified']}}, {$set: {status: 'disconnected'}});
+              delete pqubeConnections[dcId];
+              connectToPQube(pqube);      
+            }, 0);
+          }
+        }
+        else {
+          delete pqubeConnections[dcId];
         }
       }
     }
@@ -49,7 +54,7 @@ var connectToPQube = function (pqube) {
       type: 'ip',
       connection: {
         type: 'tcp',
-        host: pqube.ip,
+        host: pqube.host,
         port: parseInt(pqube.port),
         socket: socket,
         autoConnect: true,
@@ -86,6 +91,7 @@ var connectToPQube = function (pqube) {
     verifyPQube(pqube._id);
   });
   asyncMaster('disconnected', function () {
+    console.log('diconnected from pqube '+pqube.name);    
     cancelRequests(pqube._id);
     PQubes.update({_id: pqube._id, status: {$nin: ['unverified', 'unknown']}}, {$set: {status: 'disconnected'}});
   }); 

@@ -2,19 +2,19 @@
   <div class="well">
     {{#if unknown}}
     <div class="alert alert-warning text-center">
-      <p>{{_ "connectAttempt"}} {{ip}}:{{port}}</p>
+      <p>{{_ "connectAttempt"}} {{host}}:{{port}}</p>
       <p>{{_ "connectHelp"}}</p>
     </div>
     {{/if}}
     {{#if unverified}}
     <div class="alert alert-danger text-center">
-      <p>{{_ "verifyFailure"}} {{ip}}:{{port}}</p>
+      <p>{{_ "verifyFailure"}} {{host}}:{{port}}</p>
     </div>
     {{/if}}
     <div class="row text-center">
       <span class="col-sm-6 col-xs-12">
 	      <h3>{{name}}</h3>
-	      <h4>{{ip}}:{{port}}</h4>
+	      <h4>{{host}}:{{port}}</h4>
       </span>
       <span class="col-sm-6 col-xs-12">
 	      <h4>{{_ "status"}}:
@@ -28,7 +28,9 @@
 	        {{/if}}
 	      </h4>
 	      <span class="btn-group" role="group">
+          {{#if verified}}
           <a href="/manage/meters/{{_id}}" type="button" class="edit-pqube btn btn-default"><span class="glyphicon glyphicon-dashboard"></span> {{_ "meters"}}</a>
+          {{/if}}
 	        <a href="/manage/edit/{{_id}}" type="button" class="edit-pqube btn btn-default"><span class="glyphicon glyphicon-pencil"></span> {{_ "edit"}}</a>
 	        <a href="/manage/delete/{{_id}}" type="button" class="delete-pqube btn btn-default"><span class="glyphicon glyphicon-trash"></span> {{_ "delete"}}</a>
 	      </span>
