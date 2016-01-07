@@ -7,8 +7,6 @@ body {
 }
 footer {
     width:100%;
-    position:absolute;
-    top:970px;
     text-align: center;
     font: black;
 }
