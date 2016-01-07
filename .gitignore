@@ -4,3 +4,4 @@
 /packages/odometeor/.versions
 /client/templates/gauges/js/meters.js
 /client/templates/js/dataLayout.js
+/server/modbus.js~

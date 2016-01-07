@@ -23,15 +23,16 @@ meteor
 ctl-c
 ```
 
-Set your PQube IP(s) and optional port (defaults to 502) as environment vars: 
+Set your access code for user signup: 
 ```
-export pqubeIP1='xxx.xxx.xxx.xxx:port'
-export pqubeIP2='yyy.yyy.yyy.yyy:port'
+export accessCode='example'
 ```
-(only the first is mandatory)
 
 Run meteor with the settings file:
 ```
 meteor --settings settings.json
 ```
+
+Add PQube3s via the /manage page, you will have to be signed in to access it.
+When signing up use the access code you specified above.
 
