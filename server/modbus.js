@@ -65,14 +65,14 @@ var connectToPQube = function (pqube) {
     defaultMaxRetries: 0,
     defaultTimeout: 500
   });
-  var async = Meteor.wrapAsync(master.on, master);
+  var asyncMaster = Meteor.wrapAsync(master.on, master);
   var reqs = [];
   var intervalId = Meteor.setInterval(function () {
     master.transport.connection.connect();
   }, 30000);
   pqubeConnections[pqube._id] = {
     master: master,
-    async: async,
+    async: asyncMaster,
     connectInterval: intervalId, 
     reqs: [],
     lastDataReceivedAt: new Date()
@@ -80,13 +80,14 @@ var connectToPQube = function (pqube) {
   master.on('error', function (err) {
     console.log(pqube.name+'(error): '+err.message);
   });
-  async('connected', function () {
+  asyncMaster('connected', function () {
     console.log('connected to pqube '+pqube.name);
+    PQubes.update({_id: pqube._id}, {$set: {status: 'unverified'}});
     verifyPQube(pqube._id);
   });
-  async('disconnected', function () {
+  asyncMaster('disconnected', function () {
     cancelRequests(pqube._id);
-    PQubes.update({_id: pqube._id, status: {$ne: 'unverified'}}, {$set: {status: 'disconnected'}});
+    PQubes.update({_id: pqube._id, status: {$nin: ['unverified', 'unknown']}}, {$set: {status: 'disconnected'}});
   }); 
 };
 
@@ -150,7 +151,7 @@ var verifyPQube = function (pqube) {
         var decoded = decodeRegisters(response.values, req);
         if (decoded) {
           if (decoded.year == year) {
-	    Meteor.clearInterval(pqubeConnections[pqube].connectInterval);
+	          Meteor.clearInterval(pqubeConnections[pqube].connectInterval);
             PQubes.update(pqube, {$set: {status: 'connected'}});
             initRequests(pqube);
           }

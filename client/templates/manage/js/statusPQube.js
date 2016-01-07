@@ -2,6 +2,9 @@ Template.pqubeStatus.helpers({
   connected: function () {
     return this.status == 'connected';
   },
+  unknown: function () {
+    return this.status == 'unknown';
+  },
   unverified: function () {
     return this.status == 'unverified';
   },

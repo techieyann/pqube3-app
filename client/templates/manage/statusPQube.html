@@ -1,10 +1,14 @@
 <template name="pqubeStatus">
   <div class="well">
-    {{#if unverified}}
+    {{#if unknown}}
     <div class="alert alert-warning text-center">
-      <p>{{_ "verifyAttempt"}} {{ip}}:{{port}}</p>
-      <p>{{_ "verifyHelp"}}</p>
-
+      <p>{{_ "connectAttempt"}} {{ip}}:{{port}}</p>
+      <p>{{_ "connectHelp"}}</p>
+    </div>
+    {{/if}}
+    {{#if unverified}}
+    <div class="alert alert-danger text-center">
+      <p>{{_ "verifyFailure"}} {{ip}}:{{port}}</p>
     </div>
     {{/if}}
     <div class="row text-center">
