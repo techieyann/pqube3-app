@@ -56,6 +56,10 @@ select {
     color: purple;
 }
 
+#manage-content {
+    padding-top:50px;
+}
+
 #container {
     position:relative;
     width:640px;

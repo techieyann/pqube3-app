@@ -49,13 +49,11 @@
 	{{_ "home"}}
       </a>
       <div class="btn-group pull-right">
-      <a id="nav-new-pqube" href="/manage/new" type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-plus"></span> {{_ "newPQube"}}</a>
       <a href="/logout" type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-log-out"></span> {{_ "logout"}}</a>
-
       </div>
     </div>
   </nav>
-  <div class="container">
+  <div id="manage-content" class="container">
     {{#unless Template.subscriptionsReady}}
     <div id="loading-pqubes">
       {{_ "loadingPQubes"}}

@@ -1,6 +1,7 @@
 <template name="managePQubes">
   <div id="manage">
     <div id="pqube-list">
+      <a id="nav-new-pqube" href="pqube3/new" type="button" class="btn btn-default navbar-btn pull-right"><span class="glyphicon glyphicon-plus"></span> {{_ "newPQube"}}</a>
       <h3>PQube3s:</h3>
       {{#each pqube}}
       {{> pqubeStatus}}

@@ -5,8 +5,10 @@ Template.manageLayout.onCreated(function () {
 
 Template.manageLayout.onRendered(function () {
   $('#modal').on('hidden.bs.modal', function () {
-    FlowRouter.go('/manage');
+    window.history.back();
+    Session.set('newPQubeFormError', null);
     Session.set('editPQubeFormError', null);
+    Session.set('metersPQubeFormError', null);
   });
 });
 
