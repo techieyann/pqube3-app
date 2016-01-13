@@ -1,0 +1,8 @@
+<template name="manageBreadcrumbs">
+  {{#each superGroup}}
+  <li class="hidden-xs"><a>></a></li>
+  <li><a href="{{relURL}}">{{_ title}}</a></li>
+  {{/each}}
+  <li class="hidden-xs"><a>></a></li>
+  <li class="active"><a>{{_ activePage}}</a></li>
+</template>

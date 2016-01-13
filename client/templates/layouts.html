@@ -45,11 +45,23 @@
 <template name="manageLayout">
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/">
-	{{_ "home"}}
-      </a>
-      <div class="btn-group pull-right">
-      <a href="/logout" type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-log-out"></span> {{_ "logout"}}</a>
+      <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#manage-navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">{{_ "PSL"}}</a>
+      </div>
+      <div class="collapse navbar-collapse" id="manage-navbar-collapse">
+	<ul class="nav navbar-nav">
+	  {{> manageBreadcrumbs}}
+	</ul>
+	<ul class="nav navbar-nav navbar-right text-right">
+	  {{> Template.dynamic template=navButtons}}
+	  <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> {{_ "logout"}}</a></li>
+	</ul>
       </div>
     </div>
   </nav>

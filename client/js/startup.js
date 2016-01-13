@@ -5,6 +5,8 @@ Meteor.startup(function () {
     $('select').css('color', 'black');
   Session.set('voltageScopeScale', 100);
   Session.set('currentScopeScale', 10);
+  Session.set('newOrgFormError', null);
+  Session.set('editOrgFormError', null);
   Session.set('newPQubeFormError', null);
   Session.set('editPQubeFormError', null);
 

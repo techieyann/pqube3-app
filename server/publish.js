@@ -16,3 +16,7 @@ Meteor.publish('pqubesManage', function () {
 Meteor.publish('meters', function () {
   return Meters.find();
 });
+
+Meteor.publish('orgs', function () {
+  return Orgs.find({},{fields: {'accessCode': 0}});
+});

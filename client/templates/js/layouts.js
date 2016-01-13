@@ -1,11 +1,14 @@
 Template.manageLayout.onCreated(function () {
   this.subscribe('pqubesManage');
   this.subscribe('meters');
+  this.subscribe('orgs');
 });
 
 Template.manageLayout.onRendered(function () {
   $('#modal').on('hidden.bs.modal', function () {
     window.history.back();
+    Session.set('newOrgFormError', null);
+    Session.set('editOrgFormError', null);
     Session.set('newPQubeFormError', null);
     Session.set('editPQubeFormError', null);
     Session.set('metersPQubeFormError', null);

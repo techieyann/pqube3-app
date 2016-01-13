@@ -29,7 +29,9 @@ select {
 .hidden {
     display: none;
 }
-
+.text-right {
+    text-align: right;
+}
 .centered {
     text-align: center;
 }
@@ -57,7 +59,8 @@ select {
 }
 
 #manage-content {
-    padding-top:50px;
+    padding-top:75px;
+    padding-bottom: 20px;
 }
 
 #container {
