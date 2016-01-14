@@ -1,19 +1,23 @@
 Template.manageBreadcrumbs.helpers({
   superGroup: function () {
     FlowRouter.watchPathChange();
-    var parentGroup = FlowRouter.current().route.group.parent;
+    var group = FlowRouter.current().route.group;
     var superGroups = [];
-    while(parentGroup) {
-      superGroups.unshift({
-	title: parentGroup.name,
-	relURL: parentGroup.prefix
-      });
-      parentGroup = parentGroup.parent;
+    if (group) {
+      var parentGroup = group.parent;
+      while(parentGroup) {
+        superGroups.unshift({
+	        title: parentGroup.name,
+	        relURL: parentGroup.prefix
+        });
+        parentGroup = parentGroup.parent;
+      }
     }
     return superGroups;
   },
   activePage: function () {
     FlowRouter.watchPathChange();
-    return FlowRouter.current().route.group.name;
+    var group = FlowRouter.current().route.group;
+    return (group ? group.name : '');
   }
 });

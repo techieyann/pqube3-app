@@ -1,6 +1,14 @@
 Meteor.methods({
-  'checkAccess': function (accessCode) {
-    return (accessCode != process.env.accessCode);
+  'checkAccess': function (accessTest) {
+    if (accessTest.orgId == 'admin')
+      return (accessTest.code != process.env.accessCode);
+    else {
+      var org = Orgs.findOne(accessTest.orgId);
+      if (org) {
+        return accessTest.code != org.accessCode;
+      }
+      return true;
+    }
   },
   'disconnectPQube': function (id) {
     var pqube = PQubes.findOne(id);

@@ -1,0 +1,14 @@
+<template name="confirmDeleteOrg">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">{{_ "confirmDelete"}} {{_ "organization"}}:</h4>
+  </div>
+  <div class="modal-body text-center">
+    <h3>{{name}}</h3>
+    <span>{{rootURL}}/{{slug}}</span>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">{{_ "cancel"}}</button>
+    <button id="delete-org" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> {{_"delete"}}</button>
+  </div>
+</template>

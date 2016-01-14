@@ -3,6 +3,8 @@
   <li class="hidden-xs"><a>></a></li>
   <li><a href="{{relURL}}">{{_ title}}</a></li>
   {{/each}}
+  {{#if activePage}}
   <li class="hidden-xs"><a>></a></li>
   <li class="active"><a>{{_ activePage}}</a></li>
+  {{/if}}
 </template>

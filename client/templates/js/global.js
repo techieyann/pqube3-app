@@ -24,3 +24,7 @@ return Languages;
 Template.registerHelper('pqubesReady', function () {
   return PQubes.find().count();
 });
+
+Template.registerHelper('rootURL', function () {
+  return Meteor.settings.public.rootURL;
+});

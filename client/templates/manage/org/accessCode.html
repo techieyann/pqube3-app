@@ -1,32 +1,37 @@
-<template name="editOrg">
+<template name="accessCode">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title">{{_ "editOrg"}}:</h4>
   </div>
   <form id="edit-org-form" name="edit-org-form" class="form-horizontal">
     <div class="modal-body text-center">
-      {{#if editOrgError}}
+      {{#if editCodeError}}
       <div class="alert alert-danger alert-dismissable">
 	      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	        <span aria-hidden="true">&times;</span>
 	      </button>
-	      {{editOrgError}}
+	      {{editCodeError}}
       </div>
       {{/if}}
-
+      {{#unless admin}}
       <div class="form-group">
-	      <label for="edit-org-name" class="col-sm-3 control-label">{{_ "name"}}</label>
+	      <label for="original-org-code" class="col-sm-3 control-label">{{_ "accessCode"}}</label>
 	      <div class="col-sm-9">
-	        <input type="text" class="form-control" id="edit-org-name"  placeholder="{{_ 'name'}}" value="{{name}}" required>
+	        <input type="password" class="form-control" id="original-org-code"  placeholder="{{_ 'accessCode'}}" required>
+	      </div>
+      </div>
+      {{/unless}}
+      <div class="form-group">
+	      <label for="new-org-code" class="col-sm-3 control-label">{{_ "newAccessCode"}}</label>
+	      <div class="col-sm-9">
+	        <input type="password" class="form-control" id="new-org-code"  placeholder="{{_ 'newAccessCode'}}" required>
 	      </div>
       </div>
       <div class="form-group">
-	      <label for="edit-org-slug" class="col-sm-3 control-label">{{_ "url"}}</label>
-	      <div class="col-sm-9">
-	        <input type="text" class="form-control" id="edit-org-slug"  placeholder="{{_ 'url'}}" value="{{slug}}" required>
+	      <div class="col-sm-9 col-sm-offset-3">
+	        <input type="password" class="form-control" id="new-org-code-confirm"  placeholder="{{_ 'confirm'}}" required>
 	      </div>
       </div>
-      <br><br>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-default" data-dismiss="modal">{{_ "cancel"}}</button>

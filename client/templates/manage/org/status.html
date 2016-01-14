@@ -1,0 +1,12 @@
+<template name="statusOrg">
+  {{#if admin}}
+  {{> selectOrg}}
+  {{/if}}
+  <div class="well">
+  <h4>{{name}}</h4>
+  {{rootURL}}/{{slug}}
+  <a href="{{id}}/edit">edit</a>
+  <a href="{{id}}/code">change code</a>
+  <a href="{{id}}/delete">delete</a>
+  </div>
+</template>

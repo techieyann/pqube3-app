@@ -1,6 +1,10 @@
 Template.editPQube.onCreated(function () {
   var self = this;
   self.pqube = new ReactiveVar();
+});
+
+Template.editPQube.onRendered(function () {
+  var self = this;
   self.autorun(function () {
     var id = FlowRouter.current().params.pqubeId;
     var pqube = PQubes.findOne(id);

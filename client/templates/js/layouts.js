@@ -1,7 +1,6 @@
 Template.manageLayout.onCreated(function () {
   this.subscribe('pqubesManage');
   this.subscribe('meters');
-  this.subscribe('orgs');
 });
 
 Template.manageLayout.onRendered(function () {
