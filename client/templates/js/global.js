@@ -28,3 +28,11 @@ Template.registerHelper('pqubesReady', function () {
 Template.registerHelper('rootURL', function () {
   return Meteor.settings.public.rootURL;
 });
+
+Template.registerHelper('admin', function () {
+  if (Meteor.user()) {
+    var id = Meteor.user()._id;
+    return Roles.userIsInRole(id, 'admin', Roles.GLOBAL_GROUP);
+  }
+  return false;
+});

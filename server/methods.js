@@ -1,14 +1,27 @@
+
 Meteor.methods({
-  'checkAccess': function (accessTest) {
-    if (accessTest.orgId == 'admin')
-      return (accessTest.code != process.env.accessCode);
+  'grantAccess': function (accessTest) {
+    var accessGranted = false;
+    var userId = Meteor.userId();
+    if (accessTest.orgId == 'admin') {
+      if (accessTest.code == process.env.accessCode) {
+        Roles.addUsersToRoles(userId, 'admin', Roles.GLOBAL_GROUP);        
+        accessGranted = true;
+      }
+    }
     else {
       var org = Orgs.findOne(accessTest.orgId);
       if (org) {
-        return accessTest.code != org.accessCode;
+        if (accessTest.code == org.accessCode) {
+          Roles.addUsersToRoles(userId, 'manage', org._id);
+          accessGranted = true;
+        }
       }
-      return true;
     }
+    if (accessGranted) {
+      Meteor.users.update(userId, {$set: {'profile.initialized': true}});
+    }
+    return accessGranted;
   },
   'disconnectPQube': function (id) {
     var pqube = PQubes.findOne(id);

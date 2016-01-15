@@ -9,6 +9,7 @@ Meteor.startup(function () {
   Session.set('editOrgFormError', null);
   Session.set('newPQubeFormError', null);
   Session.set('editPQubeFormError', null);
+  Session.set('initUserFormError', null);
 
   Session.set('spectraSource', 'L123NvHarmonics');
 

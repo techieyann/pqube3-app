@@ -12,6 +12,65 @@ Template.manageLayout.onRendered(function () {
     Session.set('editPQubeFormError', null);
     Session.set('metersPQubeFormError', null);
   });
+  this.autorun(function () {
+    var user = Meteor.user();
+    FlowRouter.watchPathChange();
+    if (user) {
+      if (!user.profile.initialized) {
+        FlowRouter.go('/initialize');
+      }
+      if (user.profile.initialized && FlowRouter.getRouteName() == 'userInit') {
+        FlowRouter.go('/manage');
+      }
+    }
+  });
+});
+
+Template.manageLayout.helpers({
+  'orgURL': function () {
+    var userId = Meteor.userId();
+    if (Meteor.user()) {
+      if (Meteor.user().profile.initialized) {
+        if (Roles.userIsInRole(userId, 'admin', Roles.GLOBAL_GROUP)) {
+          return '';
+        }
+        else {
+          var groups = Roles.getGroupsForUser(userId, 'manage');
+          if (groups[0]) {
+            var org = Orgs.findOne(groups[0]);
+            if (org) {
+              return org.slug;
+            }
+          }
+        }
+      }
+      else {
+        return '';
+      }
+    }
+  },
+  'orgName': function () {
+    var userId = Meteor.userId();
+    if (Meteor.user()) {
+    if (Meteor.user().profile.initialized) {
+      if (Roles.userIsInRole(userId, 'admin', Roles.GLOBAL_GROUP)) {
+        return 'PSL';
+      }
+      else {
+        var groups = Roles.getGroupsForUser(userId, 'manage');
+        if (groups[0]) {
+          var org = Orgs.findOne(groups[0]);
+          if (org) {
+            return org.name;
+          }
+        }
+      }
+    }
+    else {
+      return 'init';
+    }
+   }
+  }
 });
 
 Template.dataLayout.onDestroyed(function () {

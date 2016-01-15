@@ -6,7 +6,14 @@ Template.statusOrg.onCreated(function () {
 Template.statusOrg.onRendered(function () {
   var self = this;
   self.autorun(function () {
-    var orgId = FlowRouter.current().params.orgId;
+    var orgId;
+    var userId = Meteor.userId();
+    if (Roles.userIsInRole(userId, 'admin', Roles.GLOBAL_GROUP)) {
+      orgId = FlowRouter.current().params.orgId;
+    }
+    else {
+      orgId = Roles.getGroupsForUser(userId, 'manage')[0]; 
+    }
     var org = Orgs.findOne(orgId);
     if (org) {
       self.org.set(org);
@@ -16,9 +23,6 @@ Template.statusOrg.onRendered(function () {
 });
 
 Template.statusOrg.helpers({
-  'admin': function () {
-    return true;
-  },
   'name': function () {
     var self = Template.instance();
     var org = self.org.get();
