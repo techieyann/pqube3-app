@@ -36,3 +36,8 @@ Template.registerHelper('admin', function () {
   }
   return false;
 });
+
+Template.registerHelper('currentPath', function () {
+  FlowRouter.watchPathChange();
+  return FlowRouter.current().path;
+});

@@ -29,10 +29,10 @@
 	      </h4>
 	      <span class="btn-group" role="group">
           {{#if verified}}
-          <a href="pqube3/{{_id}}/meters" type="button" class="edit-pqube btn btn-default"><span class="glyphicon glyphicon-dashboard"></span> {{_ "meters"}}</a>
+          <a href="{{currentPath}}{{org}}{{pqube3}}/{{_id}}/meters" type="button" class="edit-pqube btn btn-default"><span class="glyphicon glyphicon-dashboard"></span> {{_ "meters"}}</a>
           {{/if}}
-	        <a href="pqube3/{{_id}}/edit" type="button" class="edit-pqube btn btn-default"><span class="glyphicon glyphicon-pencil"></span> {{_ "edit"}}</a>
-	        <a href="pqube3/{{_id}}/delete" type="button" class="delete-pqube btn btn-default"><span class="glyphicon glyphicon-trash"></span> {{_ "delete"}}</a>
+	        <a href="{{currentPath}}{{org}}{{pqube3}}/{{_id}}/edit" type="button" class="edit-pqube btn btn-default"><span class="glyphicon glyphicon-pencil"></span> {{_ "edit"}}</a>
+	        <a href="{{currentPath}}{{org}}{{pqube3}}/{{_id}}/delete" type="button" class="delete-pqube btn btn-default"><span class="glyphicon glyphicon-trash"></span> {{_ "delete"}}</a>
 	      </span>
       </span>
     </div>

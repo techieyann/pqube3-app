@@ -23,23 +23,28 @@ Template.statusOrg.onRendered(function () {
 });
 
 Template.statusOrg.helpers({
-  'name': function () {
+  name: function () {
     var self = Template.instance();
     var org = self.org.get();
     if (org)
       return org.name;
   },
-  'slug': function () {
+  slug: function () {
     var self = Template.instance();
     var org = self.org.get();
     if (org)
       return org.slug;
   },
-  'id': function () {
+  id: function () {
     var self = Template.instance();
     var org = self.org.get();
     if (org)
       return org._id;
+  },
+  org: function () {
+    if (!isAdmin()) {
+      return '/org/'+Roles.getGroupsForUser(Meteor.userId())[0];
+    }
   }
 });
 

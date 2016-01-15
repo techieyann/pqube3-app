@@ -31,6 +31,16 @@ Template.pqubeStatus.helpers({
   },
   defaultable: function () {
     return !this.defaultPQube && this.status == 'connected';
+  },
+  org: function () {
+    if(!isAdmin()) {
+      return '/org';
+    }
+  },
+  pqube3: function () {
+    var pathName = FlowRouter.getRouteName();
+    if (pathName != 'managePQube') 
+      return '/pqube3';
   }
 });
 

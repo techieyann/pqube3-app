@@ -1,0 +1,5 @@
+<template name="manageNavButtons">
+  {{#unless admin}}
+  <li><a href="{{currentPath}}/org/pqube3/new"><span class="glyphicon glyphicon-plus"></span> {{_ "newPQube"}}</a></li>
+  {{/unless}}
+</template>

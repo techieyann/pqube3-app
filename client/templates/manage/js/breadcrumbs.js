@@ -7,7 +7,7 @@ Template.manageBreadcrumbs.helpers({
       var parentGroup = group.parent;
       while(parentGroup) {
         superGroups.unshift({
-	        title: parentGroup.name,
+	        title: parentGroup.options.breadcrumb,
 	        relURL: parentGroup.prefix
         });
         parentGroup = parentGroup.parent;
@@ -18,6 +18,6 @@ Template.manageBreadcrumbs.helpers({
   activePage: function () {
     FlowRouter.watchPathChange();
     var group = FlowRouter.current().route.group;
-    return (group ? group.name : '');
+    return (group ? group.options.breadcrumb : '');
   }
 });

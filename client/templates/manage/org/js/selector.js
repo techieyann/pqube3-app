@@ -16,10 +16,6 @@ Template.selectOrg.helpers({
 
 Template.selectOrg.events({
   'change #select-organization': function (e) {
-    var orgId = e.target.value;
-    if (orgId) 
-      FlowRouter.go('/manage/org/'+orgId);
-    else
-      FlowRouter.go('/manage/org/');
+    FlowRouter.go('/manage/admin/'+e.target.value);
   }
 });

@@ -1,11 +1,15 @@
 <template name="manageHome">
+  {{#if admin}}
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
       <div class="well">
 	<h4>Manage:</h4>
-	<a type="button" class="btn btn-default btn-large btn-block" href="/manage/pqube3">PSL PQube3s</a>
-	<a type="button" class="btn btn-default btn-large btn-block" href="/manage/org">Organizations</a>
+	<a type="button" class="btn btn-default btn-large btn-block" href="{{currentPath}}/pqube3">PSL PQube3s</a>
+	<a type="button" class="btn btn-default btn-large btn-block" href="{{currentPath}}/admin">Organizations</a>
       </div>
     </div>
   </div>
+  {{else}}
+  {{> manageOrgPQubes}}
+  {{/if}}
 </template>
