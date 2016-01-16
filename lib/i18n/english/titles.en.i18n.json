@@ -1,7 +1,9 @@
 {
   "titleIndex": "PQube3 Modbus App",
+  "titleUserInit": "Initialize Account",
   "titleManage":"PQube3 Modbus Control",
   "titleOrg":"Manage Organization",
+  "titleSelectOrg":"Select an Organization",
   "titleAddOrg":"Add new Organization",
   "titlePQube3s": "Manage PQube3 settings",
   "titleAdd":"Add new PQube3",

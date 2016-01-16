@@ -18,6 +18,7 @@ observePQubes = function () {
     },
     removed: function (id) {
       cancelRequests(id);
+      Meteor.clearInterval(pqubeConnections[id].intervalId);
       delete pqubeConnections[id];
       PQubeData.remove(id);
     }
@@ -74,7 +75,7 @@ var connectToPQube = function (pqube) {
   var asyncMaster = Meteor.wrapAsync(master.on, master);
   var reqs = [];
   var intervalId = Meteor.setInterval(function () {
-    master.transport.connection.connect();
+      master.transport.connection.connect();
   }, 30000);
   pqubeConnections[pqube._id] = {
     master: master,
