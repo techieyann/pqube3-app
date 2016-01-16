@@ -14,6 +14,22 @@ Template.registerHelper('atClass', function () {
 });
 
 Template.registerHelper('pqube', function () {
+  FlowRouter.watchPathChange();
+  if (isAdmin()) {
+    var paramOrgId = FlowRouter.current().params.orgId;
+    if (paramOrgId) {
+      return PQubes.find({org: paramOrgId}).fetch();
+    }
+    else {
+      return PQubes.find({org: 'PSL'}).fetch();
+    }
+  }
+  else {
+    return PQubes.find().fetch();
+  }
+});
+
+Template.registerHelper('pqubeData', function () {
   return PQubes.find().fetch();
 });
 
@@ -40,4 +56,8 @@ Template.registerHelper('admin', function () {
 Template.registerHelper('currentPath', function () {
   FlowRouter.watchPathChange();
   return FlowRouter.current().path;
+});
+
+Template.registerHelper('formError', function () {
+  return Session.get('formError');
 });

@@ -5,12 +5,9 @@ Meteor.startup(function () {
     $('select').css('color', 'black');
   Session.set('voltageScopeScale', 100);
   Session.set('currentScopeScale', 10);
-  Session.set('newOrgFormError', null);
-  Session.set('editOrgFormError', null);
-  Session.set('newPQubeFormError', null);
-  Session.set('editPQubeFormError', null);
-  Session.set('initUserFormError', null);
-
+  Session.set('formError', null);
+  Session.set('orgsReady', false);
+  Session.set('metersSelected', true);
   Session.set('spectraSource', 'L123NvHarmonics');
 
   sAlert.config({
@@ -24,7 +21,9 @@ Meteor.startup(function () {
     beep: false
   });
 
-  Meteor.subscribe('orgs');
+  Meteor.subscribe('orgs', function (){
+    Session.set('orgsReady', true);
+  });
 });
 
 

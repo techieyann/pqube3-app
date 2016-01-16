@@ -24,26 +24,26 @@ Template.metersPQube.helpers({
         return (meters.frequency == freq ? 'checked' : '');
     }
     return (freq == 60 ? 'checked':'');
-  },
-  metersPQubeFormError: function () {
-    return Session.get('metersPQubeFormError');
   }
 });
 
 Template.metersPQube.events({
   'submit #manage-meters-pqube-form, click #meters-pqube': function (e) {
     e.preventDefault();
-    Session.set('metersPQubeFormError', null);
+    Session.set('formError', null);
     var id = FlowRouter.current().params.pqubeId;
     var meterOpts = {
       frequency: parseInt($('input[name="freqRadios"]:checked').val())
     };
     Meteor.call('editMetersPQube', id, meterOpts, function (err, result) {
       if (err) {
-	      Session.set('metersPQubeFormError', err.reason);
+	      Session.set('formError', err.reason);
 	      return;
       }
       $('#modal').modal('hide');
+      Meteor.setTimeout(function () {
+        sAlert.success(TAPi18n.__('succEditMetersPQube'));
+      }, 400);
     });
   }
 });

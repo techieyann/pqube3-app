@@ -5,12 +5,12 @@
   </div>
   <form id="new-org-form" name="new-org-form" class="form-horizontal">
     <div class="modal-body text-center">
-      {{#if newOrgError}}
+      {{#if formError}}
       <div class="alert alert-danger alert-dismissable">
 	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	  <span aria-hidden="true">&times;</span>
 	</button>
-	{{newOrgError}}
+	{{formError}}
       </div>
       {{/if}}
 

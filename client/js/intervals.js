@@ -29,7 +29,7 @@ var setPresentVals = function () {
       if (dC.scopesFlag) {
         blinkNewData.call(dC);
         updateScopes.call(dC);
-        if (Session.get('spectraSelected'))
+        if (!Session.get('metersSelected'))
           updateSpectra.call(dC);
       }
       updateGauges.call(dC);

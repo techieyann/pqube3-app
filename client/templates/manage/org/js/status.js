@@ -6,6 +6,7 @@ Template.statusOrg.onCreated(function () {
 Template.statusOrg.onRendered(function () {
   var self = this;
   self.autorun(function () {
+    FlowRouter.watchPathChange();
     var orgId;
     var userId = Meteor.userId();
     if (Roles.userIsInRole(userId, 'admin', Roles.GLOBAL_GROUP)) {
@@ -18,6 +19,12 @@ Template.statusOrg.onRendered(function () {
     if (org) {
       self.org.set(org);
       self.data = org;
+    }
+    else {
+      console.log('org not found: '+orgId);
+      Meteor.setTimeout(function () {
+        FlowRouter.go('/manage');
+      },400);
     }
   });
 });
@@ -43,7 +50,7 @@ Template.statusOrg.helpers({
   },
   org: function () {
     if (!isAdmin()) {
-      return '/org/'+Roles.getGroupsForUser(Meteor.userId())[0];
+      return '/org/'+Roles.getGroupsForUser(Meteor.userId(), 'manage')[0];
     }
   }
 });

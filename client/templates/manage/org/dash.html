@@ -1,7 +1,7 @@
 <template name="manageOrgPQubes">
   {{> statusOrg}}
   {{#if admin}}
-  add pqube
+  <a type="button" href="{{currentPath}}/pqube3/new" class="btn btn-default pull-right"><span class="glyphicon glyphicon-plus"></span> {{_ "newPQube"}}</a>
   {{/if}}
   {{> managePQubes}}
 </template>

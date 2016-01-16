@@ -1,0 +1,15 @@
+{
+  "errNameRequired":"Name is a required field",
+  "errHostRequired":"Hostname is a required field",
+  "errSlugRequired":"URL is a required field",
+  "errCodeRequired":"Access code required",
+  "errNewCodeRequired":"New Access code required",
+  "errCodeMatchRequired":"Access codes must match",
+  "errLoggedInDefault":"Must be logged in to make PQube3 default",
+  "errLoggedInAdd":"Must be logged in to add PQube3",
+  "errNameExists":"PQube3 already exists with name",
+  "errHostExists":"Already registered a PQube3 at",
+  "errLoggedInEdit":"Must be logged in to modify PQube3",
+  "errUnknown":"Could not find referenced",
+  "errLoggedInRemove": "Must be logged in to remove"
+}

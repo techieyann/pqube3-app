@@ -3,7 +3,7 @@
   {{> unsupportedBrowser}}
   {{else}}
 
-    {{#unless pqube}}
+    {{#unless pqubeData}}
   {{#if Template.subscriptionsReady}}
     <div id="no-pqubes">
       {{_ "noPQubes"}}
@@ -26,7 +26,12 @@
 	{{> scopes}}
       </div>
       {{> viewSelector}}
-      {{> Template.dynamic template=bottom}}
+      {{#if metersSelected}}
+      {{> meters}}
+      {{else}}
+      {{> spectra}}
+      {{/if}}
+
     </div>
     {{/unless}}
     {{> footer}}

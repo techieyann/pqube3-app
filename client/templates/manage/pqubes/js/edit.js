@@ -13,9 +13,6 @@ Template.editPQube.onRendered(function () {
 });
 
 Template.editPQube.helpers({
-  editPQubeError: function () {
-    return Session.get('editPQubeFormError');
-  },
   name: function () {
     var pqube = Template.instance().pqube.get();
     if (pqube)
@@ -40,7 +37,7 @@ Template.editPQube.helpers({
 
 Template.editPQube.events({
   'submit #edit-pqube-form, click #edit-pqube': function (e) {
-    Session.set('editPQubeFormError', null);
+    Session.set('formError', null);
     var id = FlowRouter.current().params.pqubeId;
     e.preventDefault();
     var editPQubeData = {
@@ -49,29 +46,25 @@ Template.editPQube.events({
       port: $('#edit-pqube-port').val()
     };
     if (!editPQubeData.name) {
-      Session.set('editPQubeFormError', TAPi18n.__('errNameRequired'));
+      Session.set('formError', TAPi18n.__('errNameRequired'));
       $('#edit-pqube-name').focus();
       return;
     }
     if (!editPQubeData.host) {
-      Session.set('editPQubeFormError', TAPi18n.__('errHostRequired'));
+      Session.set('formError', TAPi18n.__('errHostRequired'));
       $('#edit-pqube-hostname').focus();
       return;
     }    
-/*    if (!editPQubeData.port) editPQubeData.port = 502;
-    var ipRegEx = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-    if (!ipRegEx.test(editPQubeData.ip)) {
-    Session.set('editPQubeFormError', TAPi18n.__('errBadIP'));
-    $('#edit-pqube-ip').val('').focus();
-    return;
-    }*/
     Meteor.call('editPQube', id, editPQubeData, function (err, result) {
       if (err) {
-	      Session.set('editPQubeFormError', err.reason);
-	      $('#edit-pqube-'+err.error).focus();
-	      return;
+	Session.set('formError', err.reason);
+	$('#edit-pqube-'+err.error).focus();
+	return;
       }
       $('#modal').modal('hide');
+      Meteor.setTimeout(function () {
+      sAlert.success(TAPi18n.__('succEditPQube'));
+      }, 400);
     });
   }  
 });

@@ -6,7 +6,7 @@
 
     <select id="scope-site-source" class="site-source">
       <option disabled>{{_ "site"}}</option>
-      {{#each pqube}}
+      {{#each pqubeData}}
       <option value="{{_id}}" {{siteSelected _id}}>{{_ name}}</option>
       {{/each}}
     </select>

@@ -1,0 +1,15 @@
+{
+  "titleIndex": "PQube3 Modbus App",
+  "titleManage":"PQube3 Modbus Control",
+  "titleOrg":"Manage Organization",
+  "titleAddOrg":"Add new Organization",
+  "titlePQube3s": "Manage PQube3 settings",
+  "titleAdd":"Add new PQube3",
+  "titleAddOrg":"Add new Organization",
+  "titleDelete": "Delete PQube3?",
+  "titleDeleteOrg": "Delete Organization?",
+  "titleEdit":"Edit PQube3...",
+  "titleEditOrg":"Edit Organization...",
+  "titleEditCodeOrg":"Edit Organization Access Code...",
+  "titleMeters":"Manage PQube3 Meters"
+}

@@ -5,12 +5,12 @@
   </div>
   <form id="new-pqube-form" name="new-pqube-form" class="form-inline centered">
     <div class="modal-body text-center">
-      {{#if newPQubeError}}
+      {{#if formError}}
       <div class="alert alert-danger alert-dismissable">
 	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	  <span aria-hidden="true">&times;</span>
 	</button>
-	{{newPQubeError}}
+	{{formError}}
       </div>
       {{/if}}
 

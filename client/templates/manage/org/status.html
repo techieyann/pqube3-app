@@ -2,11 +2,19 @@
   {{#if admin}}
   {{> selectOrg}}
   {{/if}}
-  <div class="well">
-  <h4>{{name}}</h4>
-  {{rootURL}}/{{slug}}
-  <a href="{{currentPath}}{{org}}/edit">edit</a>
-  <a href="{{currentPath}}{{org}}/code">change code</a>
-  <a href="{{currentPath}}{{org}}/delete">delete</a>
+  <div class="row text-center">
+    <div class="well col-sm-6 col-sm-offset-3 col-xs-12">
+
+      <h3>{{name}}</h3>
+      <h4><a href="/{{slug}}">{{rootURL}}/{{slug}}</a></h4>
+      <span class="btn-group" role="group">
+        <a href="{{currentPath}}{{org}}/edit" type="button" class="btn btn-default"><span class="glyphicon glyphicon-cog"></span> {{_ "settings"}}</a>
+        <a href="{{currentPath}}{{org}}/code" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> {{_ "code"}}</a>
+        {{#if admin}}
+        <a href="{{currentPath}}{{org}}/delete" type="button" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span> {{_ "delete"}}</a>
+        {{/if}}
+      </span>
+
+    </div>
   </div>
 </template>

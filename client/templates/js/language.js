@@ -5,7 +5,7 @@ Template.language.events({
     var name = Languages.filter(function (language) {
       return language.acronym == lang;
     })[0].fullName;
-    sAlert.info('Language preference set to: '+  TAPi18n.__(name));
+    sAlert.info(TAPi18n.__('alertLangPrefSet')+' '+TAPi18n.__(name));
   }
 });
 Template.language.helpers({

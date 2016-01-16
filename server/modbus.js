@@ -137,7 +137,7 @@ var initRequest = function (reqRegister, pqube) {
     onComplete: requestComplete
   });
   pqubeReq.on('error', function (err) {
-    console.log(pqube+':'+reqRegister.type+' error: '+err);
+//    console.log(pqube+':'+reqRegister.type+' error: '+err);
   });
   pqubeConnections[pqube].reqs.push(pqubeReq);
 };

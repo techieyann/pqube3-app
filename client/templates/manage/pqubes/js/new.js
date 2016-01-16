@@ -1,47 +1,51 @@
-Template.newPQube.helpers({
-  newPQubeError: function () {
-    return Session.get('newPQubeFormError');
-  }
-});
-
 Template.newPQube.events({
   'submit #new-pqube-form, click #submit-new-pqube-form': function (e) {
-    Session.set('newPQubeFormError', null);
+    Session.set('formError', null);
     e.preventDefault();
+    var orgId;
+    if (isAdmin()) {
+      var paramOrgId = FlowRouter.current().params.orgId;
+      if (paramOrgId) {
+        orgId = paramOrgId;
+      }
+    }
+    else {
+      orgId = Roles.getGroupsForUser(Meteor.userId(), 'manage')[0];
+    }
+    if (!orgId) orgId = 'PSL';
     var defaultFlag = false;
-    if (!PQubes.findOne())
+    if (!PQubes.findOne({org:orgId}))
       defaultFlag = true;
+    
     var newPQubeData = {
       _id: Random.id(),
       name: $('#new-pqube-name').val(),
       host: $('#new-pqube-hostname').val().toLowerCase(),
       port: $('#new-pqube-port').val(),
+      org: orgId,
       defaultPQube: defaultFlag
     };
     if (!newPQubeData.name) {
-      Session.set('newPQubeFormError', TAPi18n.__('errNameRequired'));
+      Session.set('formError', TAPi18n.__('errNameRequired'));
       $('#new-pqube-name').focus();
       return;
     }
     if (!newPQubeData.host) {
-      Session.set('newPQubeFormError', TAPi18n.__('errHostRequired'));
+      Session.set('formError', TAPi18n.__('errHostRequired'));
       $('#new-pqube-hostname').focus();
       return;
-    }    
+    }
     if (!newPQubeData.port) newPQubeData.port = '502';
-/*    var ipRegEx = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-    if (!ipRegEx.test(newPQubeData.ip)) {
-      Session.set('newPQubeFormError', TAPi18n.__('errBadIP'));
-      $('#new-pqube-ip').val('').focus();
-      return;
-      }*/
     Meteor.call('addNewPQube', newPQubeData, function (err, result) {
       if (err) {
-	      Session.set('newPQubeFormError', err.reason);
-	      $('#new-pqube-'+err.error).focus();
-	      return;
+	Session.set('formError', err.reason);
+	$('#new-pqube-'+err.error).focus();
+	return;
       }
       $('#modal').modal('hide');
+      Meteor.setTimeout(function () {
+        sAlert.success(TAPi18n.__('succNewPQube'));
+      }, 400);
     });
   }
 });

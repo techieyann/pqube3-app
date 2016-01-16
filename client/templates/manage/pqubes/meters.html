@@ -5,12 +5,12 @@
   </div>
   <form name="manage-meters-pqube-form" class="form-horizontal centered">
     <div class="modal-body text-center">
-      {{#if metersPQubeError}}
+      {{#if formError}}
       <div class="alert alert-danger alert-dismissable">
-	      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-	        <span aria-hidden="true">&times;</span>
-	      </button>
-	      {{metersPQubeError}}
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	  <span aria-hidden="true">&times;</span>
+	</button>
+	{{formError}}
       </div>
       {{/if}}
       <div class="form-group">

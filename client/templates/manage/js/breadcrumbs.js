@@ -1,3 +1,10 @@
+Template.manageBreadcrumbs.onRendered(function () {
+  if (window.innerWidth < 768) {
+    $('.nav a').on('click', function () {
+      $('.navbar-toggle').click();
+    });
+  }
+});
 Template.manageBreadcrumbs.helpers({
   superGroup: function () {
     FlowRouter.watchPathChange();

@@ -1,7 +1,4 @@
 Template.initUser.helpers({
-  'initUserError': function () {
-    return Session.get('initUserFormError');
-  },
   'org': function () {
     return Orgs.find().fetch();
   }
@@ -9,12 +6,12 @@ Template.initUser.helpers({
 
 Template.initUser.events({
   'submit #init-user-form, click #submit-init-user-form': function (e) {
-    Session.set('initUserFormError', null);
+    Session.set('formError', null);
     e.preventDefault();
     var org = $('#org-select').val();
     var code = $('#org-access-code').val();
     if (!code) {
-      Session.set('initUserFormError', 'Code required.');
+      Session.set('formError', 'Code required.');
       $('#org-access-code').focus();
       return;
     }
@@ -29,7 +26,7 @@ Template.initUser.events({
           FlowRouter.go('/manage');
         }
         else {
-          Session.set('initUserFormError', 'Incorrect access code for organization.');
+          Session.set('formError', 'Incorrect access code for organization.');
           $('#org-access-code').focus();
         }
       }

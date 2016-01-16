@@ -1,7 +1,7 @@
 watchDataSubscriptions = function () {
   Tracker.autorun(function () {
     var scopesSource = Session.get('scopesSource');
-    var spectraSelected = Session.get('spectraSelected');
+    var spectraSelected = !Session.get('metersSelected');
     var spectraSource = Session.get('spectraSource');
 
     var pqubes = PQubes.find();
@@ -9,17 +9,17 @@ watchDataSubscriptions = function () {
     pqubes.forEach(function (pqube) {
       var pqubeOpts;
       if (scopesSource == pqube._id) {
-	      var spectraSelectors = {};
-	      if (spectraSelected) {
-	        var dataSources = spectraList[spectraSource].dataSources;
-	        for (var i=0; i<dataSources.length; i++) {
-	          spectraSelectors[dataSources[i]] = true;
-	        }
-	      }
-	      pqubeOpts = $.extend(true, 
-			                       {}, 
-			                       pqubeTime,
-			                       scopesDataSources,
+	var spectraSelectors = {};
+	if (spectraSelected) {
+	  var dataSources = spectraList[spectraSource].dataSources;
+	  for (var i=0; i<dataSources.length; i++) {
+	    spectraSelectors[dataSources[i]] = true;
+	  }
+	}
+	pqubeOpts = $.extend(true, 
+			     {}, 
+			     pqubeTime,
+			     scopesDataSources,
 			     spectraSelectors);
       }
       else pqubeOpts = pqubeTime;
@@ -27,13 +27,13 @@ watchDataSubscriptions = function () {
     });
     if (!spectraSelected) {
       for (var i=1; i<4; i++) {
-	      var gauge = Session.get('gauge'+i);
-	      if (gauge) {
-	        if (subOpts[gauge.pqubeId]) {
+	var gauge = Session.get('gauge'+i);
+	if (gauge) {
+	  if (subOpts[gauge.pqubeId]) {
             var source = gauge.dataSource;
-	          subOpts[gauge.pqubeId][source] = true;
-	        }
-	      }
+	    subOpts[gauge.pqubeId][source] = true;
+	  }
+	}
       }
     }
     pqubes.forEach(function (pqube) {

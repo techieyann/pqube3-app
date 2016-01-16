@@ -1,19 +1,24 @@
 Template.manageLayout.onCreated(function () {
-  this.subscribe('pqubesManage');
-  this.subscribe('meters');
+  var self = this;
+  self.autorun(function () {
+    if (Meteor.user()) {
+      if (Meteor.user().profile.initialized) {
+        self.subscribe('pqubesManage');
+      }
+    }
+  });
+
+  self.subscribe('meters');
 });
 
 Template.manageLayout.onRendered(function () {
   $('#modal').on('hidden.bs.modal', function () {
     window.history.back();
-    Session.set('newOrgFormError', null);
-    Session.set('editOrgFormError', null);
-    Session.set('newPQubeFormError', null);
-    Session.set('editPQubeFormError', null);
-    Session.set('metersPQubeFormError', null);
+    Session.set('formError', null);
   });
   this.autorun(function () {
     var user = Meteor.user();
+    var orgs = Orgs.find();
     FlowRouter.watchPathChange();
     if (user) {
       if (!user.profile.initialized) {
@@ -67,7 +72,7 @@ Template.manageLayout.helpers({
       }
     }
     else {
-      return 'init';
+      return TAPi18n.__('init');
     }
    }
   }
@@ -90,16 +95,46 @@ Template.dataLayout.onCreated(function () {
 	      });
     }
   });
-  self.subscribe('meters', function () {
-    self.subscribe('pqubes', function () {
-      if (PQubes.find().count()) {
-        setDefaults();
-        watchDataSubscriptions();
-        startDataInterval();
-        observePQubes();
+});
+
+Template.dataLayout.onRendered(function () {
+  var self = this;
+  self.autorun(function () {
+    FlowRouter.watchPathChange();
+    var orgSlug = FlowRouter.current().params.orgSlug;
+    var orgsReady = Session.get('orgsReady');
+    var orgId;
+    if (orgSlug && orgsReady) {
+      var org = Orgs.findOne({slug: orgSlug});
+      if (org) {
+        orgId = org._id;
       }
-    });
+      else {
+        FlowRouter.go('/');
+        sAlert.warning(Tapi18n.__('err404'));
+      }
+    }
+    else if (!orgSlug) {
+      orgId = 'PSL';
+    }
+    if (orgId) {
+      self.subscribe('meters', function () {
+        self.subscribe('pqubes', orgId, function () {
+          if (PQubes.find().count()) {
+            setDefaults();
+            watchDataSubscriptions();
+            startDataInterval();
+            observePQubes();
+          }
+        });
+      });
+    }
   });
 });
 
+Template.dataLayout.helpers({
+  metersSelected: function () {
+    return Session.get('metersSelected');
+  }
+});
 

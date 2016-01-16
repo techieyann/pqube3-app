@@ -1,0 +1,5 @@
+{
+  "alertConnected": "Connected to PQube3 at",
+  "alertDisconnected":"Disconnected from PQube3",
+  "alertDCViewChange": "PQube3 has become unnavailable, view changed where appropriate"
+}

@@ -26,10 +26,15 @@ Template.confirmDeletePQube.events({
     e.preventDefault();
     var id = FlowRouter.current().params.pqubeId;
     Meteor.call('removePQube', id, function (err, result) {
-      if (err) console.log(err);
-      else {
-	$('#modal').modal('hide');
+      if (err) {
+        console.log(err);
+        return;
       }
+
+      $('#modal').modal('hide');
+      Meteor.setTimeout(function () {
+        sAlert.success(TAPi18n.__('succDelPQube'));
+      }, 400);
     });
   }
 });

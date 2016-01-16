@@ -4,6 +4,9 @@
     <h4 class="modal-title">{{_ "confirmDelete"}} {{_ "organization"}}:</h4>
   </div>
   <div class="modal-body text-center">
+    <div class="alert alert-danger">
+      {{_ "deleteOrgWarning"}}
+    </div>
     <h3>{{name}}</h3>
     <span>{{rootURL}}/{{slug}}</span>
   </div>
