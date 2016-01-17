@@ -74,7 +74,8 @@ Template.manageLayout.helpers({
     else {
       return TAPi18n.__('init');
     }
-   }
+    }
+    return TAPi18n.__('loading');
   }
 });
 
