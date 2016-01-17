@@ -26,25 +26,21 @@ observePQubes = function () {
   Meteor.setInterval(function () {
     var now = new Date();
     var dcIds = [];
-    for (var id in pqubeConnections) {
-      if (now - pqubeConnections[id].lastDataReceivedAt > 10000) {
-        var pqube = PQubes.findOne(id);
-        if (pqube) {
-          if (pqube.status == 'connected') {
-            Meteor.setTimeout(function () {
-              cancelRequests(id);
-	      pqubeConnections[id].master.transport.connection.close();
-              PQubes.update({_id: id, status: {$nin: ['unknown','unverified']}}, {$set: {status: 'disconnected'}});
-              delete pqubeConnections[id];
-              connectToPQube(pqube);      
-            }, 0);
-          }
-        }
-        else {
-          delete pqubeConnections[id];
+    var connectedPQubes = PQubes.find({status:'connected'}).fetch();
+    connectedPQubes.forEach(function (pqube) {
+      var id = pqube._id;
+      if (pqubeConnections[id]) {
+        if (now - pqubeConnections[id].lastDataReceivedAt > 10000) {
+          Meteor.setTimeout(function () {
+            cancelRequests(id);
+	          pqubeConnections[id].master.transport.connection.close();
+            PQubes.update(id, {$set: {status: 'disconnected'}});
+            delete pqubeConnections[id];
+            connectToPQube(pqube);      
+          }, 0);
         }
       }
-    }
+    });
   }, 10000);
 
 };
@@ -115,12 +111,19 @@ cancelRequests = function (id) {
   }
 };
 
-var procRegisters = function (registers, reqRegister, pqube) {
+var procRegisters = function (registers, reqRegister, id) {
   var decoded = decodeRegisters(registers, reqRegister);
 
   if (decoded) {
-    pqubeConnections[pqube].lastDataReceivedAt = new Date();
-    PQubeData.upsert(pqube, {$set: decoded});
+    if (pqubeConnections[id]) {
+      pqubeConnections[id].lastDataReceivedAt = new Date();
+      PQubeData.upsert(id, {$set: decoded});
+    }
+    else {
+      cancelRequests(id);
+      var pqube = PQubes.findOne(id);
+      if (pqube) connectToPQube(pqube);
+    }
   }
 };
 
@@ -143,7 +146,7 @@ var initRequest = function (reqRegister, pqube) {
   pqubeConnections[pqube].reqs.push(pqubeReq);
 };
 
-var verifyPQube = function (pqube) {
+var verifyPQube = function (id) {
   var now = new Date();
   var year = now.getFullYear();
   var req = {
@@ -159,16 +162,16 @@ var verifyPQube = function (pqube) {
         var decoded = decodeRegisters(response.values, req);
         if (decoded) {
           if (decoded.year == year) {
-	          Meteor.clearInterval(pqubeConnections[pqube].connectInterval);
-            PQubes.update(pqube, {$set: {status: 'connected'}});
-            initRequests(pqube);
+	          Meteor.clearInterval(pqubeConnections[id].connectInterval);
+            PQubes.update(id, {$set: {status: 'connected'}});
+            initRequests(id);
           }
         }
       }
       if (err) console.log(err);
     }
   );
-  var pqubeReq = pqubeConnections[pqube].master.readInputRegisters(req.start, req.num, {
+  var pqubeReq = pqubeConnections[id].master.readInputRegisters(req.start, req.num, {
     maxRetries: 1,
     timeout: 500,
     interval: -1,
