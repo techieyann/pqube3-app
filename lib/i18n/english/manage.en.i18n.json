@@ -10,7 +10,7 @@
   "logout": "Logout",
   "connectAttempt": "Attempting a modbus connection to ",
   "connectHelp": "Please confirm that the network allows it to be accessed publicly, and that the information is correct",
-  "verifyFailure": "Device is not a PQube3 at ",
+  "verifyFailure": "Unable to verify device is a PQube3 at ",
   "status": "Status",
   "default": "Default",
   "makeDefault": "Make Default",
