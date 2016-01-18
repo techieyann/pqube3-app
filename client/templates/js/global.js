@@ -18,14 +18,14 @@ Template.registerHelper('pqube', function () {
   if (isAdmin()) {
     var paramOrgId = FlowRouter.current().params.orgId;
     if (paramOrgId) {
-      return PQubes.find({org: paramOrgId}).fetch();
+      return PQubes.find({org: paramOrgId});
     }
     else {
-      return PQubes.find({org: 'PSL'}).fetch();
+      return PQubes.find({org: 'PSL'});
     }
   }
   else {
-    return PQubes.find().fetch();
+    return PQubes.find();
   }
 });
 

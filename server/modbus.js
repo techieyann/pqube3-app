@@ -18,8 +18,10 @@ observePQubes = function () {
     },
     removed: function (id) {
       cancelRequests(id);
-      Meteor.clearInterval(pqubeConnections[id].intervalId);
-      delete pqubeConnections[id];
+      if (pqubeConnections[id]) {
+        Meteor.clearInterval(pqubeConnections[id].intervalId);
+        delete pqubeConnections[id];
+      }
       PQubeData.remove(id);
     }
   });
