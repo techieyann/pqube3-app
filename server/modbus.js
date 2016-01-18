@@ -175,7 +175,7 @@ var verifyPQube = function (id) {
       if (err) {
         count++;
         console.log('pqube verification error: '+err);
-        if (count == numRetries)
+        if (count == (numRetries+1))
           pqubeConnections[id].master.transport.connection.close();
       }
     }
