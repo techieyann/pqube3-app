@@ -13,5 +13,7 @@
   "errOrgSlugExists":"URL already in use",
   "errLoggedInEdit":"Must be logged in to modify PQube3",
   "errUnknown":"Could not find referenced",
-  "errLoggedInRemove": "Must be logged in to remove"
+  "errLoggedInRemove": "Must be logged in to remove",
+  "err404": "Error 404: Page not found",
+  "err403": "Error 403: Not authorized"
 }

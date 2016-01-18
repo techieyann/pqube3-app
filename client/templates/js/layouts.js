@@ -104,15 +104,25 @@ Template.dataLayout.onRendered(function () {
     FlowRouter.watchPathChange();
     var orgSlug = FlowRouter.current().params.orgSlug;
     var orgsReady = Session.get('orgsReady');
+    var user = Meteor.user();
     var orgId;
     if (orgSlug && orgsReady) {
       var org = Orgs.findOne({slug: orgSlug});
       if (org) {
-        orgId = org._id;
+        if (hasPermission(org._id)) {
+          orgId = org._id;
+        }
+        else if (!user.profile.initialized) {
+          FlowRouter.go('/initialize');
+        }
+        else {
+          FlowRouter.go('/');
+          sAlert.warning(TAPi18n.__('err403'));
+        }
       }
       else {
         FlowRouter.go('/');
-        sAlert.warning(Tapi18n.__('err404'));
+        sAlert.warning(TAPi18n.__('err404'));
       }
     }
     else if (!orgSlug) {
