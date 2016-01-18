@@ -158,6 +158,8 @@ var verifyPQube = function (id) {
     fields: 'verification',
     chart: false
   };
+  var count = 0;
+  var numRetries = 5;
   var requestComplete = Meteor.bindEnvironment(
     function (err, response) {
       if(!err && response.values) {
@@ -171,13 +173,15 @@ var verifyPQube = function (id) {
         }
       }
       if (err) {
+        count++;
         console.log('pqube verification error: '+err);
-        pqubeConnections[id].master.transport.connection.close();
+        if (count == numRetries)
+          pqubeConnections[id].master.transport.connection.close();
       }
     }
   );
   var pqubeReq = pqubeConnections[id].master.readInputRegisters(req.start, req.num, {
-    maxRetries: 5,
+    maxRetries: numRetries,
     timeout: 1500,
     interval: -1,
     onComplete: requestComplete
