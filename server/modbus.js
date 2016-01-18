@@ -168,16 +168,16 @@ var verifyPQube = function (id) {
           }
         }
       }
-      if (err) console.log(err);
+      if (err) {
+        console.log('pqube verification error: '+err);
+        pqubeConnections[id].master.transport.connection.close();
+      }
     }
   );
   var pqubeReq = pqubeConnections[id].master.readInputRegisters(req.start, req.num, {
-    maxRetries: 1,
-    timeout: 500,
+    maxRetries: 5,
+    timeout: 1500,
     interval: -1,
     onComplete: requestComplete
   });
-  pqubeReq.on('error', function (err) {
-    console.log('pqube verification error: '+err);
-  });  
 };
