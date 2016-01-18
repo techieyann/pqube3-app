@@ -180,4 +180,7 @@ var verifyPQube = function (id) {
     interval: -1,
     onComplete: requestComplete
   });
+  pqubeReq.on('error', function (err) {
+
+  });
 };
