@@ -25,15 +25,18 @@ Meteor.methods({
   },
   'disconnectPQube': function (id) {
     var pqube = PQubes.findOne(id);
-    if (pqube && Meteor.user()) {
-      cancelRequests(id);
-      pqubeConnections[id].master.transport.connection.close();
+    if (pqube) {
+      if (hasPermission(pqube.org)) {
+        cancelRequests(id);
+        pqubeConnections[id].master.transport.connection.close();
+      }
     }
   },
   'reconnectPQube': function (id) {
     var pqube = PQubes.findOne(id);
-    if (pqube && Meteor.user()) {
-      pqubeConnections[id].master.transport.connection.connect();
+    if (pqube) {
+      if (hasPermission(pqube.org)) 
+        pqubeConnections[id].master.transport.connection.connect();
     }
   }
 });
