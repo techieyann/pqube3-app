@@ -7,6 +7,8 @@
   "joinOrg": "Join Organization",
   "initAccountMessage": "You must join an organization to initialize your account, reach out to your point of contact for the access code.",
   "newPQube": "New PQube3",
+  "pqubeOrder": "PQube3 Order",
+  "sortPQubes": "Order Pqube3s",
   "logout": "Logout",
   "connectAttempt": "Attempting a modbus connection to ",
   "connectHelp": "Please confirm that the network allows it to be accessed publicly, and that the information is correct",

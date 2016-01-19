@@ -1,3 +1,6 @@
 <template name="pqubeNavButtons">
   <li><a href="{{currentPath}}/new"><span class="glyphicon glyphicon-plus"></span> {{_ "newPQube"}}</a></li>
+  {{#if pqubes}}
+  <li><a href="{{currentPath}}/sort"><span class="glyphicon glyphicon-sort"></span> {{_ "pqubeOrder"}}</a></li>
+  {{/if}}
 </template>

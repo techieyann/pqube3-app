@@ -1,0 +1,23 @@
+<template name="sortPQubes">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">{{_ "sortPQubes"}}:</h4>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+    <ul id="pqube-order" class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 text-center">
+      {{#each pqube}}
+      <li id="{{_id}}">
+        <span class="glyphicon glyphicon-resize-vertical pull-left"></span>
+        {{name}}
+        <span class="glyphicon glyphicon-{{statusIcon}} pull-right"></span>
+      </li>
+      {{/each}}
+    </ul>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">{{_ "cancel"}}</button>
+    <button id="save-pqube-order" type="submit" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-save"></span> {{_ "save"}}</button>
+  </div>
+</template>

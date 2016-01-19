@@ -19,13 +19,6 @@
       <span class="col-sm-6 col-xs-12">
 	      <h4>{{_ "status"}}:
           <span class="glyphicon glyphicon-{{statusIcon}}"></span>
-	        {{#if defaultPQube}}
-	        <span>({{_ "default"}})</span>
-	        {{else}}
-	        {{#if defaultable}}
-	        <a href="#" type="button" class="make-pqube-default btn btn-default">{{_ "makeDefault"}}</a>
-	        {{/if}}
-	        {{/if}}
 	      </h4>
 	      <span class="btn-group" role="group">
           {{#if verified}}

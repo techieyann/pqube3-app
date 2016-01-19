@@ -11,27 +11,6 @@ Template.pqubeStatus.helpers({
   verified: function () {
     return (this.status != 'unverified' && this.status != 'unknown');
   },
-  defaultLanguage: function () {
-    var language = this.language;
-    var fullName = Languages.filter(function (lang) {
-      return lang.acronym == language;
-    })[0].fullName;
-    return fullName;
-  },
-  statusIcon: function () {
-    if (this.status == 'connected')
-      return 'ok-sign text-success';
-    if (this.status == 'disconnected')
-      return 'remove-sign text-danger';
-    if (this.status == 'unknown')
-      return 'question-sign text-warning';
-    if (this.status == 'unverified')
-      return 'ban-circle text-danger';
-    return '';
-  },
-  defaultable: function () {
-    return !this.defaultPQube && this.status == 'connected';
-  },
   org: function () {
     if(!isAdmin()) {
       return '/org';

@@ -1,7 +1,12 @@
 <template name="manageOrgPQubes">
   {{> statusOrg}}
   {{#if admin}}
-  <a type="button" href="{{currentPath}}/pqube3/new" class="btn btn-default pull-right"><span class="glyphicon glyphicon-plus"></span> {{_ "newPQube"}}</a>
+  <div class="btn-group pull-right">
+  <a type="button" href="{{currentPath}}/pqube3/new" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> {{_ "newPQube"}}</a>
+  {{#if pqubes}}
+  <a type="button" href="{{currentPath}}/sort" class="btn btn-default"><span class="glyphicon glyphicon-sort"></span> {{_ "pqubeOrder"}}</a>
+  {{/if}}
+  </div>
   {{/if}}
   {{> managePQubes}}
 </template>

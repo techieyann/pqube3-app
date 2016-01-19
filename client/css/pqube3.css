@@ -465,3 +465,16 @@ background-color: green;
     top: 200px;
     left:0px;
 }
+
+#pqube-order {
+    list-style-type: none;
+}
+
+#pqube-order>li {
+    border: solid 1px #e3e3e3;
+    border-radius:5px;
+    background-color:#f5f5f5;
+    padding: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}

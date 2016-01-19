@@ -1,7 +1,6 @@
 setDefaults = function () {
 
-  var defaultPQube = PQubes.findOne({defaultPQube: true});
-  if (!defaultPQube) defaultPQube = PQubes.findOne();
+  var defaultPQube = PQubes.findOne({},{sort: {order: 1}});
   var defaultGauges = [
     {
       gaugeNum: 1,
