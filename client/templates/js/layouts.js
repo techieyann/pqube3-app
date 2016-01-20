@@ -141,30 +141,14 @@ Template.dataLayout.onRendered(function () {
           }
         }
       }
-    }
-    else if (!orgSlug) {
-      orgId = 'PSL';
-    }
-
-      /*
-      if (org) {
-        if (hasViewPermission(org._id)) {
-          orgId = org._id;
-        }
-        else if (!user.profile.initialized) {
-          FlowRouter.go('/initialize');
-        }
-        else {
-          FlowRouter.go('/');
-          sAlert.warning(TAPi18n.__('err403'));
-        }
-      }
       else {
         FlowRouter.go('/');
         sAlert.warning(TAPi18n.__('err404'));
       }
     }
-*/
+    else if (!orgSlug) {
+      orgId = 'PSL';
+    }
     if (orgId) {
       self.subscribe('meters', function () {
         self.subscribe('pqubes', orgId, function () {
