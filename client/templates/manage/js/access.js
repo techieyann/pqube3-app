@@ -3,7 +3,7 @@ Template.accessOrg.onRendered(function () {
   this.autorun(function () {
   var org = Orgs.findOne({slug: orgSlug});
   if (org) {
-    if (Roles.userIsInRole(Meteor.user(), ['view', 'manage'], org._id))
+    if (Roles.userIsInRole(Meteor.user(), ['view', 'manage'], org._id) || isAdmin())
       FlowRouter.go('/'+orgSlug);
   }
   });
