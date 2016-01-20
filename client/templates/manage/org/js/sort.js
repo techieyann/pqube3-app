@@ -26,7 +26,6 @@ Template.sortPQubes.events({
       }
     }
     if (orgId) {
-      console.log(orgId);
       var order = $('#pqube-order').sortable('toArray');
       Meteor.call('reorderPQubes', order, orgId, function (err) {
         if (err) {
