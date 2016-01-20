@@ -21,6 +21,9 @@ a:visited {
 a.btn {
     color:initial;
 }
+.at-link {
+    color:blue!important;
+}
 select {
     background-color: #40434b;
     border-color: #222;
