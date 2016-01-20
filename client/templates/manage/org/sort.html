@@ -5,12 +5,18 @@
   </div>
   <div class="modal-body">
     <div class="row">
-    <ul id="pqube-order" class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 text-center">
+    <ul id="pqube-order" class="col-xs-12 col-sm-6 col-sm-offset-3 text-center">
       {{#each pqube}}
       <li id="{{_id}}">
-        <span class="glyphicon glyphicon-resize-vertical pull-left"></span>
-        {{name}}
-        <span class="glyphicon glyphicon-{{statusIcon}} pull-right"></span>
+        <div class="row">
+          <div class="col-xs-1">
+            <span class="glyphicon glyphicon-resize-vertical"></span>
+          </div>
+          <div class="col-xs-10">
+            {{name}}
+            <span class="glyphicon glyphicon-{{statusIcon}} pull-right"></span>
+          </div>
+        </div>
       </li>
       {{/each}}
     </ul>
