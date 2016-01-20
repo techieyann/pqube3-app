@@ -53,4 +53,4 @@ npm-container
 alanning:roles
 generalledger:sleepforms
 yasaricli:slugify
-mrt:jquery-ui-sortable
+mquandalle:jquery-ui-drag-drop-sort
