@@ -9,6 +9,8 @@
       <h4><a href="/{{slug}}">{{rootURL}}/{{slug}}</a></h4>
       {{#if private}}
       <p>{{_ "viewCode"}}: <input class="text-center form-control" type="text" value="{{viewCode}}" disabled></p>
+      {{else}}
+      <p>({{_ "public"}})</p>
       {{/if}}
       <span class="btn-group" role="group">
         <a href="{{currentPath}}{{org}}/edit" type="button" class="btn btn-default"><span class="glyphicon glyphicon-cog"></span> {{_ "settings"}}</a>
