@@ -13,8 +13,15 @@ Meteor.methods({
       var org = Orgs.findOne(accessTest.orgId);
       if (org) {
         if (accessTest.code == org.accessCode) {
-          Roles.addUsersToRoles(userId, 'manage', org._id);
-          accessType = 'manage';
+          var groups = Roles.getGroupsForUser(userId, 'manage');
+          if (groups.length) {
+            Roles.addUsersToRoles(userId, 'view', org._id);
+            accessType = 'view';            
+          }
+          else {
+            Roles.addUsersToRoles(userId, 'manage', org._id);
+            accessType = 'manage';
+          }
         }
         else if (org.visibility == 'private') {
           if (accessTest.code == org.viewCode) {
