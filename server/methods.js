@@ -1,12 +1,12 @@
 
 Meteor.methods({
   'grantAccess': function (accessTest) {
-    var accessGranted = false;
+    var accessType = 'none';
     var userId = Meteor.userId();
     if (accessTest.orgId == 'admin') {
       if (accessTest.code == process.env.accessCode) {
         Roles.addUsersToRoles(userId, 'admin', Roles.GLOBAL_GROUP);        
-        accessGranted = true;
+        accessGranted = 'admin';
       }
     }
     else {
@@ -14,14 +14,20 @@ Meteor.methods({
       if (org) {
         if (accessTest.code == org.accessCode) {
           Roles.addUsersToRoles(userId, 'manage', org._id);
-          accessGranted = true;
+          accessType = 'manage';
+        }
+        else if (org.visibility == 'private') {
+          if (accessTest.code == org.viewCode) {
+            Roles.addUsersToRoles(userId, 'view', org._id);
+            accessType = 'view';
+          }
         }
       }
     }
-    if (accessGranted) {
+    if (accessType == 'manage' || accessType == 'admin') {
       Meteor.users.update(userId, {$set: {'profile.initialized': true}});
     }
-    return accessGranted;
+    return accessType;
   },
   'disconnectPQube': function (id) {
     var pqube = PQubes.findOne(id);

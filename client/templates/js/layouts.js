@@ -12,6 +12,10 @@ Template.manageLayout.onCreated(function () {
 });
 
 Template.manageLayout.onRendered(function () {
+  Meteor.subscribe('orgsManage');
+  Meteor.subscribe('orgs', function () {
+    Session.set('orgsReady', true);
+  });
   $('#modal').on('hidden.bs.modal', function () {
     window.history.back();
     Session.set('formError', null);
@@ -22,7 +26,8 @@ Template.manageLayout.onRendered(function () {
     FlowRouter.watchPathChange();
     if (user) {
       if (!user.profile.initialized) {
-        FlowRouter.go('/initialize');
+        if (FlowRouter.current().route.name != 'orgAccess')
+          FlowRouter.go('/initialize');
       }
       if (user.profile.initialized && FlowRouter.getRouteName() == 'userInit') {
         FlowRouter.go('/manage');
@@ -56,24 +61,29 @@ Template.manageLayout.helpers({
   },
   'orgName': function () {
     var userId = Meteor.userId();
+    FlowRouter.watchPathChange();
     if (Meteor.user()) {
-    if (Meteor.user().profile.initialized) {
-      if (Roles.userIsInRole(userId, 'admin', Roles.GLOBAL_GROUP)) {
-        return 'PSL';
-      }
-      else {
-        var groups = Roles.getGroupsForUser(userId, 'manage');
-        if (groups[0]) {
-          var org = Orgs.findOne(groups[0]);
-          if (org) {
-            return org.name;
+      if (Meteor.user().profile.initialized) {
+        if (Roles.userIsInRole(userId, 'admin', Roles.GLOBAL_GROUP)) {
+          return 'PSL';
+        }
+        else {
+          var groups = Roles.getGroupsForUser(userId, 'manage');
+          if (groups[0]) {
+            var org = Orgs.findOne(groups[0]);
+            if (org) {
+              return org.name;
+            }
           }
         }
       }
-    }
-    else {
-      return TAPi18n.__('init');
-    }
+      else {
+        if (FlowRouter.current().route.name == 'orgAccess') {
+          return TAPi18n.__('access');
+        }
+        else
+          return TAPi18n.__('init');
+      }
     }
     return TAPi18n.__('loading');
   }
@@ -100,6 +110,9 @@ Template.dataLayout.onCreated(function () {
 
 Template.dataLayout.onRendered(function () {
   var self = this;
+  Meteor.subscribe('orgs', function (){
+    Session.set('orgsReady', true);
+  });
   self.autorun(function () {
     FlowRouter.watchPathChange();
     var orgSlug = FlowRouter.current().params.orgSlug;
@@ -109,7 +122,33 @@ Template.dataLayout.onRendered(function () {
     if (orgSlug && orgsReady) {
       var org = Orgs.findOne({slug: orgSlug});
       if (org) {
-        if (hasPermission(org._id)) {
+        if (org.visibility == 'public') {
+          orgId = org._id;
+        }
+        else if (org.visibility == 'private') {
+          if (user) {
+            if (hasViewPermission(org._id)) {
+              orgId = org._id;
+            }
+            else {
+              Meteor.setTimeout(function () {
+                FlowRouter.go('/'+orgSlug+'/access');
+              }, 200);
+            }
+          }
+          else {
+            FlowRouter.go('/sign-in');
+          }
+        }
+      }
+    }
+    else if (!orgSlug) {
+      orgId = 'PSL';
+    }
+
+      /*
+      if (org) {
+        if (hasViewPermission(org._id)) {
           orgId = org._id;
         }
         else if (!user.profile.initialized) {
@@ -125,9 +164,7 @@ Template.dataLayout.onRendered(function () {
         sAlert.warning(TAPi18n.__('err404'));
       }
     }
-    else if (!orgSlug) {
-      orgId = 'PSL';
-    }
+*/
     if (orgId) {
       self.subscribe('meters', function () {
         self.subscribe('pqubes', orgId, function () {

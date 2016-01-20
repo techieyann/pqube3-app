@@ -7,6 +7,7 @@
   "succEditPQube":"Successfully edited PQube3 settings!",
   "succEditMetersPQube":"Successfully edited PQube3 meters!",
   "succDelPQube":"Successfully deleted PQube3!",
-  "succReorder":"Successfully reodered PQube3s!"
+  "succReorder":"Successfully reodered PQube3s!",
+  "succViewPermission":"Successfully granted view permission!"
   
 }

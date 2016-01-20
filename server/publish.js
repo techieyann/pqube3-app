@@ -27,5 +27,20 @@ Meteor.publish('meters', function () {
 });
 
 Meteor.publish('orgs', function () {
-  return Orgs.find({},{fields: {'accessCode': 0}});
+  return Orgs.find({},{fields: {'viewCode': 0, 'accessCode': 0}});
+});
+
+Meteor.publish('orgsManage', function () {
+  var id = this.userId;
+  if (id) {
+    if (Roles.userIsInRole(id, 'admin', Roles.GLOBAL_GROUP)) {
+      return Orgs.find({},{fields: {'accessCode': 0}});
+    }
+    else {
+      var groups = Roles.getGroupsForUser(id, 'manage');
+      if (groups) {
+        return Orgs.find(groups[0], {fields: {'accessCode': 0}});
+      }
+    }
+  }
 });

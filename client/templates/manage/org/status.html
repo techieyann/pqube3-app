@@ -7,9 +7,12 @@
 
       <h3>{{name}}</h3>
       <h4><a href="/{{slug}}">{{rootURL}}/{{slug}}</a></h4>
+      {{#if private}}
+      <p>{{_ "viewCode"}}: <input class="text-center form-control" type="text" value="{{viewCode}}" disabled></p>
+      {{/if}}
       <span class="btn-group" role="group">
         <a href="{{currentPath}}{{org}}/edit" type="button" class="btn btn-default"><span class="glyphicon glyphicon-cog"></span> {{_ "settings"}}</a>
-        <a href="{{currentPath}}{{org}}/code" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> {{_ "accessCode"}}</a>
+        <a href="{{currentPath}}{{org}}/code" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> {{_ "manageCode"}}</a>
         {{#if admin}}
         <a href="{{currentPath}}{{org}}/delete" type="button" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span> {{_ "delete"}}</a>
         {{/if}}

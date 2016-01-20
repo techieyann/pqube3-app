@@ -21,7 +21,6 @@ Template.statusOrg.onRendered(function () {
       self.data = org;
     }
     else {
-      console.log('org not found: '+orgId);
       Meteor.setTimeout(function () {
         FlowRouter.go('/manage');
       },400);
@@ -41,6 +40,18 @@ Template.statusOrg.helpers({
     var org = self.org.get();
     if (org)
       return org.slug;
+  },
+  private: function () {
+    var self = Template.instance();
+    var org = self.org.get();
+    if (org)
+      return org.visibility == 'private';
+  },
+  viewCode: function () {
+    var self = Template.instance();
+    var org = self.org.get();
+    if (org)
+      return org.viewCode;
   },
   id: function () {
     var self = Template.instance();

@@ -20,10 +20,6 @@ Meteor.startup(function () {
     offset: 0, // in px
     beep: false
   });
-
-  Meteor.subscribe('orgs', function (){
-    Session.set('orgsReady', true);
-  });
 });
 
 
