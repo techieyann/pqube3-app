@@ -27,6 +27,7 @@ Template.accessOrg.events({
         orgId: org._id,
         code: code
       };
+      if (Meteor.user()) {
       Meteor.call('grantAccess', accessTest, function (err, result) {
         if (err) console.log(err);
         else {
@@ -43,11 +44,29 @@ Template.accessOrg.events({
           case 'none':
           default:
             Session.set('formError', TAPi18n.__('errBadCode'));
-            $('#org-access-code').focus();
+            $('#org-access-code').val('').focus();
             break;
           }
         }
       });
+      }
+      else {
+        Meteor.call('tempAccess', accessTest, function (err, result) {
+          if (err) console.log(err);
+          else {
+            if (result) {
+            Session.set('view'+org._id, true);
+              Meteor.setTimeout(function () {
+              FlowRouter.go('/'+org.slug);
+              }, 200);
+            }
+            else {
+              Session.set('formError', TAPi18n.__('errBadCode'));
+              $('#org-access-code').val('').focus();
+            }
+          }
+        });
+      }
     }
   }
 });

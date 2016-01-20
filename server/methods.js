@@ -1,5 +1,8 @@
 
 Meteor.methods({
+  'tempAccess': function (accessTest) {
+    return (Orgs.findOne({_id: accessTest.orgId, viewCode: accessTest.code}) ? true : false);
+  },
   'grantAccess': function (accessTest) {
     var accessType = 'none';
     var userId = Meteor.userId();

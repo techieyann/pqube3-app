@@ -60,13 +60,18 @@
       <a class="navbar-brand" href="/{{orgURL}}">{{_ orgName}}</a>
       </div>
       <div class="collapse navbar-collapse" id="manage-navbar-collapse">
-	<ul class="nav navbar-nav">
-	  {{> manageBreadcrumbs}}
-	</ul>
-	<ul class="nav navbar-nav navbar-right text-right">
-	  {{> Template.dynamic template=navButtons}}
-	  <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> {{_ "logout"}}</a></li>
-	</ul>
+        <ul class="nav navbar-nav">
+          {{> manageBreadcrumbs}}
+        </ul>
+        <ul class="nav navbar-nav navbar-right text-right">
+          {{> Template.dynamic template=navButtons}}
+          {{#if currentUser}}
+          <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> {{_ "logout"}}</a></li>
+          {{else}}
+          <li><a href="/sign-in"><span class="glyphicon glyphicon-log-in"></span> {{_ "signin"}}</a></li>
+          <li><a href="/sign-up"><span class="glyphicon glyphicon-circle-arrow-up"></span> {{_ "signup"}}</a></li>
+          {{/if}}
+        </ul>
       </div>
     </div>
   </nav>

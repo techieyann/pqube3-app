@@ -85,6 +85,9 @@ Template.manageLayout.helpers({
           return TAPi18n.__('init');
       }
     }
+    if (FlowRouter.current().route.name == 'orgAccess') {
+      return TAPi18n.__('access');
+    }
     return TAPi18n.__('loading');
   }
 });
@@ -137,7 +140,14 @@ Template.dataLayout.onRendered(function () {
             }
           }
           else {
-            FlowRouter.go('/sign-in');
+            if (Session.get('view'+org._id)) {
+              orgId = org._id;
+            }
+            else {
+              Meteor.setTimeout(function () {
+                FlowRouter.go('/'+orgSlug+'/access');
+              }, 200);
+            }
           }
         }
       }
