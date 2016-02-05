@@ -2,6 +2,11 @@ Template.registerHelper('browserUnsupported', function () {
   return (BrowserDetect.browser == "Explorer" && BrowserDetect.version < 9);
 });
 
+Template.registerHelper('safariDropdownFix', function () {
+  console.log(Session.get('safariDropdownFix'));
+  return (Session.get('safariDropdownFix') && 'safariDropdownFix');
+});
+
 Template.registerHelper('spectraSelected', function () {
   return FlowRouter.getRouteName() == 'spectra';
 });

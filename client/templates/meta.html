@@ -4,7 +4,7 @@
       {{> language}}
     </div>
 
-    <select id="scope-site-source" class="site-source">
+    <select id="scope-site-source" class="site-source {{safariDropdownFix}}">
       <option disabled>{{_ "site"}}</option>
       {{#each pqubeData}}
       <option value="{{_id}}" {{siteSelected _id}}>{{_ name}}</option>

@@ -1,22 +1,22 @@
 <template name="gaugeSelectors">
   <div id="site-selectors">
     {{#each gauges}}
-    <select data-meter="{{gaugeNum}}" class="site-source">
-      <option disabled>{{_ "site"}}</option>
-      {{#each pqubeData}}
-      <option value="{{_id}}" {{siteSelected ../gaugeNum _id}}>{{_ name}}</option>
-      {{/each}}
-    </select>
+      <select data-meter="{{gaugeNum}}" class="site-source {{safariDropdownFix}}">
+        <option disabled>{{_ "site"}}</option>
+        {{#each pqubeData}}
+          <option value="{{_id}}" {{siteSelected ../gaugeNum _id}}>{{_ name}}</option>
+        {{/each}}
+      </select>
     {{/each}}
   </div>
   <div id="gauge-selectors">
     {{#each gauges}}
-    <select data-meter="{{gaugeNum}}" class="meter-source">
-      <option disabled>{{_ "channel"}}</option>
-      {{#each dataSource}}
-      <option value="{{gaugeName}}" {{gaugeSelected ../gaugeNum gaugeName}}>{{_ gaugeName}}</option>
-      {{/each}}
-    </select>
+      <select data-meter="{{gaugeNum}}" class="meter-source {{safariDropdownFix}}">
+        <option disabled>{{_ "channel"}}</option>
+        {{#each dataSource}}
+          <option value="{{gaugeName}}" {{gaugeSelected ../gaugeNum gaugeName}}>{{_ gaugeName}}</option>
+        {{/each}}
+      </select>
     {{/each}}
   </div>
 </template>

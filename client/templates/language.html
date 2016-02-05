@@ -1,5 +1,5 @@
 <template name="language">
-  <select id="language-select">
+  <select id="language-select" class="{{safariDropdownFix}}">
     <option disabled>{{_ "language"}}</option>
     {{#each language}}
     <option value="{{acronym}}" {{currentLanguage}}>{{_ fullName}}</option>

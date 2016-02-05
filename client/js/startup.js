@@ -1,8 +1,8 @@
 Meteor.startup(function () {
   BlazeLayout.setRoot('body');
 
-  if (BrowserDetect.browser == 'Safari')
-    $('select').css('color', 'black');
+  if (BrowserDetect.browser == 'Safari' && BrowserDetect.OS == 'iPhone/iPod')
+    Session.set('safariDropdownFix', true);
   Session.set('voltageScopeScale', 100);
   Session.set('currentScopeScale', 10);
   Session.set('formError', null);

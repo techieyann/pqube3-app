@@ -29,6 +29,9 @@ select {
     border-color: #222;
     color: #ccc;
 }
+select.safariDropdownFix {
+    color: black !important;
+}
 .hidden {
     display: none;
 }
