@@ -1,11 +1,11 @@
-Modernizr.addTest('iOs', function () {
+Modernizr.addTest('ios', function () {
   return navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false;
 });
 
 Meteor.startup(function () {
   BlazeLayout.setRoot('body');
 
-  if (BrowserDetect.browser == 'Safari' && Modernizr.iOs())
+  if (BrowserDetect.browser == 'Safari' && Modernizr.ios)
     Session.set('safariDropdownFix', true);
   Session.set('voltageScopeScale', 100);
   Session.set('currentScopeScale', 10);
