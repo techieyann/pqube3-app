@@ -19,6 +19,7 @@ cfs:http-methods@0.0.30
 check@1.1.0
 coffeescript@1.0.11
 cosmos:browserify@0.5.1
+cwaring:modernizr@3.0.0_1
 d4nyll:odometeor@0.2.1
 ddp@1.2.2
 ddp-client@1.2.1
