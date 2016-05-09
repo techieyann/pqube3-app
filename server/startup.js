@@ -1,4 +1,4 @@
 Meteor.startup(function () {
-  processMeters();
+//  processMeters();
   observePQubes();
 });

@@ -46,17 +46,25 @@ Template.gaugeSelectors.helpers({
 
 Template.gaugeSelectors.events({
   'change .site-source': function (e) {
-    var gaugeSettings = Session.get('gauge'+e.target.dataset.meter);
-    gaugeSettings.pqubeId = e.target.value;
-    var prefix = e.target.dataset.meter;
-    Session.set('gauge'+prefix+'Value', null);
-    Session.set('gauge'+prefix, gaugeSettings);
-    $('#'+e.target.dataset.meter+'-recorder-head').css('left', null);
+    var gaugeNum = e.target.dataset.meter;
+    var pqube = e.target.value;
+    var meters = Meters.findOne(pqube);
+    var firstMeter;
+    if (meters && meters.selected) {
+      for (var key in meters.selected) {
+        firstMeter = key;
+        break;
+      }
+      var gaugeSettings = getGaugeSettings(e.target.value, firstMeter, parseInt(gaugeNum,10));
+      Session.set('gauge'+gaugeNum+'Value', null);
+      Session.set('gauge'+gaugeNum, gaugeSettings);
+      $('#'+e.target.dataset.meter+'-recorder-head').css('left', null);      
+    }
   },
   'change .meter-source': function (e) {
     var gaugeNum = e.target.dataset.meter;
     var pqube = Session.get('gauge'+gaugeNum).pqubeId;
-    var gaugeSettings = getGaugeSettings(pqube, e.target.value, parseInt(e.target.dataset.meter,10));
+    var gaugeSettings = getGaugeSettings(pqube, e.target.value, parseInt(gaugeNum,10));
 
     Session.set('gauge'+gaugeNum+'Value', null);
     Session.set('gauge'+gaugeNum, gaugeSettings);

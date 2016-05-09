@@ -1,3 +1,5 @@
+
+
 Template.manageLayout.onCreated(function () {
   var self = this;
   self.autorun(function () {
@@ -175,6 +177,17 @@ Template.dataLayout.onRendered(function () {
 });
 
 Template.dataLayout.helpers({
+  anyPQubes: function () {
+    var pqubes = PQubes.find({}, {sort: {order:1}}).fetch();
+    if (pqubes.length) {
+
+      var pqube = pqubes[0];
+      var meters = Meters.findOne(pqube._id);
+      console.log(meters && meters.defaults && meters.defaults.length);
+      return (meters && meters.defaults && meters.defaults.length);
+    }
+    return false;
+  },
   metersSelected: function () {
     return Session.get('metersSelected');
   }

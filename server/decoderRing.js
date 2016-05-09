@@ -11,6 +11,9 @@ decodeRegisters = function (registers, reqRegister) {
     chartDataIndex = reqRegister.index; 
     buffOpts.fields = chartFields(reqRegister.num/2);
   }
+  else if (reqRegister.type == 'meter') {
+    buffOpts.fields = [{name: reqRegister.field, start:0, type:'float'}];
+  }
   else buffOpts.fields = buffArrays[reqRegister.fields];
   var data = decoderRing.decode(registers, buffOpts);
   if (chartDataFlag) {

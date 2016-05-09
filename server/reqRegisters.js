@@ -7,13 +7,6 @@ reqRegisters = [
     chart: false
   },
   {
-    type: 'THD',
-    start: 7194,
-    num: 2,
-    fields: 'THDarray',
-    chart: false
-  },
-  {
     type: 'freqVVect',
     start: 9020,
     num: 14,
@@ -68,7 +61,7 @@ reqRegisters = [
     num: 28,
     fields: 'currentArray',
     chart: false
-  },
+  },  
   {
     type: 'i1Graph',
     start: 11028,
@@ -151,13 +144,6 @@ reqRegisters = [
     start: 13822,
     num: 84,
     fields: 'ambientArray',
-    chart: false
-  },
-  {
-    type: 'acceleration',
-    start: 13924,
-    num: 14,
-    fields: 'accArray',
     chart: false
   }
 ];

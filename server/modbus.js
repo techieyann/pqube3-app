@@ -11,10 +11,20 @@ observePQubes = function () {
         connectToPQube(pqube);
     },
     changed: function (pqube, oldPQube) {
-      if (pqube.host != oldPQube.host || pqube.port != oldPQube.port) {
-	      cancelRequests(oldPQube._id);
-	      delete pqubeConnections[oldPQube._id];	
-	      connectToPQube(pqube);
+      var hostChanged = pqube.host != oldPQube.host;
+      var portChanged = pqube.port != oldPQube.port;
+      var oldPQubeMeters = oldPQube.metersChangedAt;
+      var pqubeMeters = pqube.metersChangedAt;
+      var metersChanged = false;
+      if (oldPQubeMeters && pqubeMeters)
+        metersChanged = pqube.metersChangedAt.getTime() != oldPQube.metersChangedAt.getTime();
+      else if (pqubeMeters && !oldPQubeMeters)
+        metersChanged = true;
+      var reconnect = hostChanged || portChanged || metersChanged;
+      if (reconnect) {
+	cancelRequests(oldPQube._id);
+	delete pqubeConnections[oldPQube._id];	
+	connectToPQube(pqube);
       }
     },
     removed: function (id) {
@@ -102,6 +112,18 @@ initRequests = function (id) {
   for (var i=0; i<reqRegisters.length; i++) {
     if (reqRegisters[i].type != 'verification') 
       initRequest(reqRegisters[i], id);
+  }
+  var meters = Meters.findOne(id);
+  if (meters) {
+    for (var key in meters.selected) {
+      var req = {
+        type: 'meter',
+        start: meters.selected[key].register,
+        num: 2,
+        field: key
+      };
+      initRequest(req, id);
+    }
   }
 };
 cancelRequests = function (id) {

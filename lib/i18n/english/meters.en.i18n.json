@@ -1,0 +1,17 @@
+{
+  "Frequency": "Frequency",
+  "L1_THD": "L1-N THD",
+  "Current_L1": "L1 Current",
+  "Current_L2": "L2 Current",
+  "Current_L3": "L3 Current",
+  "L1_N_RMS_Half": "L1-N Voltage",
+  "L1_Power": "Watts",
+  "L1_Apparent_Power": "VARs",
+  "Unbalance_A_Negative_Sequence": "Unbalance A (neg seq)",
+  "Ext_Probe_1_Ambient_Temp": "Temperature",
+  "Ext_Probe_1_Humidity": "Humidity",
+  "Ext_Probe_1_Pressure": "Barometric Pressure",
+  "Ext_Probe_1_Acceleration_X":"X Acceleration",
+  "Ext_Probe_1_Acceleration_Y":"Y Acceleration",
+  "Ext_Probe_1_Acceleration_Z":"Z Acceleration"
+}

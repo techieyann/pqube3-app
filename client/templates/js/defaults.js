@@ -7,10 +7,12 @@ setDefaults = function () {
     var meters = Meters.findOne(id);
     if (meters) {
       var defaultGauges = meters.defaults;
-      for (var i=0; i<defaultGauges.length; i++) {
-        var g = defaultGauges[i];
-        var gaugeSettings = getGaugeSettings(id, g, i+1);
-        Session.set('gauge'+(i+1), gaugeSettings);
+      if (defaultGauges) {
+        for (var i=0; i<defaultGauges.length; i++) {
+          var g = defaultGauges[i];
+          var gaugeSettings = getGaugeSettings(id, g, i+1);
+          Session.set('gauge'+(i+1), gaugeSettings);
+        }
       }
     }
   }

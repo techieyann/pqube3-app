@@ -1,44 +1,26 @@
 <template name="metersPQube">
-  <div class="modal-header borderless">
+  <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h4>{{name}} {{_ 'meters'}}:</h4>        
-    <ul class="nav nav-tabs nav-justified">
-      <li id="select" role="presentation" class="meter-tab {{activeTab 'select'}}"><a href="">Select</a></li>
-      <li id="modify" role="presentation" class="meter-tab {{activeTab 'modify'}}"><a href="">Modify Gauges</a></li>
-      <li id="default" role="presentation" class="meter-tab {{activeTab 'default'}}"><a href="">Default</a></li>
-    </ul>
-    <hr class="visible-xs">
   </div>
-  {{#if formError}}
-    <div class="alert alert-danger alert-dismissable">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-	<span aria-hidden="true">&times;</span>
-      </button>
-      {{formError}}
-    </div>
-  {{/if}}
-  {{#if (activeTab 'select')}}
-    {{> selectMetersPQube}}
-  {{/if}}
-  {{#if (activeTab 'modify')}}
-    {{> modifyMetersPQube}}
-  {{/if}}
-  {{#if (activeTab 'default')}}
-    {{> defaultMetersPQube}}
-  {{/if}}
-</template>
-
-<template name="selectMetersPQube">
   <div class="modal-body">
+    {{#if formError}}
+      <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	  <span aria-hidden="true">&times;</span>
+        </button>
+        {{formError}}
+      </div>
+    {{/if}}
     <div class="row">
-      <div class="col-xs-6 right-bordered">
+      <div class="col-xs-6">
         <div class="row">
           <div class="col-md-6">
             <h4>Group:</h4>
             <select id="meter-group" class="meter-select full-width">
               <option value="">All</option>
               {{#each group in groups}}
-                <option value="{{group.key}}">{{group.val}}</option>
+                <option value="{{group}}">{{_ group}}</option>
               {{/each}}
             </select>
             <h4>Filter:</h4>
@@ -62,76 +44,94 @@
         </div>
 
       </div>
-      <div class="col-xs-6">
-        <h3>Selected ({{numSelected}}/{{maxSelectable}}):</h3>
+      <div class="col-xs-6 left-bordered">
+        <div id="selected-meter-list">
+        <button type="button" id="clear-all-selected" class="btn btn-default pull-right">Clear All</button>                
+        <h3>Selected ({{numSelected}}/{{maxSelectable}}): </h3>
         <ul id="selected-meters" class="list-unstyled">
           {{#each meter in meterList}}
             <li>
-              <span data-meter="{{meter}}" class="unselect clickable glyphicon glyphicon-remove-circle"></span>
-              {{_ meter}}
+              <span data-meter="{{meter.name}}" class="unselect clickable glyphicon glyphicon-remove-circle"></span>
+              <span data-meter="{{meter.name}}" class="edit clickable glyphicon glyphicon-pencil"></span>              
+              <strong>{{_ meter.name}}</strong>
+              
             </li>
+            {{#if editingMeter meter.name}}
+              <li id="{{meter}}-edit">
+                <form id="meter-gauge-form" class="form-inline">
+                  <div class="form-group">
+                    <label>Anchor Position:</label>
+                    <div class="radio">
+                      <label>
+                        <input type="radio" name="anchorLocation" id="anchorBottom" value="min" {{anchorLocation 'min'}}>
+                        Bottom
+                      </label>
+                    </div>
+                    <div class="radio">
+                      <label>
+                        <input type="radio" name="anchorLocation" id="anchorCenter" value="center" {{anchorLocation 'center'}}>
+                        Center
+                      </label>
+                    </div>
+                  </div>
+                  <br><br>
+                  <div class="form-group">
+                    <label for="anchor-val">Anchor Value:</label>
+                    <div class="input-group">
+                      <input id="anchor-val" class="form-control text-right" type="text" placeholder="{{anchorVal}}">
+                      <div class="input-group-addon">{{_ meter.units}}</div>
+                    </div>
+                  </div>
+                  <hr>
+                  <button id="cancel-meter-settings" type="submit" class="btn btn-default"> {{_ "cancel"}}</button>                  
+                  <button id="save-meter-settings" type="submit" class="btn btn-primary pull-right">Confirm</button>
+                </form>
+              </li>
+            {{/if}}
           {{/each}}
         </ul>
+        <hr>
+        </div>
+        <div class="col-xs-12">
+          <button type="button" id="toggle-edit-defaults" class="btn btn-default pull-right">
+            {{#if editingDefaults}}
+              Confirm
+              {{else}}
+              Edit
+            {{/if}}
+          </button>
+          <h4>Defaults:</h4>
+        </div>
+        <br>
+        <ul id="default-list" class="list-unstyled text-center">
+          {{#each item in defaultItem}}
+            <li>{{_ item}}</li>
+          {{/each}}
+        </ul>
+        <div id="edit-default-list">
+          <ul id="meter-default-order" class="list-unstyled">
+            {{#each meter in defaultMeterList}}
+              <li data-meter="{{meter}}">
+                <div class="row">
+                  <div class="col-xs-1">
+                    <span class="glyphicon glyphicon-resize-vertical"></span>
+                  </div>
+                  <div class="col-xs-10 col-sm-11">
+                    {{_ meter}}
+                  </div>
+                </div>
+                
+              </li>
+            {{/each}}
+          </ul>
+        </div>
       </div>
     </div>
   </div>
   {{#if saveable}}
-  <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">{{_ "cancel"}}</button>
-    <button id="save-selected-meters" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-save"></span> {{_ "save"}}</button>
-  </div>
-  {{/if}}
-</template>
-
-<template name="modifyMetersPQube">
-  <div class="modal-body text-center">
-    <div class="row">
-      <div class="col-xs-5 col-sm-4 col-md-3">
-        <h4>Meters:</h4>
-        <select id="meter-list" size="20" class="meter-select full-width" multiple>
-          {{#each meter in selectedMeters}}
-            <option value="{{meter.name}}">{{_ meter.name}}</option>
-          {{/each}}
-        </select>
-      </div>
-      <div class="col-xs-7 col-sm-8 col-md-9">
-        {{#if selected}}
-          <form id="meter-gauge-form" class="form-inline">
-            <h4>{{_ selected}}:</h4>
-            <div class="form-group">
-              <label>Anchor Position:</label>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="anchorLocation" id="anchorBottom" value="min" {{anchorLocation 'min'}}>
-                  Bottom
-                </label>
-              </div>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="anchorLocation" id="anchorCenter" value="center" {{anchorLocation 'center'}}>
-                  Center
-                </label>
-              </div>
-            </div>
-            <br><br>
-            <div class="form-group">
-              <label for="anchor-val">Anchor Value:</label>
-              <div class="input-group">
-                <input id="anchor-val" class="form-control text-right" type="text" placeholder="{{anchorVal}}">
-                <div class="input-group-addon">{{_ units}}</div>
-              </div>
-            </div>
-            <hr>
-            <button id="save-meter-settings" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-save"></span> {{_ "save"}}</button>
-          </form>
-        {{/if}}
-      </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">{{_ "cancel"}}</button>
+      <button id="save-selected-meters" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-save"></span> {{_ "save"}}</button>
     </div>
-  </div>
-</template>
-
-<template name="defaultMetersPQube">
-  <div class="modal-body">
-    default
-  </div>
+  {{/if}}
 </template>

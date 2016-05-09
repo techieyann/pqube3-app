@@ -1,38 +1,37 @@
 <template name="dataLayout">
   {{#if browserUnsupported}}
-  {{> unsupportedBrowser}}
+    {{> unsupportedBrowser}}
   {{else}}
-
-    {{#unless pqubeData}}
-  {{#if Template.subscriptionsReady}}
-    <div id="no-pqubes">
-      {{_ "noPQubes"}}
-    </div>
-    {{else}}
-    <div id="loading-pqubes">
-      {{_ "loadingPQubes"}}
-    </div>
-    {{/if}}
-   {{else}}
-
-    <div id="container">
-
-      <div id="header">
-	{{> meta}}			
-	<a href="http://www.powersensorsltd.com" id="logo" target="_blank"><img alt="Power Sensors Ltd." src="/images/header.png">{{> title}}</a>
-	{{> newData}}
-      </div>
-      <div id="scopes">
-	{{> scopes}}
-      </div>
-      {{> viewSelector}}
-      {{#if metersSelected}}
-      {{> meters}}
+    {{#unless anyPQubes}}
+      {{#if Template.subscriptionsReady}}
+        <div id="no-pqubes">
+          {{_ "noPQubes"}}
+        </div>
       {{else}}
-      {{> spectra}}
+        <div id="loading-pqubes">
+          {{_ "loadingPQubes"}}
+        </div>
       {{/if}}
+    {{else}}
 
-    </div>
+      <div id="container">
+
+        <div id="header">
+	  {{> meta}}			
+	  <a href="http://www.powersensorsltd.com" id="logo" target="_blank"><img alt="Power Sensors Ltd." src="/images/header.png">{{> title}}</a>
+	  {{> newData}}
+        </div>
+        <div id="scopes">
+	  {{> scopes}}
+        </div>
+        {{> viewSelector}}
+        {{#if metersSelected}}
+          {{> meters}}
+        {{else}}
+          {{> spectra}}
+        {{/if}}
+
+      </div>
     {{/unless}}
     {{> footer}}
   {{/if}}

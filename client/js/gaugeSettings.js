@@ -1,16 +1,17 @@
 getGaugeSettings = function (pqube, name, meterNum) {
   var meters = Meters.findOne(pqube);
+  
   var gauge = meters.selected[name];
   if (gauge) {
     var extendSettings = {
       pqubeId: pqube,
       gaugeName: name,
       prefix: meterNum,
-      dataSource: gauge.dataSource,
       sigFigs: gauge.sigFigs,
       units: gauge.units,
       legendSigFigs: gauge.legendSigFigs,
       multiplier: gauge.multiplier,
+      dataSource: name,
       sevenSegment: {
         pattern: getPattern(gauge.sigFigs)
       },
@@ -24,7 +25,6 @@ getGaugeSettings = function (pqube, name, meterNum) {
       gaugeDefaults, 
       extendSettings
     );
-
     return settings;
   }
   return {};

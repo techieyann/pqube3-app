@@ -38,7 +38,10 @@ select.meter-select {
     border-radius: 5px;
 }
 .right-bordered {
-    border-right: solid 1px #ccc;
+    border-right: solid 1px #ddd;
+}
+.left-bordered {
+    border-left: solid 1px #ddd;
 }
 .borderless {
     border: none;
@@ -513,13 +516,41 @@ background-color: green;
 
 .unselect {
     padding-left: 5px;
-    padding-right: 20px;
+    padding-right: 5px;
+}
+.edit {
+    padding-left: 5px;
+    padding-right: 10px;
 }
 
 
 
-#selected-meters>li:hover {
+#selected-meters>li:hover,
+#meter-default-order>li:hover
+{
     border-radius: 5px;
     background: #ddd;
 }
-                           
+
+#meter-default-order {
+    margin-top: 1em;
+}
+#meter-default-order>li:nth-child(1) {
+    border-top: solid 1px #ddd;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;    
+}
+#meter-default-order>li:nth-child(-n+3) {
+    border-left: solid 1px #ddd;
+    border-right: solid 1px #ddd;
+    font-size:20px;
+}
+#meter-default-order>li:nth-child(3) {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;        
+
+    border-bottom: solid 1px #ddd;
+}
+#meter-default-order>li:nth-child(n+4) {
+    color: #aaa
+}

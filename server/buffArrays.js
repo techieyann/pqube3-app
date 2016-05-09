@@ -2,9 +2,6 @@ buffArrays = {
   verification: [
     {name: 'year', start:0, type:'float'}
   ],
-  freqArray: [
-    {name: 'freq', start:0, type:'float'}
-  ],
   vectArray: [
     {name: 'vMagL1N', start:0, type:'float'},
     {name: 'vAngL1N', start:4, type:'float'},
@@ -19,14 +16,6 @@ buffArrays = {
     {name: 'iMagL3', start:40, type:'float'},
     {name: 'iAngL3', start:44, type:'float'},
   ],
-  THDarray: [
-    {name: 'THDL1', start:0, type:'float'}
-  ],
-
-  LNarray: [
-    {name: 'vMagL1N', start:0, type:'float'}
-  ],
-
   freqVectArray: [
     {name: 'freq', start:0, type:'float'},
     {name: 'vMagL1N', start:4, type:'float'},
@@ -62,22 +51,12 @@ buffArrays = {
   ],
 
   ambientArray: [
-    {name: 'temp', start:0, type:'float'},
-    {name: 'humidity', start:4, type:'float'},
-    {name: 'pressure', start:8, type:'float'},
-    {name: 'L1E2k9k', start:64, type:'float'},
-    {name: 'L1E8k150k', start:72, type:'float'},
     {name: 'pqYear', start: 140, type:'float'},
     {name: 'pqMonth', start: 144, type:'float'},
     {name: 'pqDay', start: 148, type:'float'},
     {name: 'pqHour', start: 152, type:'float'},
     {name: 'pqMinute', start: 156, type:'float'},
     {name: 'pqSecond', start: 160, type:'float'}
-  ],
-  accArray: [
-    {name: 'xAcc', start:0, type:'float'},
-    {name: 'yAcc', start:12, type:'float'},
-    {name: 'zAcc', start:24, type:'float'}
   ]
 };
 

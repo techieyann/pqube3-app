@@ -103,7 +103,7 @@ Template.gauge.onRendered(function () {
       tgOpts.tick.major.last = gaugeMax;
       tgOpts.tick.major.interval = range/2;
       tgOpts.digital.callback =  function (pV) {
-        return TAPi18n.__(data.gaugeName+'Units');
+        return TAPi18n.__(data.units);
       };
       tgOpts.tick.major.legend.callback = function (n) {
         return  n.toFixed(data.legendSigFigs);
@@ -130,7 +130,7 @@ Template.gauge.onRendered(function () {
         duration: 500
       };
       self.gauge.set(tgOpts.range.lowStop);
-      var unitStr = TAPi18n.__(data.gaugeName+'Units');
+      var unitStr = TAPi18n.__(data.units);
 
       self.smoothie = new SmoothieChart({
 	rotate: true,
@@ -195,7 +195,7 @@ Template.gauge.onRendered(function () {
 	tgOpts.tick.major.last = gaugeMax;
 	tgOpts.tick.major.interval = range/2;
 	tgOpts.digital.callback =  function (pV) {
-          return TAPi18n.__(data.gaugeName+'Units');
+          return TAPi18n.__(data.units);
 	};
 	tgOpts.tick.major.legend.callback = function (n) {
           return  n.toFixed(data.legendSigFigs);

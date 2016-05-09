@@ -66,6 +66,15 @@ Template.registerHelper('pqubeData', function () {
   return PQubes.find({}, {sort: {order:1}}).fetch();
 });
 
+Template.registerHelper('pqubeMeterData', function () {
+  var pqubes = PQubes.find({}, {sort: {order:1}}).fetch();
+  pqubes = pqubes.filter(function (pqube) {
+    var meters = Meters.findOne(pqube._id);
+    return meters.defaults;
+  });
+  return pqubes;
+});
+
 Template.registerHelper('language', function () {
 return Languages;
 });

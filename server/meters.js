@@ -45,7 +45,8 @@ var meterList = {
     },
     sigFigs: 4,
     legendSigFigs: 2,
-    multiplier: 1
+    multiplier: 1,
+    units: 'hz'
   },
   iL1: {
     group: 'current',
@@ -57,7 +58,8 @@ var meterList = {
     },
     sigFigs: 3,
     legendSigFigs: 1,
-    multiplier: 1
+    multiplier: 1,
+    units: 'amps'
   },
   iL2: {
     group: 'current',    
@@ -69,7 +71,8 @@ var meterList = {
     },
     sigFigs: 3,
     legendSigFigs: 1,
-    multiplier: 1
+    multiplier: 1,
+    units: 'amps'    
   },
   iL3: {
     group: 'current',    
@@ -81,7 +84,8 @@ var meterList = {
     },
     sigFigs: 3,
     legendSigFigs: 1,
-    multiplier: 1
+    multiplier: 1,
+    units: 'amps'    
   },
   l1n: {
     group: 'voltage',    
@@ -93,7 +97,8 @@ var meterList = {
     },
     sigFigs: 3,
     legendSigFigs: 1,
-    multiplier: 1
+    multiplier: 1,
+    units: 'vrms'
   },
   thd: {
     group: 'voltage',    
@@ -105,7 +110,8 @@ var meterList = {
     },
     sigFigs: 2,
     legendSigFigs: 1,
-    multiplier: 1
+    multiplier: 1,
+    units: '%thd'
   },
   watts: {
     group: 'current',
@@ -117,7 +123,8 @@ var meterList = {
     },
     sigFigs: 3,
     legendSigFigs: 1,
-    multiplier: (1/1000)
+    multiplier: (1/1000),
+    units: 'kw'
   }, 
   vars: {
     group: 'current',    
@@ -129,7 +136,8 @@ var meterList = {
     },
     sigFigs: 3,
     legendSigFigs: 1,
-    multiplier: (1/1000)
+    multiplier: (1/1000),
+    units: 'kvar'
   }, 
   uaneg: {
     group: 'current',    
@@ -141,7 +149,8 @@ var meterList = {
     },
     sigFigs: 2,
     legendSigFigs: 1,
-    multiplier: 1
+    multiplier: 1,
+    units: '%'
   }, 
   temp: {
     group: 'probe',
@@ -153,7 +162,8 @@ var meterList = {
     },
     sigFigs: 2,
     legendSigFigs: 1,
-    multiplier: 1
+    multiplier: 1,
+    units: 'c'
   }, 
   humidity: {
     group: 'probe',    
@@ -165,7 +175,8 @@ var meterList = {
     },
     sigFigs: 2,
     legendSigFigs: 1,
-    multiplier: 1
+    multiplier: 1,
+    units: '%rh'
   }, 
   pressure: {
     group: 'probe',    
@@ -177,7 +188,8 @@ var meterList = {
     },
     sigFigs: 4,
     legendSigFigs: 1,
-    multiplier: (1/100)
+    multiplier: (1/100),
+    units: 'hpa'
   },
   xAcc: {
     group: 'probe',    
@@ -189,7 +201,8 @@ var meterList = {
     },
     sigFigs: 3,
     legendSigFigs: 1,
-    multiplier: 1
+    multiplier: 1,
+    units: 'm/s/s'
   },
   yAcc: {
     group: 'probe',    
@@ -201,7 +214,8 @@ var meterList = {
     },
     sigFigs: 3,
     legendSigFigs: 1,
-    multiplier: 1
+    multiplier: 1,
+    units: 'm/s/s'    
   },
   zAcc: {
     group: 'probe',    
@@ -213,22 +227,7 @@ var meterList = {
     },
     sigFigs: 3,
     legendSigFigs: 1,
-    multiplier: 1
-  }/*,
-     L12k9k: {
-     dataSource: 'L1E2k9k',
-     min: 0,
-     max: 1,
-     sigFigs: 3,
-     legendSigFigs: 1,
-     multiplier: 1    
-     },
-     L18k150k: {
-     dataSource: 'L1E8k150k',
-     min: 0,
-     max: 1,
-     sigFigs: 3,
-     legendSigFigs: 1,
-     multiplier: 1    
-     }*/
+    multiplier: 1,
+    units: 'm/s/s'
+  }
 };

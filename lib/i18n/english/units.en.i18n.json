@@ -1,0 +1,13 @@
+{
+  "hz": "Hz",  
+  "%thd": "% THD",
+  "amps": "Amps",  
+  "vrms": "Vrms",  
+  "kw": "kW",  
+  "kvar": "kVAR",  
+  "%": "%",  
+  "c": "°C",  
+  "%rh": "%RH",  
+  "hpa": "hPa",  
+  "m/s/s":"m/s²"
+}
