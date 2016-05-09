@@ -1,105 +1,42 @@
-getGaugeSettings = function (pqube, name, meterNum) {
-  var meters = Meters.findOne(pqube);
-  var gauge = meters.selected[name];
-  if (gauge) {
-    var extendSettings = {
-      pqubeId: pqube,
-      gaugeName: name,
-      prefix: meterNum,
-      dataSource: gauge.dataSource,
-      sigFigs: gauge.sigFigs,
-      units: gauge.units,
-      legendSigFigs: gauge.legendSigFigs,
-      multiplier: gauge.multiplier,
-      sevenSegment: {
-        pattern: getPattern(gauge.sigFigs)
-      },
-      tunguskaGauge: {
-	id: meterNum+'-tunguska-gauge'
-      }
-    };
-    var settings = $.extend(
-      true, 
-      {}, 
-      gaugeDefaults, 
-      extendSettings
-    );
+processMeters = function () {
+  var meters = Meters.findOne('masterList');
 
-    return settings;
-  }
-  return {};
-};
+    Meters.upsert({
+      _id: 'masterList'
+    }, {
+      meters: meterList,
+      groups: meterGroups
+    });
 
-var gaugeDefaults = {
-  sevenSegment: {
-    colorOff: "#004200", 
-    colorOn: "#00aa00"
-  },
-  tunguskaGauge: {
-    range: {
-      sweep: 240,
-      startAngle: -120
-    },
-    foreground: {
-      image: 'images/meter_front.png',
-      left: -98,
-      top: -96
-    },
-    digital: {
-      font: '18px sans serif',
-      color: '#333',
-      top:57,
-      left:0
-    },
-    tick: {
-      minor: {
-	alpha: 0
-      },
-      major: {
-	lineWidth: 0,
-	startAt: 1,
-	endAt: 1,
-	legend: {
-	  color: '#555',
-	  font: '14px sans serif',
-	  radius: .60
-	}
-      }
-    }
-  }
-};
 
-getPattern = function (numSigFigs) {
-  var numDigits = 6;
-  var pattern = '';
-  for (var i=0;i<numDigits-numSigFigs; i++) {
-    pattern = pattern + '#';
-  }
-  if (numSigFigs) {
-    pattern = pattern + '.';
-    for (i=0;i<numSigFigs; i++) {
-      pattern = pattern + '#';
-    }
-  }
-  return pattern;
-};
-
-alignToPattern = function (value, pattern) {
-  var lengthDiff = pattern.length - value.length;
-  if (lengthDiff) {
-    var alignedValue = '';
-    for (var i = 0; i<lengthDiff; i++) {
-      alignedValue += ' ';
-    }
-    alignedValue += value;
-    return alignedValue;
-  }
-  else return value;
+  Meters.update(
+    {_id: {$ne: 'masterList'}},
+    {
+      $set: {
+        defaults: defaultMeters,
+        selected: meterList
+      }    
+    }, {multi: true}
+  );
   
 };
 
-gaugeList = {
+var defaultMeters = [
+  'freq',
+  'watts',
+  'l1n'
+];
+
+var meterGroups = {
+  voltage: 'Voltage',
+  current: 'Current and Power',
+  probe: 'Probes and Other'
+};
+
+
+var meterList = {
   freq: {
+    group: 'voltage',
     dataSource: 'freq',
     scale: {
       anchor: 'center',
@@ -111,6 +48,7 @@ gaugeList = {
     multiplier: 1
   },
   iL1: {
+    group: 'current',
     dataSource: 'iL1',
     scale: {
       anchor: 'min',
@@ -122,6 +60,7 @@ gaugeList = {
     multiplier: 1
   },
   iL2: {
+    group: 'current',    
     dataSource: 'iL2',
     scale: {
       anchor: 'min',
@@ -133,6 +72,7 @@ gaugeList = {
     multiplier: 1
   },
   iL3: {
+    group: 'current',    
     dataSource: 'iL3',
     scale: {
       anchor: 'min',
@@ -144,6 +84,7 @@ gaugeList = {
     multiplier: 1
   },
   l1n: {
+    group: 'voltage',    
     dataSource: 'vMagL1N',
     scale: {
       anchor: 'center',
@@ -155,6 +96,7 @@ gaugeList = {
     multiplier: 1
   },
   thd: {
+    group: 'voltage',    
     dataSource: 'THDL1',
     scale: {
       anchor: 'min',
@@ -166,6 +108,7 @@ gaugeList = {
     multiplier: 1
   },
   watts: {
+    group: 'current',
     dataSource: 'watts',
     scale: {
       anchor: 'min',
@@ -177,6 +120,7 @@ gaugeList = {
     multiplier: (1/1000)
   }, 
   vars: {
+    group: 'current',    
     dataSource: 'VAR',
     scale: {
       anchor: 'min',
@@ -188,6 +132,7 @@ gaugeList = {
     multiplier: (1/1000)
   }, 
   uaneg: {
+    group: 'current',    
     dataSource: 'uANeg',
     scale: {
       anchor: 'min',
@@ -199,6 +144,7 @@ gaugeList = {
     multiplier: 1
   }, 
   temp: {
+    group: 'probe',
     dataSource: 'temp',
     scale: {
       anchor: 'min',
@@ -210,6 +156,7 @@ gaugeList = {
     multiplier: 1
   }, 
   humidity: {
+    group: 'probe',    
     dataSource: 'humidity',
     scale: {
       anchor: 'min',
@@ -221,6 +168,7 @@ gaugeList = {
     multiplier: 1
   }, 
   pressure: {
+    group: 'probe',    
     dataSource: 'pressure',
     scale: {
       anchor: 'center',
@@ -232,6 +180,7 @@ gaugeList = {
     multiplier: (1/100)
   },
   xAcc: {
+    group: 'probe',    
     dataSource: 'xAcc',
     scale: {
       anchor: 'center',
@@ -243,6 +192,7 @@ gaugeList = {
     multiplier: 1
   },
   yAcc: {
+    group: 'probe',    
     dataSource: 'yAcc',
     scale: {
       anchor: 'center',
@@ -254,6 +204,7 @@ gaugeList = {
     multiplier: 1
   },
   zAcc: {
+    group: 'probe',    
     dataSource: 'zAcc',
     scale: {
       anchor: 'center',
@@ -264,20 +215,20 @@ gaugeList = {
     legendSigFigs: 1,
     multiplier: 1
   }/*,
-  L12k9k: {
-    dataSource: 'L1E2k9k',
-    min: 0,
-    max: 1,
-    sigFigs: 3,
-    legendSigFigs: 1,
-    multiplier: 1    
-  },
-  L18k150k: {
-    dataSource: 'L1E8k150k',
-    min: 0,
-    max: 1,
-    sigFigs: 3,
-    legendSigFigs: 1,
-    multiplier: 1    
-  }*/
+     L12k9k: {
+     dataSource: 'L1E2k9k',
+     min: 0,
+     max: 1,
+     sigFigs: 3,
+     legendSigFigs: 1,
+     multiplier: 1    
+     },
+     L18k150k: {
+     dataSource: 'L1E8k150k',
+     min: 0,
+     max: 1,
+     sigFigs: 3,
+     legendSigFigs: 1,
+     multiplier: 1    
+     }*/
 };

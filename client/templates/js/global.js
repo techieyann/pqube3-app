@@ -3,7 +3,6 @@ Template.registerHelper('browserUnsupported', function () {
 });
 
 Template.registerHelper('safariDropdownFix', function () {
-  console.log(Session.get('safariDropdownFix'));
   return (Session.get('safariDropdownFix') && 'safariDropdownFix');
 });
 

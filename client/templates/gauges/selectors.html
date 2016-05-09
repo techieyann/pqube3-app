@@ -13,7 +13,7 @@
     {{#each gauges}}
       <select data-meter="{{gaugeNum}}" class="meter-source {{safariDropdownFix}}">
         <option disabled>{{_ "channel"}}</option>
-        {{#each dataSource}}
+        {{#each (dataSource gaugeNum)}}
           <option value="{{gaugeName}}" {{gaugeSelected ../gaugeNum gaugeName}}>{{_ gaugeName}}</option>
         {{/each}}
       </select>

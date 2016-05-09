@@ -83,16 +83,8 @@ Template.gauge.onRendered(function () {
       self.sevenSeg.draw();
       var tgOpts = data.tunguskaGauge;
       var gaugeMax, gaugeMin;
-      var scale = gaugeList[data.gaugeName].scale;
-      //hack for quick 50/60 hz switch
-      if (data.gaugeName == 'freq') {
-        var meters = Meters.findOne(data.pqubeId);
-        if (meters) {
-          if (meters.frequency) {
-            scale.val = meters.frequency;
-          }
-        }
-      }
+      var meters = Meters.findOne(data.pqubeId);
+      var scale = meters.selected[data.gaugeName].scale;
       Session.set(self.data+'-gaugeScale',scale);
       if (scale.anchor == 'min') {
 	      gaugeMax = scale.val+scale.init;

@@ -5,3 +5,5 @@
 /client/templates/gauges/js/meters.js
 /client/templates/js/dataLayout.js
 /server/modbus.js~
+/.DS_Store
+/packages/.DS_Store

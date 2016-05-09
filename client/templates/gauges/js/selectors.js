@@ -12,12 +12,19 @@ Template.gaugeSelectors.helpers({
       }
     ];
   },
-  dataSource: function () {
-    var array = [];
-    for (var key in gaugeList) {
-      array.push($.extend({gaugeName: key},gaugeList[key]));
-    }
+  dataSource: function (gaugeNum) {
+    var array = [];    
+    var gauge = Session.get('gauge'+gaugeNum);
+    if (gauge) {
+      var pqube = gauge.pqubeId;
+      var meters = Meters.findOne(pqube);
 
+      if (meters) {
+        for (var key in meters.selected) {
+          array.push({gaugeName: key});
+        }
+      }
+    }
     return array;
   },
   siteSelected: function (gaugeNum, name) {
@@ -49,8 +56,7 @@ Template.gaugeSelectors.events({
   'change .meter-source': function (e) {
     var gaugeNum = e.target.dataset.meter;
     var pqube = Session.get('gauge'+gaugeNum).pqubeId;
-    var gaugeSettings = getGaugeSettings(e.target.value, parseInt(e.target.dataset.meter,10));
-    gaugeSettings.pqubeId = pqube;
+    var gaugeSettings = getGaugeSettings(pqube, e.target.value, parseInt(e.target.dataset.meter,10));
 
     Session.set('gauge'+gaugeNum+'Value', null);
     Session.set('gauge'+gaugeNum, gaugeSettings);

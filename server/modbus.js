@@ -3,6 +3,7 @@ var modbus = Meteor.npmRequire('h5.modbus');
 pqubeConnections = {};
 
 observePQubes = function () {
+  PQubes.update({status: {$nin: ['unverified','unknown']}}, {$set: {status: 'disconnected'}}, {multi: true});  
   var pqubes = PQubes.find();
   pqubes.observe({
     added: function (pqube) {

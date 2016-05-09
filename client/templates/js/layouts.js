@@ -23,13 +23,13 @@ Template.manageLayout.onRendered(function () {
   this.autorun(function () {
     var user = Meteor.user();
     var orgs = Orgs.find();
-    FlowRouter.watchPathChange();
+    var routeName = FlowRouter.getRouteName();
     if (user) {
       if (!user.profile.initialized) {
-        if (FlowRouter.current().route.name != 'orgAccess')
+        if (routeName != 'orgAccess')
           FlowRouter.go('/initialize');
       }
-      if (user.profile.initialized && FlowRouter.getRouteName() == 'userInit') {
+      if (user.profile.initialized && routeName == 'userInit') {
         FlowRouter.go('/manage');
       }
     }
