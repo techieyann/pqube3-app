@@ -49,6 +49,29 @@
 
       </div>
       <div class="col-xs-7 col-sm-8 col-md-9 left-bordered">
+        <div id="edit-default-list">
+          <ul id="meter-default-order" class="list-unstyled">
+            {{#each meter in defaultMeterList}}
+              <li data-meter="{{meter}}">
+                <div class="row">
+                  <div class="col-xs-1">
+                    <span class="glyphicon glyphicon-resize-vertical"></span>
+                  </div>
+                  <div class="col-xs-10 col-sm-11">
+                    {{_ meter}}
+                  </div>
+                </div>
+                
+              </li>
+            {{/each}}
+          </ul>
+          <button type="button" id="cancel-defaults" class="btn btn-default">
+            Cancel
+          </button>          
+          <button type="button" id="confirm-defaults" class="btn btn-primary pull-right">
+            Confirm
+          </button>          
+        </div>        
         <div id="selected-meter-list">
         <h4>
           Selected
@@ -141,29 +164,6 @@
             {{/unless}}
           {{/each}}
         </ul>
-        </div>
-        <div id="edit-default-list">
-          <ul id="meter-default-order" class="list-unstyled">
-            {{#each meter in defaultMeterList}}
-              <li data-meter="{{meter}}">
-                <div class="row">
-                  <div class="col-xs-1">
-                    <span class="glyphicon glyphicon-resize-vertical"></span>
-                  </div>
-                  <div class="col-xs-10 col-sm-11">
-                    {{_ meter}}
-                  </div>
-                </div>
-                
-              </li>
-            {{/each}}
-          </ul>
-          <button type="button" id="cancel-defaults" class="btn btn-default">
-            Cancel
-          </button>          
-          <button type="button" id="confirm-defaults" class="btn btn-primary pull-right">
-            Confirm
-          </button>          
         </div>
       </div>
     </div>
