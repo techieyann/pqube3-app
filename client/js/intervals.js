@@ -92,6 +92,7 @@ var updateGauges = function () {
     var gaugeSettings = Session.get('gauge'+i);
     if (gaugeSettings) {
       if (gaugeSettings.pqubeId == this.pqubeId) {
+
         var presentVal = (this.pqubeData[gaugeSettings.dataSource]*gaugeSettings.multiplier);
         if (isNaN(presentVal)) presentVal = '';
         var gaugeValue = {

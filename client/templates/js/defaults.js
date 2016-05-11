@@ -17,19 +17,3 @@ setDefaults = function () {
     }
   }
 };
-
-
-  var defaultGauges = [
-    {
-      gaugeNum: 1,
-      gaugeName: 'freq'
-    },
-    {
-      gaugeNum: 2,
-      gaugeName: 'watts'
-    },
-    {
-      gaugeNum: 3,
-      gaugeName: 'l1n'
-    }
-  ];

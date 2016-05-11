@@ -7,6 +7,7 @@ Template.metersPQube.onCreated(function () {
   instance.selectedMeter = new ReactiveVar(false);
   instance.anyChanges = new ReactiveVar(false);
   instance.numSelected = new ReactiveVar(0);
+  instance.selectedClass = new ReactiveVar('default');
   instance.editing = new ReactiveVar();
   instance.editingDefaults = new ReactiveVar();
   instance.defaults = new ReactiveVar([]);
@@ -47,6 +48,17 @@ Template.metersPQube.onRendered(function () {
       notEditing.slideDown();
       editing.slideUp();      
     }
+  });
+  instance.autorun(function () {
+    var selected = instance.selectedMeter.get();
+    var numSelected = instance.numSelected.get();
+
+    if ( selected && numSelected == instance.maxSelectable) 
+      instance.selectedClass.set('danger');
+    else if (numSelected < instance.minSelectable)
+      instance.selectedClass.set('warning');
+    else
+      instance.selectedClass.set('default');
   });
 });
 
@@ -117,14 +129,41 @@ Template.metersPQube.helpers({
     var instance = Template.instance();
     return instance.maxSelectable;
   },
+  selectedClass: function () {
+    var instance = Template.instance();
+    return instance.selectedClass.get();
+  },
   meterList: function () {
     var instance = Template.instance();
     var selected = instance.selected.get();
     var array = [];
     for (var key in selected) {
-      if (selected[key].selected) array.push({name: key, units: selected[key].units});
+      var meter = selected[key];
+      if (meter.selected) array.push({
+        name: key,
+        multiplier: meter.multiplier,
+        sigFigs: meter.sigFigs,
+        units: meter.units
+      });
     }
     return array;
+  },
+  meterDefaultColor: function (meter) {
+    var colors = [
+      'purple',
+      'orange',
+      'green'
+    ];
+    var instance = Template.instance();
+    var defaults = instance.defaults.get();
+    var index = defaults.indexOf(meter);
+    if (index != -1) return colors[index];
+  },
+  meterDefault: function (meter) {
+    var instance = Template.instance();
+    var defaults = instance.defaults.get();
+    var index = defaults.indexOf(meter);
+    return (index != -1 ? '('+ ++index +')':''); 
   },
   editingMeter: function (meter) {
     var instance = Template.instance();
@@ -162,7 +201,7 @@ Template.metersPQube.helpers({
   defaultMeterList: function () {
     var instance = Template.instance();
     var selected = instance.selected.get();
-    var defaults = instance.defaults.get();    
+    var defaults = instance.defaults.get(); 
     var array = [];
     if (defaults && selected) {
       for (var i = 0; i<defaults.length; i++ ) {
@@ -194,7 +233,6 @@ Template.metersPQube.events({
   'change #meter-list': function (e) {
     var instance = Template.instance();
     instance.selectedMeter.set(true);
-    
   },
   'click #select-meter': function (e) {
     var instance = Template.instance();
@@ -222,6 +260,20 @@ Template.metersPQube.events({
     instance.selectedMeter.set(false);
     $('#meter-list').find('option:selected').attr('selected', false);    
   },
+  'click #default-all-selected': function () {
+    var instance = Template.instance();
+    var selected = instance.selected.get();
+    var master = Meters.findOne('masterList');
+    if (master) {
+      for (var key in selected) {
+        if (selected[key].selected && master.meters[key]) {
+          selected[key] = master.meters[key];
+          selected[key].selected = true;
+        }
+      }
+      instance.selected.set(selected);
+    }
+  },  
   'click #clear-all-selected': function () {
     var instance = Template.instance();
     var selected = instance.selected.get();
@@ -235,7 +287,7 @@ Template.metersPQube.events({
   'click .unselect': function (e) {
     var instance = Template.instance();
     var selected = instance.selected.get();
-    var meter = e.target.dataset.meter;
+    var meter = e.currentTarget.dataset.meter;
     var count = instance.numSelected.get();
     var defaults = instance.defaults.get();
     count--;
@@ -261,12 +313,24 @@ Template.metersPQube.events({
   },
   'click .edit': function (e) {
     var instance = Template.instance();
-    var meter = e.target.dataset.meter;
+    var meter = e.currentTarget.dataset.meter;
     instance.editing.set(meter);
   },
   'click #cancel-meter-settings': function () {
     var instance = Template.instance();
     instance.editing.set(null);    
+  },
+  'click #default-meter-settings': function () {
+    var instance = Template.instance();
+    var master = Meters.findOne('masterList');
+    var selected = instance.selected.get();
+    var meter = instance.editing.get();
+    if (master && master.meters[meter] && selected[meter]) {
+      selected[meter] = master.meters[meter];
+      selected[meter].selected = true;
+      instance.selected.set(selected);
+      instance.anyChanges.set(true);
+    }
   },
   'submit #meter-gauge-form, click #save-meter-settings': function (e) {
     e.preventDefault();    
@@ -274,30 +338,48 @@ Template.metersPQube.events({
     var meters = instance.selected.get();
     var meter = instance.editing.get();
     if (meters[meter]) {
+      var units = $('#meter-units').val();
+      if (units) meters[meter].units = units;
+      var multiplier = parseFloat($('#meter-mult').val());
+      if (multiplier) meters[meter].multiplier = multiplier;
+      var sigFigs = parseInt($('#meter-sig-figs').val(), 10);
+      if (sigFigs) {
+        sigFigs = Math.min(0, sigFigs);
+        sigFigs = Math.max(4, sigFigs);
+        meters[meter].sigFigs = sigFigs;
+      }
       var location = $('input[name="anchorLocation"]:checked').val();
-      var val = parseInt($('#anchor-val').val(), 10);
       meters[meter].scale.anchor = location;
+      
+      var val = parseInt($('#anchor-val').val(), 10);
       if (val) meters[meter].scale.val = val;
+      
       instance.selected.set(meters);
       instance.editing.set(null);
       instance.anyChanges.set(true);
     }
   },
-  'click #toggle-edit-defaults': function () {
+  'click #edit-defaults': function () {
     var instance = Template.instance();
-    var editingDefaults = instance.editingDefaults.get();
-    if (editingDefaults) {
-      var array = [];
-      for (var i=0; i<3; i++) {
-        var li = $('#meter-default-order>li')[i];
-        if (li) array.push(li.dataset.meter);
-      }
-      instance.defaults.set(array);
-      instance.anyChanges.set(true);
-    }
-    instance.editingDefaults.set(!editingDefaults);
+    instance.editingDefaults.set(true);
   },
-  'click #save-selected-meters': function () {
+  'click #cancel-defaults': function () {
+    var instance = Template.instance();
+    instance.editingDefaults.set(false);
+  },
+  'click #confirm-defaults': function () {
+    var instance = Template.instance();
+    var array = [];
+    for (var i=0; i<3; i++) {
+      var li = $('#meter-default-order>li')[i];
+      if (li) array.push(li.dataset.meter);
+    }
+    instance.defaults.set(array);
+    instance.anyChanges.set(true);
+
+    instance.editingDefaults.set(false);
+  },
+  'click .save-selected-meters': function () {
     var instance = Template.instance();
     Session.set('formError', null);
     var id = instance.pqube;

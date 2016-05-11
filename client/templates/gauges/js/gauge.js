@@ -12,7 +12,7 @@ Template.gauge.onCreated(function () {
     var scale;
     Tracker.nonreactive(function () {scale = Session.get(self.data+'-gaugeScale');});
     if (scale && !isNaN(min) && !isNaN(max)) {
-     
+      
       var diff;
       if (scale.anchor == 'min') {
 	diff = Math.abs(max-scale.val);
@@ -43,9 +43,9 @@ Template.gauge.onCreated(function () {
         Session.set(self.data+'-gaugeScale', scale);
 	return true;
       }
-  }
-  return false;
-};
+    }
+    return false;
+  };
 
 });
 
@@ -54,117 +54,120 @@ Template.gauge.onRendered(function () {
   self.autorun(function () {
     var data = Session.get('gauge'+self.data);
     if (data) {
-      self.canvas = null;
-      self.canvas = document.getElementById(data.prefix+'-smoothie-canvas');
-      if (self.initialized) {
-	self.canvas.width = self.smoothieWidth;
-	self.canvas.height = self.smoothieHeight;
-	self.smoothie.stop();
-        self.smoothieLine.clear();
-	self.smoothie.removeTimeSeries(self.smoothieLine);
-	delete self.smoothie;
-	delete self.smoothieLine;
-        $('#'+data.prefix+'-tunguska-gauge-lock').remove();
-      }
-
-
-      self.sevenSeg = new SegmentDisplay(data.prefix+'-display');
-      self.sevenSeg.pattern         = data.sevenSegment.pattern;
-      self.sevenSeg.displayAngle    = 12;
-      self.sevenSeg.digitHeight     = 20;
-      self.sevenSeg.digitWidth      = 15;
-      self.sevenSeg.digitDistance   = 4;
-      self.sevenSeg.segmentWidth    = 2.5;
-      self.sevenSeg.segmentDistance = 0.5;
-      self.sevenSeg.segmentCount    = 7;
-      self.sevenSeg.cornerType      = 0;
-      self.sevenSeg.colorOn         = data.sevenSegment.colorOn;
-      self.sevenSeg.colorOff        = data.sevenSegment.colorOff;
-      self.sevenSeg.draw();
-      var tgOpts = data.tunguskaGauge;
-      var gaugeMax, gaugeMin;
       var meters = Meters.findOne(data.pqubeId);
-      var scale = meters.selected[data.gaugeName].scale;
-      Session.set(self.data+'-gaugeScale',scale);
-      if (scale.anchor == 'min') {
-	      gaugeMax = scale.val+scale.init;
-	      gaugeMin = scale.val;
-      }
-      else if (scale.anchor == 'center') {
-	      gaugeMax = scale.val+scale.init;
-	      gaugeMin = scale.val-scale.init;
-      }
-      var range = gaugeMax-gaugeMin;
-      tgOpts.range.min = gaugeMin;
-      tgOpts.range.lowStop = gaugeMin-(range/20);
-      tgOpts.range.max = gaugeMax;
-      tgOpts.range.highStop = gaugeMax+(range/20);
-      tgOpts.tick.major.first = gaugeMin;
-      tgOpts.tick.major.last = gaugeMax;
-      tgOpts.tick.major.interval = range/2;
-      tgOpts.digital.callback =  function (pV) {
-        return TAPi18n.__(data.units);
-      };
-      tgOpts.tick.major.legend.callback = function (n) {
-        return  n.toFixed(data.legendSigFigs);
-      };
-      var color;
-      switch (data.prefix) {
-      case 1:
-        color = "purple";
-        break;
-      case 2:
-        color = "#D66A00";
-        break;
-      case 3:
-        color = "green";
-        break;
-      }
+      if (meters && meters.selected[data.gaugeName]) {
+        self.canvas = null;
+        self.canvas = document.getElementById(data.prefix+'-smoothie-canvas');
+        if (self.initialized) {
+	  self.canvas.width = self.smoothieWidth;
+	  self.canvas.height = self.smoothieHeight;
+	  self.smoothie.stop();
+          self.smoothieLine.clear();
+	  self.smoothie.removeTimeSeries(self.smoothieLine);
+	  delete self.smoothie;
+	  delete self.smoothieLine;
+          $('#'+data.prefix+'-tunguska-gauge-lock').remove();
+        }
 
-      tgOpts.pointer = {
-        fillColor: color
-      };
-      self.gauge = new TunguskaGauge(tgOpts);
-      self.gauge.theme.pointer.dynamics = {
-        easing: 'easeOutQuint',
-        duration: 500
-      };
-      self.gauge.set(tgOpts.range.lowStop);
-      var unitStr = TAPi18n.__(data.units);
 
-      self.smoothie = new SmoothieChart({
-	rotate: true,
-	scrollBackwards: true,
-	maxValue: tgOpts.range.max,
-	minValue: tgOpts.range.min,
-	interpolation: 'bezier',
-	millisPerPixel: 500,
-        enableDpiScaling: false,
-	xOffset: 30,
-	labels: {
-	  disabled: false,
-	  fillStyle: '#747474',
-	  unit: unitStr,
-	  precision: data.legendSigFigs,
-	  fontSize:7
-	},
-	grid: {
-	  fillStyle: '#e4e4e4',
-	  strokeStyle: '#747474',
-	  sharpLines: true,
-	  millisPerLine:30000,
-	  verticalSections: 2
-	},
-	timestampFormatter:SmoothieChart.timeFormatter,
-	pqubeId: data.pqubeId,
-	meter: self.data
+        self.sevenSeg = new SegmentDisplay(data.prefix+'-display');
+        self.sevenSeg.pattern         = data.sevenSegment.pattern;
+        self.sevenSeg.displayAngle    = 12;
+        self.sevenSeg.digitHeight     = 20;
+        self.sevenSeg.digitWidth      = 15;
+        self.sevenSeg.digitDistance   = 4;
+        self.sevenSeg.segmentWidth    = 2.5;
+        self.sevenSeg.segmentDistance = 0.5;
+        self.sevenSeg.segmentCount    = 7;
+        self.sevenSeg.cornerType      = 0;
+        self.sevenSeg.colorOn         = data.sevenSegment.colorOn;
+        self.sevenSeg.colorOff        = data.sevenSegment.colorOff;
+        self.sevenSeg.draw();
+        var tgOpts = data.tunguskaGauge;
+        var gaugeMax, gaugeMin;
+        
+        var scale = meters.selected[data.gaugeName].scale;
+        Session.set(self.data+'-gaugeScale',scale);
+        if (scale.anchor == 'min') {
+	  gaugeMax = scale.val+scale.init;
+	  gaugeMin = scale.val;
+        }
+        else if (scale.anchor == 'center') {
+	  gaugeMax = scale.val+scale.init;
+	  gaugeMin = scale.val-scale.init;
+        }
+        var range = gaugeMax-gaugeMin;
+        tgOpts.range.min = gaugeMin;
+        tgOpts.range.lowStop = gaugeMin-(range/20);
+        tgOpts.range.max = gaugeMax;
+        tgOpts.range.highStop = gaugeMax+(range/20);
+        tgOpts.tick.major.first = gaugeMin;
+        tgOpts.tick.major.last = gaugeMax;
+        tgOpts.tick.major.interval = range/2;
+        tgOpts.digital.callback =  function (pV) {
+          return TAPi18n.__(data.units);
+        };
+        tgOpts.tick.major.legend.callback = function (n) {
+          return  n.toFixed(data.legendSigFigs);
+        };
+        var color;
+        switch (data.prefix) {
+        case 1:
+          color = "purple";
+          break;
+        case 2:
+          color = "#D66A00";
+          break;
+        case 3:
+          color = "green";
+          break;
+        }
 
-      });
-      self.smoothie.streamTo(self.canvas);
-      self.smoothieLine = new TimeSeries();
-      self.smoothie.addTimeSeries(self.smoothieLine, {lineWidth:2, strokeStyle:color});
-      $('#'+self.prefix+'-smoothie-recorder').css('left', null);
-      self.initialized = true;
+        tgOpts.pointer = {
+          fillColor: color
+        };
+        self.gauge = new TunguskaGauge(tgOpts);
+        self.gauge.theme.pointer.dynamics = {
+          easing: 'easeOutQuint',
+          duration: 500
+        };
+        self.gauge.set(tgOpts.range.lowStop);
+        var unitStr = TAPi18n.__(data.units);
+
+        self.smoothie = new SmoothieChart({
+	  rotate: true,
+	  scrollBackwards: true,
+	  maxValue: tgOpts.range.max,
+	  minValue: tgOpts.range.min,
+	  interpolation: 'bezier',
+	  millisPerPixel: 500,
+          enableDpiScaling: false,
+	  xOffset: 30,
+	  labels: {
+	    disabled: false,
+	    fillStyle: '#747474',
+	    unit: unitStr,
+	    precision: data.legendSigFigs,
+	    fontSize:7
+	  },
+	  grid: {
+	    fillStyle: '#e4e4e4',
+	    strokeStyle: '#747474',
+	    sharpLines: true,
+	    millisPerLine:30000,
+	    verticalSections: 2
+	  },
+	  timestampFormatter:SmoothieChart.timeFormatter,
+	  pqubeId: data.pqubeId,
+	  meter: self.data
+
+        });
+        self.smoothie.streamTo(self.canvas);
+        self.smoothieLine = new TimeSeries();
+        self.smoothie.addTimeSeries(self.smoothieLine, {lineWidth:2, strokeStyle:color});
+        $('#'+self.prefix+'-smoothie-recorder').css('left', null);
+        self.initialized = true;
+      }
     }
   });
   self.autorun(function () {
@@ -245,10 +248,9 @@ Template.gauge.helpers({
     var presentVal = Session.get('gauge'+self.data+'Value');
     if (presentVal) {
       var val = '';
-      if (presentVal.val != '') {
+      if (presentVal.val !== '') {
 	val = presentVal.val.toFixed(data.sigFigs);
       }
-      
       if (self.sevenSeg) {
         self.sevenSeg.setValue(alignToPattern(val, self.sevenSeg.pattern));
       }
@@ -295,6 +297,46 @@ Template.gauge.helpers({
   prefix: function () {
     var self = Template.instance();
     return self.data;
+  }
+});
+
+Template.gauge.events({
+  'click .strip-chart-save': function (e) {
+    var self = Template.instance();
+    var data = self.smoothie.seriesSet[0].timeSeries.data;
+    var gauge = Session.get('gauge'+self.data);
+    var pqube = PQubes.findOne(gauge.pqubeId);
+    var parsed = [];
+    console.log(gauge);
+    parsed.push(['PQube3', pqube.name]);
+    parsed.push(['Meter', gauge.gaugeName]);
+    parsed.push(['Units', gauge.units]);
+    parsed.push(['']);
+    parsed.push(['Time', 'Value']);
+    for (var i=0; i<data.length; i++) {
+      var datum = [];
+      datum.push((new Date(data[i][0])).toString());
+      datum.push(data[i][1]);
+      parsed.push(datum);
+    }
+    var csv = Papa.unparse(parsed);
+    var exportFilename = pqube.name+'.'+gauge.gaugeName+'.csv';
+
+    //https://github.com/mholt/PapaParse/issues/175    
+    var csvData = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+    //IE11 & Edge
+    if (navigator.msSaveBlob) {
+      navigator.msSaveBlob(csvData, exportFilename);
+    } else {
+      //In FF link must be added to DOM to be clicked
+      var link = document.createElement('a');
+      link.href = window.URL.createObjectURL(csvData);
+      link.setAttribute('download', exportFilename);
+      document.body.appendChild(link);    
+      link.click();
+      document.body.removeChild(link);    
+    }
+    
   }
 });
 

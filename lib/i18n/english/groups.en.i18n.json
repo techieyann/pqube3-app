@@ -1,5 +1,6 @@
 {
-  "current": "Current and Power",
-  "probe": "Probes and Other",
+  "analog": "Analog",
+  "current": "Current",
+  "probe": "Probes",
   "voltage": "Voltage"
 }

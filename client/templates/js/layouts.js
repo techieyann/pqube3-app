@@ -183,7 +183,6 @@ Template.dataLayout.helpers({
 
       var pqube = pqubes[0];
       var meters = Meters.findOne(pqube._id);
-      console.log(meters && meters.defaults && meters.defaults.length);
       return (meters && meters.defaults && meters.defaults.length);
     }
     return false;

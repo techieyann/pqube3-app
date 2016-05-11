@@ -4,16 +4,16 @@ Template.meta.events({
     var emptyGraph = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     var emptyVectors = {
       l1: {
-				magnitude: 0,
-				angle: 0
+	magnitude: 0,
+	angle: 0
       },
       l2: {
-				magnitude: 0,
-				angle: 0
+	magnitude: 0,
+	angle: 0
       },
       l3: {
-				magnitude: 0,
-				angle: 0
+	magnitude: 0,
+	angle: 0
       }
     };
     Session.set('vL1NGraph', emptyGraph);
@@ -33,7 +33,16 @@ Template.meta.events({
       Session.set('odoReset', false);
     },0);
 
-
+    var pqube = e.target.value;
+    var meters = Meters.findOne(pqube);
+    if (meters && meters.defaults) {
+      for (var i=1; i<4; i++) {
+        var gaugeSettings = getGaugeSettings(e.target.value, meters.defaults[i-1], i);
+        Session.set('gauge'+i+'Value', null);
+        Session.set('gauge'+i, gaugeSettings);
+        $('#'+i+'-recorder-head').css('left', null);
+      }
+    }
   }
 });
 Template.meta.helpers({

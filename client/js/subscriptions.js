@@ -31,7 +31,6 @@ watchDataSubscriptions = function () {
 	if (gauge) {
 	  if (subOpts[gauge.pqubeId]) {
             var source = gauge.dataSource;
-            console.log(source);
 	    subOpts[gauge.pqubeId][source] = true;
 	  }
 	}

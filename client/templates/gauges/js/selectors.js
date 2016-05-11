@@ -50,15 +50,12 @@ Template.gaugeSelectors.events({
     var pqube = e.target.value;
     var meters = Meters.findOne(pqube);
     var firstMeter;
-    if (meters && meters.selected) {
-      for (var key in meters.selected) {
-        firstMeter = key;
-        break;
-      }
-      var gaugeSettings = getGaugeSettings(e.target.value, firstMeter, parseInt(gaugeNum,10));
+    if (meters && meters.defaults) {
+
+      var gaugeSettings = getGaugeSettings(e.target.value, meters.defaults[gaugeNum-1], parseInt(gaugeNum,10));
       Session.set('gauge'+gaugeNum+'Value', null);
       Session.set('gauge'+gaugeNum, gaugeSettings);
-      $('#'+e.target.dataset.meter+'-recorder-head').css('left', null);      
+      $('#'+gaugeNum+'-recorder-head').css('left', null);
     }
   },
   'change .meter-source': function (e) {

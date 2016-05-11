@@ -3,13 +3,17 @@ getGaugeSettings = function (pqube, name, meterNum) {
   
   var gauge = meters.selected[name];
   if (gauge) {
+    var legendSigFigs = 4-gauge.scale.val.toString().length;
+    legendSigFigs = Math.max(0, legendSigFigs);
+    legendSigFigs = Math.min(legendSigFigs, gauge.sigFigs);
+    
     var extendSettings = {
       pqubeId: pqube,
       gaugeName: name,
       prefix: meterNum,
       sigFigs: gauge.sigFigs,
       units: gauge.units,
-      legendSigFigs: gauge.legendSigFigs,
+      legendSigFigs: legendSigFigs,
       multiplier: gauge.multiplier,
       dataSource: name,
       sevenSegment: {
