@@ -338,22 +338,26 @@ Template.metersPQube.events({
     var meters = instance.selected.get();
     var meter = instance.editing.get();
     if (meters[meter]) {
-      var units = $('#meter-units').val();
-      if (units) meters[meter].units = units;
-      var multiplier = parseFloat($('#meter-mult').val());
-      if (multiplier) meters[meter].multiplier = multiplier;
-      var sigFigs = parseInt($('#meter-sig-figs').val(), 10);
-      if (sigFigs) {
-        sigFigs = Math.max(0, sigFigs);
-        sigFigs = Math.min(4, sigFigs);
-        meters[meter].sigFigs = sigFigs;
-      }
       var location = $('input[name="anchorLocation"]:checked').val();
-      meters[meter].scale.anchor = location;
-      
+      meters[meter].scale.anchor = location;      
       var val = parseInt($('#anchor-val').val(), 10);
       if (val) meters[meter].scale.val = val;
+      if (!val) val = meters[meter].scale.val;
       
+      var units = $('#meter-units').val();
+      if (units) meters[meter].units = units;
+      
+      var multiplier = parseFloat($('#meter-mult').val());
+      if (multiplier) meters[meter].multiplier = multiplier;
+      
+      var sigFigs = parseInt($('#meter-sig-figs').val(), 10);
+      if (sigFigs) {
+        var valLength = val.toString().length;
+        sigFigs = Math.max(0, sigFigs);
+        sigFigs = Math.min(6-valLength, sigFigs);
+        meters[meter].sigFigs = sigFigs;
+      }
+
       instance.selected.set(meters);
       instance.editing.set(null);
       instance.anyChanges.set(true);
