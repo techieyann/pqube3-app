@@ -344,8 +344,8 @@ Template.metersPQube.events({
       if (multiplier) meters[meter].multiplier = multiplier;
       var sigFigs = parseInt($('#meter-sig-figs').val(), 10);
       if (sigFigs) {
-        sigFigs = Math.min(0, sigFigs);
-        sigFigs = Math.max(4, sigFigs);
+        sigFigs = Math.max(0, sigFigs);
+        sigFigs = Math.min(4, sigFigs);
         meters[meter].sigFigs = sigFigs;
       }
       var location = $('input[name="anchorLocation"]:checked').val();
