@@ -12,7 +12,7 @@
   "L1_N": "Napięcie L1-N",
   "Real_Power": "Moc",
   "Reactive_Power": "Mocy biernej",
-  "A_unbalance": "Wzmacniacze asymetrii",
+  "V_unbalance": "Wzmacniacze asymetrii",
   "A_Temperature": "Temperatura",
   "A_Humidity": "Wilgotność",
   "A_Barometric_Pressure": "Ciśnienie barometryczne",

@@ -12,7 +12,7 @@
   "L1_N": "L1-N電圧",
   "Real_Power": "電力",
   "Reactive_Power": "無効電力",
-  "A_unbalance": "アンプのアンバランス",
+  "V_unbalance": "アンプのアンバランス",
   "A_Temperature": "温度",
   "A_Humidity": "湿度",
   "A_Barometric_Pressure": "気圧",

@@ -14,7 +14,7 @@
   "L1_N":"L1-N Napon",
   "Real_Power": "Radna snaga",
   "Reactive_Power": "Jalova snaga",
-  "A_unbalance": "Nesimetrija A (neg seq)",
+  "V_unbalance": "Nesimetrija A (neg seq)",
   "A_Temperature": "Temperatura",
   "A_Humidity": "VlaÅ¾nost",
   "A_Barometric_Pressure": "Tlak",

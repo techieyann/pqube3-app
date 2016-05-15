@@ -17,7 +17,7 @@
   "L1_N": "相电压",
   "Real_Power": "有功功率",
   "Reactive_Power": "无功功率",
-  "A_Unbalance": "电流负序不平衡度",
+  "V_unbalance": "电流负序不平衡度",
   "A_Temperature": "温度",
   "A_Humidity": "湿度",
   "A_Barometric_Pressure": "大气压力",
