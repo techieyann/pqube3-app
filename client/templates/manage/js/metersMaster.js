@@ -5,19 +5,19 @@ Template.metersMaster.onCreated(function () {
   instance.groups = new ReactiveVar();
   instance.verified = new ReactiveVar(false);
 });
-
+var csvHeaders = [
+  'Name',
+  'Group',
+  'Register',
+  'AnchorLocation',
+  'AnchorValue',
+  'SigFigs',
+  'Multiplier',
+  'Units'
+];
 Template.metersMaster.onRendered(function () {
   var instance = this;
-  var csvHeaders = [
-    'Name',
-    'Group',
-    'Register',
-    'AnchorLocation',
-    'AnchorValue',
-    'SigFigs',
-    'Multiplier',
-    'Units'
-  ];
+
   instance.autorun(function () {
     var file = instance.file.get();
     instance.verified.set(false);
@@ -90,5 +90,21 @@ Template.metersMaster.events({
   'change #meter-master': function (e) {
     var instance = Template.instance();
     instance.file.set(e.target.files[0]);
+  },
+  'click #download-meter-master': function () {
+    var master = Meters.findOne('masterList');
+    if (master) {
+      var meterList = [];
+      meterList.push(csvHeaders);
+      for (var key in master.meters) {
+        var meterJson = master.meters[key];
+        var meter = [];
+        for (var i = 0; i<csvHeaders.length; i++) {
+          meter.push(meterJson[csvHeaders[i]]);
+        }
+        if (meter.length) meterList.push(meter);
+      }
+      unparseAndDownloadCSV(meterList, 'meterMasterList.csv');
+    }
   }
 });
