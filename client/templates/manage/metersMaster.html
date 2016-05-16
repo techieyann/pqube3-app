@@ -5,21 +5,22 @@
   </div>
   <div class="modal-body text-center">
     {{#if formError}}
-      <div class="alert alert-danger alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-	  <span aria-hidden="true">&times;</span>
-        </button>
-        {{formError}}
-      </div>
+    <div class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	<span aria-hidden="true">&times;</span>
+      </button>
+      {{formError}}
+    </div>
     {{/if}}    
-      <div class="row">
-        <div class="col-xs-8">
-          <h4>Upload CSV</h4>
-          <input type="file" id="meter-master" accept=".csv">
-        </div>
-        <div class="col-xs-4">
-          <h4>Download CSV</h4>
-          <button type="button" id="download-meter-master" class="btn btn-default">Download</button>
-        </div>
+    <div class="row">
+      <div class="col-xs-8">
+        <h4>Upload CSV</h4>
+        <input type="file" id="meter-master" accept=".csv">
+      </div>
+      <div class="col-xs-4">
+        <h4>Download CSV</h4>
+        <button type="button" id="download-meter-master" class="btn btn-default">Download</button>
+      </div>
+    </div>
   </div>
 </template>

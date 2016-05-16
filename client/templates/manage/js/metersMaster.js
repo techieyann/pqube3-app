@@ -5,6 +5,7 @@ Template.metersMaster.onCreated(function () {
   instance.groups = new ReactiveVar();
   instance.verified = new ReactiveVar(false);
 });
+
 var csvHeaders = [
   'Name',
   'Group',
@@ -15,6 +16,7 @@ var csvHeaders = [
   'Multiplier',
   'Units'
 ];
+
 Template.metersMaster.onRendered(function () {
   var instance = this;
 
@@ -99,10 +101,15 @@ Template.metersMaster.events({
       for (var key in master.meters) {
         var meterJson = master.meters[key];
         var meter = [];
-        for (var i = 0; i<csvHeaders.length; i++) {
-          meter.push(meterJson[csvHeaders[i]]);
-        }
-        if (meter.length) meterList.push(meter);
+        meter.push(key);
+        meter.push(meterJson.group);
+        meter.push(meterJson.register);        
+        meter.push(meterJson.scale.anchor);
+        meter.push(meterJson.scale.val);
+        meter.push(meterJson.sigFigs);
+        meter.push(meterJson.multiplier);
+        meter.push(meterJson.units);
+        meterList.push(meter);
       }
       unparseAndDownloadCSV(meterList, 'meterMasterList.csv');
     }
