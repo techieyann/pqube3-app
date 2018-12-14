@@ -5,7 +5,7 @@
       {{name}} {{_ 'meters'}}:
       {{#if saveable}}
         <button type="button" class="save-selected-meters btn btn-primary pull-right"><span class="glyphicon glyphicon-save"></span> {{_ "save"}}</button>
-      {{/if}}      
+      {{/if}}
     </h3>
   </div>
   <div class="modal-body">
@@ -30,7 +30,7 @@
             <h4>Meter Name Filter:</h4>
             <input id="meter-filter" type="text" class="full-width">
 
-          
+
           <div id="meters-master-list" class="centered">
             <h4>Meters:</h4>
             <select id="meter-list" size="20" class="meter-select full-width" multiple>
@@ -42,7 +42,7 @@
               {{#if notMaxSelected}}
                 <button id="select-meter" class="btn btn-success"><span class="glyphicon glyphicon-ok-sign"></span></button>
               {{/if}}
-              <button id="clear-select" class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button>              
+              <button id="clear-select" class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button>
             {{/if}}
           </div>
 
@@ -61,17 +61,17 @@
                     {{_ meter}}
                   </div>
                 </div>
-                
+
               </li>
             {{/each}}
           </ul>
           <button type="button" id="cancel-defaults" class="btn btn-default">
             Cancel
-          </button>          
+          </button>
           <button type="button" id="confirm-defaults" class="btn btn-primary pull-right">
             Confirm
-          </button>          
-        </div>        
+          </button>
+        </div>
         <div id="selected-meter-list">
         <h4>
           Selected
@@ -83,7 +83,7 @@
           <ul class="dropdown-menu">
             <li><a id="edit-defaults" class="clickable">Choose Display Defaults</a></li>
             <li role="separator" class="divider"></li>
-            <li><a id="default-all-selected" class="clickable">Reset All</a></li>            
+            <li><a id="default-all-selected" class="clickable">Reset All</a></li>
             <li><a id="clear-all-selected" class="clickable">Unselect All</a></li>
           </ul>
           </div>
@@ -93,7 +93,7 @@
             {{#unless editingMeter meter.name}}
               <li>
                 <div class="btn-group">
-                  <button data-meter="{{meter.name}}" class="unselect btn btn-default">                  
+                  <button data-meter="{{meter.name}}" class="unselect btn btn-default">
                     <span class="glyphicon glyphicon-remove-circle"></span>
                   </button>
                   <button data-meter="{{meter.name}}" class="edit btn btn-default">
@@ -144,7 +144,7 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="anchor-val" class="col-md-2">Anchor Value:</label>
+                    <label for="anchor-val" class="col-md-2 control-label">Anchor Value:</label>
                     <div class="col-md-10">
                       <div class="input-group">
                         <input id="anchor-val" class="form-control text-right" type="number" placeholder="{{anchorVal}}">
@@ -155,7 +155,7 @@
 
                   <button id="cancel-meter-settings" type="button" class="btn btn-default"> {{_ "cancel"}}</button>
                   <div class="btn-group pull-right">
-                    <button id="default-meter-settings" type="button" class="btn btn-primary">Defaults</button>                                                    
+                    <button id="default-meter-settings" type="button" class="btn btn-primary">Defaults</button>
                     <button id="save-meter-settings" type="submit" class="btn btn-primary">Confirm</button>
                   </div>
 

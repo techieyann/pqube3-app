@@ -94,6 +94,16 @@ select.meter-select {
     background-image: url('images/background.png');
     background-repeat: no-repeat;
 }
+#container.meters-only {
+  height: 720px;
+}
+#manage-screw {
+  position:absolute;
+  top:0px;
+  right:0px;
+  width:20px;
+  height:15px;
+}
 #logo {
     position:absolute;
     top: 40px;
@@ -120,6 +130,15 @@ select.meter-select {
     left:400px;
     top:3px;
     font-size:10px;
+}
+#scopes.meters-only,
+#view-selector.meters-only {
+  display: none;
+}
+#scopes-background {
+  position:absolute;
+  top:122px;
+  left:22px;
 }
 #scopes-panel {
     position:absolute;
@@ -301,7 +320,7 @@ select.meter-select {
     position:absolute;
     left: 5px;
     bottom:2px;
-} 
+}
 #odometers {
     position:absolute;
     right: 20px;
@@ -389,6 +408,9 @@ text-align:center;
 #gauges {
     position:absolute;
     top:375px;
+}
+#gauges.meters-only {
+  top:120px;
 }
 #gauge-selectors {
     position:absolute;
@@ -531,9 +553,9 @@ background-color: green;
     margin-top: 30px;
 }
 
-#selected-meters>li {    
+#selected-meters>li {
     padding-bottom: 5px;
-    padding-top:5px;    
+    padding-top:5px;
 }
 
 #selected-meters>li:nth-child(n+2) {
@@ -542,7 +564,7 @@ background-color: green;
 
 #selected-meters>li:hover,
 #meter-default-order>li:hover {
-    border-radius: 5px;                                
+    border-radius: 5px;
     background: #ddd;
 }
 
@@ -568,7 +590,7 @@ background-color: green;
 }
 #meter-default-order>li:nth-child(3) {
     border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;        
+    border-bottom-right-radius: 5px;
 
     border-bottom: solid 1px #ddd;
 }
@@ -585,4 +607,3 @@ background-color: green;
 .green {
     color: green;
 }
-         

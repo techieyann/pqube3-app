@@ -116,15 +116,13 @@ Template.dataLayout.onCreated(function () {
 Template.dataLayout.onRendered(function () {
   var self = this;
   Meteor.subscribe('orgs', function (){
-    Session.set('orgsReady', true);
-  });
-  self.autorun(function () {
+    self.autorun(function () {
     FlowRouter.watchPathChange();
     var orgSlug = FlowRouter.current().params.orgSlug;
-    var orgsReady = Session.get('orgsReady');
+
     var user = Meteor.user();
     var orgId;
-    if (orgSlug && orgsReady) {
+    if (orgSlug) {
       var org = Orgs.findOne({slug: orgSlug});
       if (org) {
         if (org.visibility == 'public') {
@@ -174,15 +172,21 @@ Template.dataLayout.onRendered(function () {
       });
     }
   });
+
+  });
+
 });
 
 Template.dataLayout.helpers({
   anyPQubes: function () {
     var pqubes = PQubes.find({}, {sort: {order:1}}).fetch();
+
     if (pqubes.length) {
 
       var pqube = pqubes[0];
+
       var meters = Meters.findOne(pqube._id);
+
       return (meters && meters.defaults && meters.defaults.length);
     }
     return false;
@@ -191,4 +195,3 @@ Template.dataLayout.helpers({
     return Session.get('metersSelected');
   }
 });
-

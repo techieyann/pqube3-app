@@ -1,6 +1,7 @@
 {
   "errNameRequired":"Name is a required field",
   "errHostRequired":"Hostname is a required field",
+  "errSlugExists":"PQube3 slug already exists with name",
   "errSlugRequired":"URL is a required field",
   "errCodeRequired":"Access code required",
   "errNewCodeRequired":"New Access code required",

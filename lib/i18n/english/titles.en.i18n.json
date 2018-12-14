@@ -15,5 +15,6 @@
   "titleEdit":"Edit PQube3...",
   "titleEditOrg":"Edit Organization...",
   "titleEditCodeOrg":"Edit Organization Access Code...",
-  "titleMeters":"Manage PQube3 Meters"
+  "titleMeters":"Manage PQube3 Meters",
+  "titleManageMeters":"Manage Meters Masterlist"
 }

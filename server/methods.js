@@ -8,8 +8,8 @@ Meteor.methods({
     var userId = Meteor.userId();
     if (accessTest.orgId == 'admin') {
       if (accessTest.code == process.env.accessCode) {
-        Roles.addUsersToRoles(userId, 'admin', Roles.GLOBAL_GROUP);        
-        accessGranted = 'admin';
+        Roles.addUsersToRoles(userId, 'admin', Roles.GLOBAL_GROUP);
+        accessType = 'admin';
       }
     }
     else {
@@ -19,7 +19,7 @@ Meteor.methods({
           var groups = Roles.getGroupsForUser(userId, 'manage');
           if (groups.length) {
             Roles.addUsersToRoles(userId, 'view', org._id);
-            accessType = 'view';            
+            accessType = 'view';
           }
           else {
             Roles.addUsersToRoles(userId, 'manage', org._id);
@@ -51,7 +51,7 @@ Meteor.methods({
   'reconnectPQube': function (id) {
     var pqube = PQubes.findOne(id);
     if (pqube) {
-      if (hasPermission(pqube.org)) 
+      if (hasPermission(pqube.org))
         pqubeConnections[id].master.transport.connection.connect();
     }
   }

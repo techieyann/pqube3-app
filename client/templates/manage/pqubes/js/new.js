@@ -16,12 +16,14 @@ Template.newPQube.events({
     var defaultFlag = false;
     if (!PQubes.findOne({org:orgId}))
       defaultFlag = true;
-    
+
     var newPQubeData = {
       _id: Random.id(),
       name: $('#new-pqube-name').val(),
-      host: $('#new-pqube-hostname').val().toLowerCase(),
+      host: $('#new-pqube-hostname').val(),
       port: $('#new-pqube-port').val(),
+      slug: $('#new-pqube-slug').val(),
+      metersOnly: $('#new-pqube-meters-only').is(':checked'),
       org: orgId,
       defaultPQube: defaultFlag
     };
@@ -35,7 +37,11 @@ Template.newPQube.events({
       $('#new-pqube-hostname').focus();
       return;
     }
+    else {
+      newPQubeData.host = newPQubeData.host.toLowerCase();
+    }
     if (!newPQubeData.port) newPQubeData.port = '502';
+    if (newPQubeData.slug) newPQubeData.slug = newPQubeData.slug.toLowerCase();
     Meteor.call('addNewPQube', newPQubeData, function (err, result) {
       if (err) {
 	Session.set('formError', err.reason);

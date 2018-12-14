@@ -1,6 +1,6 @@
 <template name="meters">
   {{#if pqubesReady}}
-  <div id="gauges">
+  <div id="gauges" class="{{metersOnly}}">
     {{> gaugeSelectors}}
     {{> gauges}}
   </div>

@@ -32,6 +32,7 @@
   "new": "New",
   "name":"Name",
   "host":"Host",
+  "metersOnly":"Meters Only",
   "ipOrHostname":"IP or Hostname",
   "port":"Port",
   "url":"URL",
@@ -49,7 +50,7 @@
   "save":"Save",
   "manageMeters": "Manage meters for",
 
-  "organization": "Organization",  
+  "organization": "Organization",
   "pqube3": "PQube3s",
   "manage": "Manage"
 }

@@ -28,6 +28,16 @@ Template.editPQube.helpers({
     if (pqube)
     return pqube.port;
   },
+  metersOnly: function () {
+    var pqube = Template.instance().pqube.get();
+    if (pqube)
+    return pqube.metersOnly ? 'checked':'';
+  },
+  slug: function () {
+    var pqube = Template.instance().pqube.get();
+    if (pqube)
+    return pqube.slug;
+  },
   selectedLanguage: function () {
     var pqube = Template.instance().pqube.get();
     if (pqube)
@@ -42,8 +52,10 @@ Template.editPQube.events({
     e.preventDefault();
     var editPQubeData = {
       name: $('#edit-pqube-name').val(),
-      host: $('#edit-pqube-hostname').val().toLowerCase(),
-      port: $('#edit-pqube-port').val()
+      host: $('#edit-pqube-hostname').val(),
+      port: $('#edit-pqube-port').val(),
+      slug: $('#edit-pqube-slug').val(),
+      metersOnly: $('#edit-pqube-meters-only').is(':checked')      
     };
     if (!editPQubeData.name) {
       Session.set('formError', TAPi18n.__('errNameRequired'));
@@ -54,7 +66,8 @@ Template.editPQube.events({
       Session.set('formError', TAPi18n.__('errHostRequired'));
       $('#edit-pqube-hostname').focus();
       return;
-    }    
+    }
+    if (editPQubeData.slug) editPQubeData.slug = editPQubeData.slug.toLowerCase();
     Meteor.call('editPQube', id, editPQubeData, function (err, result) {
       if (err) {
 	Session.set('formError', err.reason);
@@ -66,5 +79,5 @@ Template.editPQube.events({
       sAlert.success(TAPi18n.__('succEditPQube'));
       }, 400);
     });
-  }  
+  }
 });

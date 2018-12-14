@@ -1,9 +1,9 @@
 <template name="metersMaster">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <h4>Upload Meter Master List:</h4>
+    <h4>Meter Master List:</h4>
   </div>
-  <div class="modal-body text-center">
+  <div class="modal-body">
     {{#if formError}}
       <div class="alert alert-danger alert-dismissable">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -11,7 +11,18 @@
         </button>
         {{formError}}
       </div>
-    {{/if}}    
-    <input type="file" id="meter-master" accept=".csv">
+    {{/if}}
+    <div class="row">
+      <div class="col-xs-6">
+        <label class="btn btn-default btn-file">
+            <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>
+            Upload <input type="file" id="meter-master" style="display: none;">
+        </label>
+
+      </div>
+      <div class="col-xs-6 text-right">
+        <button class="btn btn-default" id="download-master">Download <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></button>
+      </div>
+    </div>
   </div>
 </template>

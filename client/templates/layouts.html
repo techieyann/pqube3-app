@@ -14,24 +14,26 @@
       {{/if}}
     {{else}}
 
-      <div id="container">
+      <div id="container" class="{{metersOnly}}">
 
         <div id="header">
-	  {{> meta}}			
+	  {{> meta}}
 	  <a href="http://www.powersensorsltd.com" id="logo" target="_blank"><img alt="Power Sensors Ltd." src="/images/header.png">{{> title}}</a>
 	  {{> newData}}
         </div>
-        <div id="scopes">
-	  {{> scopes}}
-        </div>
+	       {{> scopes}}
         {{> viewSelector}}
         {{#if metersSelected}}
           {{> meters}}
         {{else}}
           {{> spectra}}
         {{/if}}
-
+      <a href="/manage">
+        <div id="manage-screw">
+        </div>
+      </a>
       </div>
+
     {{/unless}}
     {{> footer}}
   {{/if}}

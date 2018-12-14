@@ -1,6 +1,14 @@
 setDefaults = function () {
 
   var defaultPQube = PQubes.findOne({},{sort: {order: 1}});
+
+  var defaultOverride = Session.get('deviceSlug');
+  if (defaultOverride) {
+
+    var overridePQube = PQubes.findOne({slug: defaultOverride});
+    console.log(overridePQube);
+    if (overridePQube) defaultPQube = overridePQube;
+  }
   if (defaultPQube) {
     var id = defaultPQube._id;
     Session.set('scopesSource', id);

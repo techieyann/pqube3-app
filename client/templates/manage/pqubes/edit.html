@@ -27,7 +27,23 @@
 	      <label for="edit-pqube-port">{{_ "port"}}</label>
 	      <input type="text" class="form-control" id="edit-pqube-port"  placeholder="502" maxlength="6" size="6" value="{{port}}">
       </div>
-      <br>
+      <br><br>
+      <hr>
+      <h4>Options:</h4>
+
+      <div class="form-group">
+        <div class="checkbox">
+          <label><input id="edit-pqube-meters-only" type="checkbox" {{metersOnly}}>  {{_ "metersOnly"}}</label>
+        </div>
+      </div>
+      <br><br>
+      <div class="form-group">
+        <label for="edit-pqube-slug">{{_ 'url'}}</label>
+        <div class="input-group">
+          <div class="input-group-addon">{{rootURL}}/pq/</div>
+          <input type="text" class="form-control" id="edit-pqube-slug"  placeholder="{{_ 'url'}}" value="{{slug}}">
+        </div>
+      </div>
 
     </div>
     <div class="modal-footer">

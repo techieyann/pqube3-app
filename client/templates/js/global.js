@@ -75,6 +75,14 @@ Template.registerHelper('pqubeMeterData', function () {
   return pqubes;
 });
 
+Template.registerHelper('metersOnly', function () {
+  var selectedPQube = Session.get('scopesSource');
+  var pqube = PQubes.findOne(selectedPQube);
+  if (pqube && pqube.metersOnly) {
+    return 'meters-only';
+  }
+});
+
 Template.registerHelper('language', function () {
 return Languages;
 });

@@ -1,4 +1,8 @@
 <template name="scopes">
+        <div id="scopes" class="{{metersOnly}}">
+
+
+  <img id="scopes-background" src="/images/scopes_background.png">
   {{> voltageChart}}
   {{> voltageVectors}}
   {{> currentChart}}
@@ -9,4 +13,5 @@
   {{#unless odoReset}}
   {{> odometers}}
   {{/unless}}
+        </div>  
 </template>
